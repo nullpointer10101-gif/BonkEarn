@@ -151,6 +151,13 @@ app.post('/auth/login', (req, res) => {
     }
   }
 
+  // Check if existing user is locked/flagged by Admin
+  if (user && user.flagged === 1) {
+    return res.status(403).json({
+      error: `⛔ ACCESS FORBIDDEN: Account #${user.id} is blocked by administrator for policy review.`
+    });
+  }
+
   const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, { expiresIn: '1h' });
   const refreshToken = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '7d' });
 
@@ -447,6 +454,35 @@ app.post('/admin/users/:id/flag', (req, res) => {
 
   db.prepare('UPDATE users SET flagged = ? WHERE id = ?').run(flagged ? 1 : 0, userId);
   res.json({ success: true, userId, flagged: flagged ? 1 : 0 });
+});
+
+app.post('/admin/users/:id/unblock', (req, res) => {
+  const userId = Number(req.params.id);
+  const user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+
+  db.prepare('UPDATE users SET flagged = 0 WHERE id = ?').run(0, userId);
+
+  const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+  db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
+    .run(txId, userId, 'admin_unblock', 0, `🔓 Admin Unlocked Account #${userId} (@${user.username || 'user'})`);
+
+  res.json({ success: true, userId, message: `Account #${userId} unblocked successfully.` });
+});
+
+app.post('/admin/users/:id/block', (req, res) => {
+  const userId = Number(req.params.id);
+  const { reason } = req.body;
+  const user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+
+  db.prepare('UPDATE users SET flagged = 1 WHERE id = ?').run(1, userId);
+
+  const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+  db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
+    .run(txId, userId, 'admin_block', 0, `🔒 Admin Flagged & Blocked Account #${userId}: ${reason || 'Sybil/Policy Review'}`);
+
+  res.json({ success: true, userId, message: `Account #${userId} blocked successfully.` });
 });
 
 app.post('/admin/tasks', (req, res) => {

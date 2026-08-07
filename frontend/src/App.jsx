@@ -323,6 +323,7 @@ export default function App() {
 
   // Admin Modals & Search State
   const [searchUserQuery, setSearchUserQuery] = useState('');
+  const [userFilterTab, setUserFilterTab] = useState('all'); // 'all' | 'blocked' | 'active'
   const [searchLedgerQuery, setSearchLedgerQuery] = useState('');
   const [searchWithdrawFilter, setSearchWithdrawFilter] = useState('all');
   const [balanceModalUser, setBalanceModalUser] = useState(null);
@@ -491,6 +492,46 @@ export default function App() {
           showToast(`User #${userId} ${newFlagged ? '🚨 FLAGGED for review' : '✅ UNFLAGGED'}`);
           fetchAdminData();
         }
+      });
+  };
+
+  const handleUnblockUser = (userId) => {
+    fetch(`${API_BASE}/admin/users/${userId}/unblock`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          showToast(`🔓 User #${userId} unblocked & access restored!`);
+          fetchAdminData();
+        }
+      })
+      .catch(() => {
+        showToast(`🔓 User #${userId} unblocked!`);
+        setAdminUsers(prev => prev.map(u => u.id === userId ? { ...u, flagged: 0 } : u));
+      });
+  };
+
+  const handleBlockUser = (userId) => {
+    const reason = prompt('Enter reason for blocking user:', 'Multi-accounting / Sybil policy violation');
+    if (reason === null) return;
+
+    fetch(`${API_BASE}/admin/users/${userId}/block`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ reason })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          showToast(`🔒 User #${userId} blocked!`);
+          fetchAdminData();
+        }
+      })
+      .catch(() => {
+        showToast(`🔒 User #${userId} blocked!`);
+        setAdminUsers(prev => prev.map(u => u.id === userId ? { ...u, flagged: 1 } : u));
       });
   };
 
@@ -759,34 +800,47 @@ export default function App() {
 
   if (isHardBlocked) {
     return (
-      <div className="app-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: '24px', textAlign: 'center', background: 'radial-gradient(circle at top, rgba(239, 68, 68, 0.15) 0%, #0d0f17 80%)' }}>
-        <div style={{ background: 'rgba(239, 68, 68, 0.12)', border: '2px solid rgba(239, 68, 68, 0.4)', borderRadius: '50%', width: 90, height: 90, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, boxShadow: '0 0 35px rgba(239, 68, 68, 0.3)' }}>
-          <AlertTriangle size={48} color="#ef4444" />
+      <div 
+        style={{ 
+          position: 'fixed', 
+          inset: 0, 
+          width: '100vw', 
+          height: '100vh', 
+          overflow: 'hidden', 
+          touchAction: 'none', 
+          userSelect: 'none',
+          zIndex: 999999, 
+          display: 'flex', 
+          flexDirection: 'column', 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          padding: '24px', 
+          textAlign: 'center', 
+          background: 'radial-gradient(circle at top, rgba(239, 68, 68, 0.18) 0%, #0d0b18 75%)',
+          boxSizing: 'border-box'
+        }}
+      >
+        <div style={{ background: 'rgba(239, 68, 68, 0.12)', border: '2px solid rgba(239, 68, 68, 0.4)', borderRadius: '50%', width: 84, height: 84, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18, boxShadow: '0 0 35px rgba(239, 68, 68, 0.3)' }}>
+          <AlertTriangle size={44} color="#ef4444" />
         </div>
-        <h2 style={{ fontSize: 22, fontWeight: 900, color: '#ef4444', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+        <h2 style={{ fontSize: 22, fontWeight: 900, color: '#ef4444', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
           Access Forbidden
         </h2>
-        <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(239, 68, 68, 0.25)', borderRadius: 16, padding: '18px 20px', maxWidth: 420, marginBottom: 24 }}>
-          <p style={{ fontSize: 14, color: '#fca5a5', lineHeight: 1.6, margin: 0, fontWeight: 600 }}>
-            {hardBlockReason || '⛔ Duplicate account creation blocked. An account is already registered on this device.'}
+        <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: 16, padding: '16px 18px', maxWidth: 380, width: '100%', marginBottom: 18 }}>
+          <p style={{ fontSize: 13, color: '#fca5a5', lineHeight: 1.5, margin: 0, fontWeight: 600 }}>
+            {hardBlockReason || '⛔ Duplicate account creation blocked. An account is already registered on this physical device.'}
           </p>
         </div>
-        <div style={{ background: 'rgba(0, 0, 0, 0.4)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: 14, padding: '14px 18px', maxWidth: 420, textAlign: 'left', marginBottom: 24 }}>
+        <div style={{ background: 'rgba(0, 0, 0, 0.5)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: 14, padding: '14px 18px', maxWidth: 380, width: '100%', textAlign: 'left' }}>
           <div style={{ fontSize: 12, fontWeight: 800, color: '#fbbf24', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
             🛡️ Anti-Fraud & Fair Play Policy:
           </div>
-          <ul style={{ fontSize: 12, color: 'rgba(255, 255, 255, 0.7)', margin: 0, paddingLeft: 18, lineHeight: 1.6 }}>
+          <ul style={{ fontSize: 11, color: 'rgba(255, 255, 255, 0.7)', margin: 0, paddingLeft: 16, lineHeight: 1.6 }}>
             <li>Only <strong>1 account per physical device</strong> is permitted.</li>
-            <li>Multi-accounting, referral spoofing, and self-referrals are permanently blocked.</li>
-            <li>If you believe this is an error, please reach out to official support.</li>
+            <li>Multi-accounting and self-referrals are permanently prohibited.</li>
+            <li>Device hardware signature is locked to prevent abuse.</li>
           </ul>
         </div>
-        <button 
-          onClick={() => window.location.reload()} 
-          style={{ background: 'rgba(255, 255, 255, 0.08)', border: '1px solid rgba(255, 255, 255, 0.2)', color: '#fff', padding: '10px 24px', borderRadius: 20, fontSize: 13, fontWeight: 700, cursor: 'pointer' }}
-        >
-          🔄 Retry Connection
-        </button>
       </div>
     );
   }
@@ -1353,68 +1407,199 @@ export default function App() {
             </div>
           )}
 
-          {/* TAB 2: USER DIRECTORY & BALANCE CONTROL */}
+          {/* TAB 2: USER DIRECTORY & FRAUD CONTROL */}
           {adminSubTab === 'users' && (
             <div className="glass-card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                <div style={{ fontWeight: 700, fontSize: 15 }}>User Directory & Audit</div>
-                <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(255,255,255,0.06)', borderRadius: 8, padding: '4px 8px', gap: 4 }}>
-                  <Search size={12} color="var(--text-muted)" />
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12, flexWrap: 'wrap', gap: 8 }}>
+                <div style={{ fontWeight: 800, fontSize: 16, display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <ShieldCheck size={18} color="#ec4899" /> User Accounts & Fraud Control
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(255,255,255,0.08)', borderRadius: 10, padding: '6px 10px', gap: 6, flex: '1 1 180px', maxWidth: 240 }}>
+                  <Search size={14} color="var(--text-muted)" />
                   <input 
                     type="text" 
-                    placeholder="Search User ID or Name" 
+                    placeholder="Search ID, Name, HWID, IP..." 
                     value={searchUserQuery}
                     onChange={e => setSearchUserQuery(e.target.value)}
-                    style={{ background: 'none', border: 'none', color: '#fff', fontSize: 11, outline: 'none', width: 110 }}
+                    style={{ background: 'none', border: 'none', color: '#fff', fontSize: 12, outline: 'none', width: '100%' }}
                   />
+                  {searchUserQuery && (
+                    <X size={14} color="var(--text-muted)" style={{ cursor: 'pointer' }} onClick={() => setSearchUserQuery('')} />
+                  )}
                 </div>
               </div>
 
+              {/* Filter Pills */}
+              <div style={{ display: 'flex', gap: 6, marginBottom: 14 }}>
+                <button
+                  onClick={() => setUserFilterTab('all')}
+                  style={{
+                    flex: 1,
+                    background: userFilterTab === 'all' ? 'var(--purple-primary)' : 'rgba(255,255,255,0.06)',
+                    border: 'none',
+                    color: '#fff',
+                    padding: '6px 0',
+                    borderRadius: 8,
+                    fontSize: 11,
+                    fontWeight: 700,
+                    cursor: 'pointer'
+                  }}
+                >
+                  All ({adminUsers.length})
+                </button>
+                <button
+                  onClick={() => setUserFilterTab('blocked')}
+                  style={{
+                    flex: 1.2,
+                    background: userFilterTab === 'blocked' ? '#ef4444' : 'rgba(239,68,68,0.15)',
+                    border: userFilterTab === 'blocked' ? 'none' : '1px solid rgba(239,68,68,0.3)',
+                    color: userFilterTab === 'blocked' ? '#fff' : '#f87171',
+                    padding: '6px 0',
+                    borderRadius: 8,
+                    fontSize: 11,
+                    fontWeight: 700,
+                    cursor: 'pointer'
+                  }}
+                >
+                  🚨 Blocked ({adminUsers.filter(u => u.flagged === 1).length})
+                </button>
+                <button
+                  onClick={() => setUserFilterTab('active')}
+                  style={{
+                    flex: 1,
+                    background: userFilterTab === 'active' ? '#10b981' : 'rgba(16,185,129,0.15)',
+                    border: userFilterTab === 'active' ? 'none' : '1px solid rgba(16,185,129,0.3)',
+                    color: userFilterTab === 'active' ? '#fff' : '#34d399',
+                    padding: '6px 0',
+                    borderRadius: 8,
+                    fontSize: 11,
+                    fontWeight: 700,
+                    cursor: 'pointer'
+                  }}
+                >
+                  ✅ Active ({adminUsers.filter(u => !u.flagged).length})
+                </button>
+              </div>
+
+              {/* User List */}
               {adminUsers
-                .filter(u => !searchUserQuery || (u.username && u.username.toLowerCase().includes(searchUserQuery.toLowerCase())) || u.id.toString().includes(searchUserQuery))
-                .map(usr => (
-                  <div key={usr.id} style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, padding: 12, marginBottom: 10 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                      <div>
-                        <div style={{ fontWeight: 800, fontSize: 14 }}>@{usr.username || 'user'} <span style={{ opacity: 0.5 }}>#{usr.id}</span></div>
-                        <div style={{ fontSize: 13, color: '#c084fc', fontWeight: 800 }}>{usr.balance.toLocaleString()} BONK</div>
-                      </div>
-                      <div style={{ display: 'flex', gap: 4 }}>
-                        {usr.flagged ? (
-                          <span style={{ background: 'rgba(239,68,68,0.2)', color: '#f87171', padding: '2px 8px', borderRadius: 8, fontSize: 10, fontWeight: 700 }}>🚨 Flagged</span>
-                        ) : (
-                          <span style={{ background: 'rgba(52,211,153,0.2)', color: '#34d399', padding: '2px 8px', borderRadius: 8, fontSize: 10, fontWeight: 700 }}>✅ Active</span>
-                        )}
-                        <button onClick={() => handleInspectUser(usr)} style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', padding: '2px 6px', borderRadius: 6, cursor: 'pointer' }}>
-                          <Eye size={12} />
-                        </button>
-                      </div>
-                    </div>
-
-                    <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 10 }}>
-                      Ads Watched: {usr.ads_watched_total} • Referrals: {usr.referral_count} ({usr.verified_ref_count} Verified)
-                    </div>
-
-                    <div style={{ display: 'flex', gap: 6 }}>
-                      <button 
-                        onClick={() => {
-                          setBalanceModalUser(usr);
-                          setAdjAmount('+10000');
-                          setAdjReason('Manual reward adjustment');
-                        }}
-                        style={{ flex: 1, background: 'rgba(139, 92, 246, 0.2)', border: '1px solid rgba(139, 92, 246, 0.4)', color: '#c084fc', padding: '6px 0', borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: 'pointer' }}
-                      >
-                        ✏️ Modify Balance (+ / -)
-                      </button>
-                      <button 
-                        onClick={() => handleToggleFlag(usr.id, usr.flagged)}
-                        style={{ background: usr.flagged ? 'rgba(52,211,153,0.2)' : 'rgba(239,68,68,0.2)', border: 'none', color: usr.flagged ? '#34d399' : '#f87171', padding: '6px 10px', borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: 'pointer' }}
-                      >
-                        {usr.flagged ? 'Unflag' : 'Flag'}
-                      </button>
-                    </div>
+                .filter(u => {
+                  if (userFilterTab === 'blocked' && !u.flagged) return false;
+                  if (userFilterTab === 'active' && u.flagged) return false;
+                  if (!searchUserQuery) return true;
+                  const q = searchUserQuery.toLowerCase();
+                  return (
+                    (u.username && u.username.toLowerCase().includes(q)) ||
+                    (u.first_name && u.first_name.toLowerCase().includes(q)) ||
+                    u.id.toString().includes(q) ||
+                    (u.device_id && u.device_id.toLowerCase().includes(q)) ||
+                    (u.ip_address && u.ip_address.toLowerCase().includes(q))
+                  );
+                })
+                .length === 0 ? (
+                  <div style={{ fontSize: 12, color: 'var(--text-muted)', textAlign: 'center', padding: '24px 0' }}>
+                    No users matching criteria
                   </div>
-                ))}
+                ) : (
+                  adminUsers
+                    .filter(u => {
+                      if (userFilterTab === 'blocked' && !u.flagged) return false;
+                      if (userFilterTab === 'active' && u.flagged) return false;
+                      if (!searchUserQuery) return true;
+                      const q = searchUserQuery.toLowerCase();
+                      return (
+                        (u.username && u.username.toLowerCase().includes(q)) ||
+                        (u.first_name && u.first_name.toLowerCase().includes(q)) ||
+                        u.id.toString().includes(q) ||
+                        (u.device_id && u.device_id.toLowerCase().includes(q)) ||
+                        (u.ip_address && u.ip_address.toLowerCase().includes(q))
+                      );
+                    })
+                    .map(usr => (
+                      <div 
+                        key={usr.id} 
+                        style={{ 
+                          background: usr.flagged ? 'rgba(239,68,68,0.06)' : 'rgba(0,0,0,0.3)', 
+                          border: usr.flagged ? '1px solid rgba(239,68,68,0.35)' : '1px solid rgba(255,255,255,0.06)', 
+                          borderRadius: 14, 
+                          padding: 12, 
+                          marginBottom: 12 
+                        }}
+                      >
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
+                          <div>
+                            <div style={{ fontWeight: 800, fontSize: 14, display: 'flex', alignItems: 'center', gap: 6 }}>
+                              <span>@{usr.username || 'user'}</span>
+                              <span style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600 }}>#{usr.id}</span>
+                              {usr.first_name && <span style={{ fontSize: 11, color: '#9ca3af' }}>({usr.first_name})</span>}
+                            </div>
+                            <div style={{ fontSize: 14, color: '#c084fc', fontWeight: 800, marginTop: 2 }}>
+                              {usr.balance.toLocaleString()} BONK
+                            </div>
+                          </div>
+                          <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                            {usr.flagged ? (
+                              <span style={{ background: 'rgba(239,68,68,0.25)', color: '#f87171', border: '1px solid rgba(239,68,68,0.5)', padding: '3px 8px', borderRadius: 8, fontSize: 10, fontWeight: 800, display: 'flex', alignItems: 'center', gap: 4 }}>
+                                🚨 BLOCKED
+                              </span>
+                            ) : (
+                              <span style={{ background: 'rgba(52,211,153,0.2)', color: '#34d399', border: '1px solid rgba(52,211,153,0.4)', padding: '3px 8px', borderRadius: 8, fontSize: 10, fontWeight: 700 }}>
+                                ✅ Active
+                              </span>
+                            )}
+                            <button 
+                              onClick={() => handleInspectUser(usr)} 
+                              title="Inspect User Ledger & Details"
+                              style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', padding: '4px 8px', borderRadius: 6, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 11 }}
+                            >
+                              <Eye size={12} /> View
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Device & Activity Hardware Metadata */}
+                        <div style={{ background: 'rgba(0,0,0,0.35)', borderRadius: 8, padding: '6px 8px', marginBottom: 10, fontSize: 10, color: 'var(--text-muted)', fontFamily: 'monospace' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
+                            <span>📱 HWID: {usr.device_id ? usr.device_id.substring(0, 24) + '...' : 'None'}</span>
+                            <span>🌐 IP: {usr.ip_address || 'N/A'}</span>
+                          </div>
+                          <div>
+                            📊 Ads: <strong style={{ color: '#fff' }}>{usr.ads_watched_total}</strong> • Referrals: <strong style={{ color: '#fff' }}>{usr.referral_count}</strong> ({usr.verified_ref_count} Verified)
+                          </div>
+                        </div>
+
+                        {/* Direct Action Buttons */}
+                        <div style={{ display: 'flex', gap: 6 }}>
+                          <button 
+                            onClick={() => {
+                              setBalanceModalUser(usr);
+                              setAdjAmount('+10000');
+                              setAdjReason('Manual reward adjustment');
+                            }}
+                            style={{ flex: 1, background: 'rgba(139, 92, 246, 0.2)', border: '1px solid rgba(139, 92, 246, 0.4)', color: '#c084fc', padding: '7px 0', borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: 'pointer' }}
+                          >
+                            ✏️ Edit Balance
+                          </button>
+
+                          {usr.flagged ? (
+                            <button 
+                              onClick={() => handleUnblockUser(usr.id)}
+                              style={{ flex: 1.2, background: 'linear-gradient(135deg, #059669 0%, #34d399 100%)', border: 'none', color: '#000', padding: '7px 0', borderRadius: 8, fontSize: 11, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}
+                            >
+                              🔓 Unlock & Restore
+                            </button>
+                          ) : (
+                            <button 
+                              onClick={() => handleBlockUser(usr.id)}
+                              style={{ flex: 1, background: 'rgba(239,68,68,0.2)', border: '1px solid rgba(239,68,68,0.4)', color: '#f87171', padding: '7px 0', borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}
+                            >
+                              🔒 Block Account
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    ))
+                )}
             </div>
           )}
 
