@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-import db from './db.js';
+import db, { resetDatabase } from './db.js';
 
 const app = express();
 app.use(cors());
@@ -385,6 +385,15 @@ app.post('/admin/login', (req, res) => {
   } else {
     res.status(401).json({ error: 'Invalid admin password' });
   }
+});
+
+app.all('/admin/wipe-db', (req, res) => {
+  const password = req.body?.password || req.query?.password;
+  if (password === ADMIN_PASSWORD) {
+    resetDatabase();
+    return res.json({ success: true, message: 'All users, sessions, and transactions purged successfully. Database is clean.' });
+  }
+  return res.status(401).json({ error: 'Unauthorized: Invalid admin password' });
 });
 
 // --- ADMIN ENDPOINTS ---

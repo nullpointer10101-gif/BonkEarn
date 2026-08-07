@@ -432,5 +432,15 @@ class DbWrapper {
   }
 }
 
+export function resetDatabase() {
+  memoryDb.users = [];
+  memoryDb.ad_sessions = [];
+  memoryDb.task_completions = [];
+  memoryDb.withdrawals = [];
+  memoryDb.transactions = [];
+  saveData(memoryDb);
+  return true;
+}
+
 const db = new DbWrapper();
 export default db;

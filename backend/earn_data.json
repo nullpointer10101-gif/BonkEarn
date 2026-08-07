@@ -1,21 +1,5 @@
 {
-  "users": [
-    {
-      "id": 99887766,
-      "username": "crypto_earner",
-      "first_name": "Alex",
-      "balance": 81000,
-      "ads_watched_total": 10,
-      "ads_watched_today": 4,
-      "ads_date": "2026-08-07",
-      "referrer_id": null,
-      "referral_count": 5,
-      "verified_ref_count": 3,
-      "withdrawal_unlocked": 1,
-      "flagged": 0,
-      "created_at": "2026-08-07T15:18:13.875Z"
-    }
-  ],
+  "users": [],
   "ad_sessions": [],
   "tasks": [
     {
@@ -46,33 +30,7 @@
       "created_at": "2026-08-07T15:18:13.875Z"
     }
   ],
-  "task_completions": [
-    {
-      "user_id": 99887766,
-      "task_id": "t1",
-      "completed_at": "2026-08-07T15:31:47.130Z"
-    },
-    {
-      "user_id": 99887766,
-      "task_id": "t3",
-      "completed_at": "2026-08-07T15:31:48.649Z"
-    },
-    {
-      "user_id": 99887766,
-      "task_id": "t2",
-      "completed_at": "2026-08-07T15:32:08.289Z"
-    }
-  ],
-  "withdrawals": [
-    {
-      "id": "w_101",
-      "user_id": 99887766,
-      "amount": 50000,
-      "wallet_address": "7xKXtg2CW87d9C72...89aX",
-      "status": "completed",
-      "requested_at": "2026-08-06 14:30",
-      "processed_at": "2026-08-06 15:00",
-      "admin_note": null
-    }
-  ]
+  "task_completions": [],
+  "withdrawals": [],
+  "transactions": []
 }
