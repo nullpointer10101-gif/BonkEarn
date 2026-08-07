@@ -348,7 +348,7 @@ app.get('/withdraw/history', authenticateToken, (req, res) => {
 });
 
 // --- 6.5 ADMIN OPERATIONS ---
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'meela';
 
 app.post('/admin/login', (req, res) => {
   const { password } = req.body;
@@ -356,7 +356,7 @@ app.post('/admin/login', (req, res) => {
     const adminToken = jwt.sign({ role: 'admin', authorized: true }, JWT_SECRET, { expiresIn: '12h' });
     res.json({ success: true, adminToken });
   } else {
-    res.status(401).json({ error: 'Invalid admin password (default: admin123)' });
+    res.status(401).json({ error: 'Invalid admin password' });
   }
 });
 

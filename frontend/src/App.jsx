@@ -167,13 +167,13 @@ export default function App() {
       })
       .catch(() => {
         // Fallback check for demo environment if backend is offline
-        if (adminPasswordInput === 'admin123') {
+        if (adminPasswordInput === 'meela') {
           setIsAdminAuthenticated(true);
           setAdminPasswordInput('');
           showToast('🔓 Admin Console Unlocked!');
           fetchAdminData();
         } else {
-          setAdminAuthError('Invalid admin password. (Default: admin123)');
+          setAdminAuthError('Invalid admin password.');
         }
       });
   };
