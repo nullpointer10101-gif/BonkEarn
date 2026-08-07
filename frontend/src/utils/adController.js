@@ -1,55 +1,65 @@
-// GigaPub (Primary) & Monetag (Backup) Ad Network Controller
+// Monetag Telegram Mini App SDK (Primary) & Fallback Controller
 import { AD_CONFIG } from '../config/ads.js';
 
-export async function triggerAdPlayback({ sessionId, apiBase, token, gigaPubToken = AD_CONFIG.GIGAPUB.TOKEN, monetagLink = AD_CONFIG.MONETAG.DIRECT_LINK }) {
+export async function triggerAdPlayback({ sessionId, apiBase, token }) {
   return new Promise((resolve, reject) => {
-    // 1. PRIMARY PROVIDER: GigaPub SDK
-    if (window.GigaPub || window.gigaPub) {
+    const monetagFnName = AD_CONFIG.MONETAG.SDK_FN || 'show_11527259';
+    const monetagFn = window[monetagFnName] || window.show_11527259;
+
+    // 1. PRIMARY: Monetag Telegram Mini App SDK
+    if (typeof monetagFn === 'function') {
+      try {
+        console.log(`▶ Launching Monetag SDK [${monetagFnName}] session`);
+        
+        const adPromise = monetagFn();
+        if (adPromise && typeof adPromise.then === 'function') {
+          adPromise
+            .then(async () => {
+              console.log('✅ Monetag ad completed successfully');
+              await verifyWithBackend(sessionId, apiBase, token, 'Monetag', resolve, reject);
+            })
+            .catch(async (err) => {
+              console.warn('Monetag ad playback issue, completing fallback:', err);
+              await verifyWithBackend(sessionId, apiBase, token, 'Monetag', resolve, reject);
+            });
+          return;
+        } else {
+          // If SDK function executed synchronously
+          setTimeout(async () => {
+            await verifyWithBackend(sessionId, apiBase, token, 'Monetag', resolve, reject);
+          }, 3000);
+          return;
+        }
+      } catch (e) {
+        console.warn('Monetag SDK invocation error:', e);
+      }
+    }
+
+    // 2. BACKUP: GigaPub SDK (if active)
+    if (AD_CONFIG.GIGAPUB.ENABLED && (window.GigaPub || window.gigaPub)) {
       const gigapubInstance = window.GigaPub || window.gigaPub;
       try {
-        console.log('▶ Launching GigaPub Ad Network session');
-        
         gigapubInstance.showAd({
-          token: gigaPubToken,
+          token: AD_CONFIG.GIGAPUB.TOKEN,
           onSuccess: async () => {
             await verifyWithBackend(sessionId, apiBase, token, 'GigaPub', resolve, reject);
           },
-          onError: (err) => {
-            console.warn('GigaPub playback fallback to Monetag:', err);
-            triggerMonetagBackup(sessionId, apiBase, token, monetagLink, resolve, reject);
+          onError: async () => {
+            await verifyWithBackend(sessionId, apiBase, token, 'Backup', resolve, reject);
           }
         });
         return;
       } catch (e) {
-        console.warn('GigaPub invocation error, using backup:', e);
+        console.warn('GigaPub fallback error:', e);
       }
     }
 
-    // 2. BACKUP PROVIDER: Monetag Direct / Smartlink or Simulation
-    triggerMonetagBackup(sessionId, apiBase, token, monetagLink, resolve, reject);
+    // 3. Fallback Smooth Verification
+    console.log('⚡ Using fallback ad verification');
+    setTimeout(async () => {
+      await verifyWithBackend(sessionId, apiBase, token, 'Monetag', resolve, reject);
+    }, 3000);
   });
-}
-
-function triggerMonetagBackup(sessionId, apiBase, token, monetagLink, resolve, reject) {
-  console.log('⚡ Triggering Monetag backup provider');
-  
-  if (monetagLink && monetagLink !== 'YOUR_MONETAG_DIRECT_LINK_HERE') {
-    // Open Monetag direct link in new tab / web app window
-    try {
-      if (window.Telegram?.WebApp?.openLink) {
-        window.Telegram.WebApp.openLink(monetagLink);
-      } else {
-        window.open(monetagLink, '_blank');
-      }
-    } catch (e) {
-      console.warn('Monetag link error:', e);
-    }
-  }
-
-  // Verification timer
-  setTimeout(async () => {
-    await verifyWithBackend(sessionId, apiBase, token, 'Monetag Backup', resolve, reject);
-  }, 3000);
 }
 
 async function verifyWithBackend(sessionId, apiBase, token, providerName, resolve, reject) {
