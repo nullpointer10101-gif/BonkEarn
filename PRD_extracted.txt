@@ -1,0 +1,642 @@
+
+
+
+
+🐕 BONKHUB
+Product Requirements Document
+Telegram Mini App — Earn BONK by Watching Ads & Completing Tasks
+Version 1.0  |  Classification: Confidential
+
+
+
+Field
+Detail
+Product Name
+BonkHub
+Bot Handle (suggested)
+@BONKhub_bot
+Token
+BONK (Solana SPL)
+Platform
+Telegram Mini App (WebApp API)
+Document Version
+1.0
+Status
+Draft — For Development
+
+
+
+1. Executive Summary
+BonkHub is a Telegram Mini App that rewards users with BONK tokens for watching advertisements, completing social tasks, and referring new users. The product is inspired by viral Telegram reward bots and improves on them with robust anti-fraud infrastructure, automated ad verification, a tiered referral system, and a semi-automated withdrawal pipeline.
+The goal is to build a high-retention, viral-growth platform that drives BONK token adoption while monetising through ad network revenue.
+
+2. Goals & Success Metrics
+2.1 Business Goals
+Drive BONK token adoption via daily active engagement
+Monetise via ad network revenue (Adsgram / Monetag)
+Achieve viral growth through referral mechanics
+Build a retentive daily-habit loop: open bot → watch ads → earn → refer
+
+2.2 KPIs
+
+
+Metric
+Target (Month 1)
+Target (Month 3)
+Daily Active Users (DAU)
+5,000
+50,000
+Ads watched per day
+30,000
+300,000
+Referral conversion rate
+15%
+25%
+Withdrawal requests/day
+500
+5,000
+Bot retention (D7)
+30%
+40%
+
+
+3. User Personas
+
+
+Persona
+Description
+Primary Goal
+Crypto Earner
+TG power user, follows crypto communities, familiar with airdrops
+Earn BONK, withdraw fast
+Casual Clicker
+Non-crypto user, attracted by earning potential
+Easy tasks, simple UI
+Referral Hustler
+Community managers, group admins, influencers
+Maximise referral bonuses
+Admin / Operator
+Platform operator managing tasks, withdrawals, users
+Control & oversight
+
+
+4. System Architecture
+4.1 High-Level Stack
+
+
+Layer
+Technology
+Notes
+Telegram Bot
+Node.js + Telegraf or Grammy
+Handles /start, inline buttons, WebApp launch
+Mini App Frontend
+React + Vite + Telegram WebApp SDK
+Mobile-first, dark theme
+Backend API
+Node.js + Fastify (REST)
+JWT auth via TG initData
+Database
+PostgreSQL (Supabase or self-hosted)
+Users, tasks, rewards, withdrawals
+Cache / Queue
+Redis
+Rate limiting, job queues
+Ad Integration
+Adsgram SDK
+Ad serving + server-side callback
+Blockchain
+Solana Web3.js
+BONK SPL token transfers
+Admin Panel
+React + Tailwind
+Internal ops dashboard
+CDN / Hosting
+Cloudflare Pages + Cloudflare Workers
+DDoS protection, edge cache
+
+4.2 Authentication
+All Mini App requests authenticated via Telegram initData HMAC-SHA256 validation
+Server MUST verify initData hash on every API request — never trust client-supplied user_id
+Session tokens: short-lived JWT (1h) + refresh token (7d) stored server-side
+No passwords — Telegram identity is the sole auth source
+
+
+5. Screens & Feature Specifications
+5.1 Home Screen
+Entry point after bot launch. Shows user identity, balance, and stats at a glance.
+5.1.1 UI Components
+Header: "BONKHUB" brand name (top-left) + 3-dot menu + close (top-right)
+Username display + Telegram ID badge (top)
+Balance card (prominent, purple gradient): "TOTAL BALANCE (BONK)" + numeric balance in large font
+Stats row — 3 tiles: Referrals | Verified Refs | Ads Watched
+Menu cards (tappable rows with icon + title + subtitle + chevron):
+Customer Service — "24/7 Live Support"
+Referral Program — "Invite & Earn 10,000 BONK"
+How to Use Bot? — "Quick guide to earn BONK"
+Primary CTA button: "⚡ Go to Task Center →" (full-width, purple)
+Bottom navigation bar: Home | Tasks | Withdraw
+
+5.1.2 Behaviour
+Balance updates in real-time via WebSocket or polling every 30s
+Stats row pulls live counts from API on page load
+Customer Service → opens Telegram support channel/bot link
+
+5.2 Task Center
+Core engagement loop. Two sections: Premium Ads and Bonus Tasks.
+5.2.1 Premium Ads Section
+Header: "▶ Premium Ads" + daily counter badge "X/10 Today" (purple)
+Sub-text: "Watch advertisements securely to earn 1,200 BONK instantly."
+Daily cap: 10 ads per user per UTC day
+Reward per ad: 1,200 BONK (configurable by admin)
+
+3-step sequential flow per ad:
+
+
+Step
+Label
+State Logic
+Button
+1
+Watch Ad
+Always available if daily cap not hit
+START (purple)
+2
+Verify Click
+LOCKED until step 1 ad fully viewed (server-confirmed)
+LOCKED → VERIFY
+3
+Claim Reward
+Active only after step 2 verified
+CLAIM (green)
+
+Step 2 unlock: Ad network sends server-side callback confirming view completion → server marks step 2 unlocked
+Step 3 claim: Server credits 1,200 BONK, increments ads_watched counter, resets 3-step flow
+After daily cap reached: all 3 steps disabled, badge shows "10/10 Today", resets at UTC midnight
+
+5.2.2 Bonus Tasks Section
+Header: "⭐ Bonus Tasks"
+Task card: title, reward amount, "Complete" button
+Task types supported:
+Join Telegram channel/group (verified via Bot API getChatMember)
+Follow Twitter/X account (verified via OAuth or manual)
+Visit URL (verified via unique tracking link + server callback)
+Custom admin-defined task (manual approval)
+"ADD YOUR TASK" link → leads admins/sponsors to task submission form
+Each task: one-time completion per user (idempotent claim)
+
+5.3 Referral Program
+Viral growth mechanic. Accessible from Home → "Referral Program" card.
+
+
+Rule
+Detail
+Referral Link Format
+https://t.me/BONKhub_bot?start={user_id}
+Signup Bonus
+100 BONK credited instantly to referrer on new user start
+Minimum Refs for Withdrawal
+3 verified referrals required to unlock withdrawals
+Verified Referral Bonus
++10,000 BONK when referred user watches 10 ads for the first time
+Verified Ref Definition
+Referral who has watched ≥10 total ads (not just today)
+Anti-Abuse
+New account filter: TG account age <7 days flagged for review
+
+5.3.1 Referral Modal UI
+Full-screen modal with green referral icon
+Rule 1 and Rule 2 listed with emoji icons
+"Verified Referral Bonus" highlight box (green background)
+Referral link displayed in input field (read-only)
+"Copy Link" button (yellow/gold) + "Close" button
+
+5.4 Withdraw Screen
+Users withdraw earned BONK to their Solana wallet.
+
+
+Field
+Detail
+Token
+BONK (Solana SPL)
+Minimum Withdrawal
+50,000 BONK (configurable)
+Wallet Field
+Solana wallet address (base58, 32–44 chars)
+Prerequisite
+Min 3 verified referrals + account not flagged
+Processing
+Queue-based, processed in batches (manual trigger or scheduler)
+Status Tracking
+Pending → Processing → Completed / Failed
+Tx Hash
+Shown on completion, links to Solscan
+
+5.4.1 UI Components
+Amount input: "AMOUNT (BONK)" label + value field + "MAX" button
+Wallet input: "SOLANA WALLET ADDRESS" label + address field
+"SUBMIT REQUEST" CTA button (full-width, purple)
+"Recent Withdrawals" section: table of past requests with status badges
+Validation errors shown inline below fields
+
+
+6. API Specification
+6.1 Authentication
+All endpoints require Authorization: Bearer <jwt> header. JWT issued after successful initData validation.
+
+
+
+Endpoint
+Method
+Description
+POST /auth/login
+POST
+Validate TG initData, return JWT + refresh_token
+POST /auth/refresh
+POST
+Exchange refresh_token for new JWT
+
+6.2 User
+
+
+Endpoint
+Method
+Description
+GET /user/me
+GET
+Return profile: id, username, balance, stats, referral_count, verified_refs
+GET /user/referrals
+GET
+List referrals with verified status
+
+6.3 Tasks & Ads
+
+
+Endpoint
+Method
+Description
+GET /tasks
+GET
+List available bonus tasks with completion status
+POST /tasks/:id/claim
+POST
+Claim a completed bonus task
+GET /ads/status
+GET
+Return today's ad count + daily cap + current step
+POST /ads/start
+POST
+Initiate ad session, return ad network token
+POST /ads/callback
+POST
+Ad network server-side callback (HMAC verified) — unlocks step 2
+POST /ads/claim
+POST
+Claim ad reward after step 2 verified — credits 1,200 BONK
+
+6.4 Withdrawal
+
+
+Endpoint
+Method
+Description
+POST /withdraw/request
+POST
+Submit withdrawal: { amount, wallet_address }
+GET /withdraw/history
+GET
+List past withdrawal requests with status + tx_hash
+
+6.5 Admin (Protected)
+
+
+Endpoint
+Method
+Description
+GET /admin/users
+GET
+List all users, filterable by status/balance
+POST /admin/withdraw/:id/approve
+POST
+Approve withdrawal + trigger on-chain transfer
+POST /admin/withdraw/:id/reject
+POST
+Reject withdrawal with reason
+GET /admin/tasks
+GET
+List all tasks
+POST /admin/tasks
+POST
+Create new bonus task
+DELETE /admin/tasks/:id
+DELETE
+Remove task
+GET /admin/analytics
+GET
+DAU, ads served, withdrawals, referral funnel
+
+
+7. Database Schema
+7.1 users
+
+
+Column
+Type
+Notes
+id
+BIGINT PK
+Telegram user_id
+username
+VARCHAR(64)
+TG username (nullable)
+first_name
+VARCHAR(128)
+TG first name
+balance
+BIGINT
+BONK balance in smallest unit
+ads_watched_total
+INT
+Lifetime ad count
+ads_watched_today
+INT
+Resets UTC midnight
+ads_date
+DATE
+Date of last ad_watched_today reset
+referrer_id
+BIGINT FK
+users.id of referrer (nullable)
+referral_count
+INT
+Direct referrals count
+verified_ref_count
+INT
+Refs who completed ≥10 ads
+withdrawal_unlocked
+BOOLEAN
+True when verified_ref_count ≥ 3
+flagged
+BOOLEAN
+Anti-fraud flag
+created_at
+TIMESTAMPTZ
+Account creation
+
+7.2 ad_sessions
+
+
+Column
+Type
+Notes
+id
+UUID PK
+
+user_id
+BIGINT FK
+users.id
+step
+SMALLINT
+1=started, 2=verified, 3=claimed
+ad_token
+VARCHAR
+Ad network session token
+reward_amount
+BIGINT
+BONK credited on claim
+created_at
+TIMESTAMPTZ
+
+claimed_at
+TIMESTAMPTZ
+Nullable
+
+7.3 tasks
+
+
+Column
+Type
+Notes
+id
+UUID PK
+
+title
+VARCHAR(256)
+
+type
+ENUM
+join_tg | follow_x | visit_url | custom
+reward_amount
+BIGINT
+BONK reward
+verification_data
+JSONB
+Channel id, URL, etc.
+active
+BOOLEAN
+
+expires_at
+TIMESTAMPTZ
+Nullable
+
+7.4 task_completions
+
+
+Column
+Type
+Notes
+user_id
+BIGINT FK
+
+task_id
+UUID FK
+
+completed_at
+TIMESTAMPTZ
+
+PRIMARY KEY
+(user_id, task_id)
+Idempotent — one completion per user per task
+
+7.5 withdrawals
+
+
+Column
+Type
+Notes
+id
+UUID PK
+
+user_id
+BIGINT FK
+
+amount
+BIGINT
+BONK amount
+wallet_address
+VARCHAR(64)
+Solana base58 address
+status
+ENUM
+pending | processing | completed | failed
+tx_hash
+VARCHAR(128)
+On-chain tx signature (nullable)
+requested_at
+TIMESTAMPTZ
+
+processed_at
+TIMESTAMPTZ
+Nullable
+admin_note
+TEXT
+Rejection reason etc.
+
+
+8. Anti-Fraud & Security
+
+
+Threat
+Mitigation
+Fake ad views (bot clicking)
+Server-side ad network callback required before step 2 unlock. No callback = no reward.
+Multiple accounts (same user)
+TG user_id is primary identity. Cross-check device fingerprint where possible.
+Fake referrals (self-referral)
+Block if referrer_id == user_id. Flag accounts with >10 referrals in <1h.
+Referral farming (fresh accounts)
+New TG accounts <7 days old = flagged referral, not counted as verified ref.
+Task re-claiming
+Unique constraint on task_completions(user_id, task_id). Server-side idempotency check.
+Withdrawal address injection
+Validate Solana address format server-side (base58, 32-44 chars). Reject otherwise.
+Replay attacks on /ads/callback
+Verify HMAC signature from ad network on every callback. One-time nonce per session.
+Balance manipulation
+Balance only modified via server-side credited transactions. No client-supplied balance field accepted.
+Admin endpoint exposure
+Admin routes protected by separate admin JWT. Admin accounts hardcoded/seeded, no self-registration.
+Rate limiting
+Redis-based: 30 req/min per user globally. /ads/start: 1 per 30s. /withdraw/request: 1 per hour.
+
+
+9. Admin Panel
+9.1 Dashboard
+Real-time stats: DAU, total users, ads served today, BONK distributed today
+Withdrawal queue: count of pending requests with total BONK amount
+Flagged users: count of accounts pending review
+
+9.2 User Management
+Search/filter by user_id, username, balance, flag status
+View user detail: balance history, ad history, referral tree, withdrawals
+Actions: flag/unflag, manual balance adjustment (with reason log), ban
+
+9.3 Withdrawal Management
+List of pending withdrawals: user, amount, wallet, requested_at
+Bulk approve: triggers batch on-chain BONK transfer via Solana Web3.js
+Reject with reason (reason stored, notified via bot message to user)
+Export to CSV
+
+9.4 Task Management
+Create / edit / deactivate bonus tasks
+Set: title, type, reward, verification data, expiry
+View completion count per task
+
+9.5 Analytics
+DAU / WAU / MAU chart
+Ads watched per day
+Referral funnel: invited → signed up → verified
+Withdrawal volume: total BONK out per day
+Top earners leaderboard
+
+
+10. Notification System
+
+
+Event
+Notification
+New referral signup
+Bot message: "🎉 New referral! +100 BONK credited."
+Referral becomes verified
+Bot message: "✅ Verified referral! +10,000 BONK credited."
+Withdrawal approved
+Bot message: "💸 Withdrawal processed! Tx: <hash>"
+Withdrawal rejected
+Bot message: "❌ Withdrawal rejected: <reason>"
+Daily ad cap reached
+In-app banner: "You've watched all 10 ads today. Come back tomorrow!"
+Task completed
+In-app toast: "+<amount> BONK earned!"
+
+
+11. Non-Functional Requirements
+
+
+Requirement
+Target
+API Response Time
+p95 < 300ms
+Uptime
+99.5% monthly
+Concurrent Users
+Support 5,000 concurrent without degradation
+Mini App Load Time
+First paint < 2s on 4G mobile
+Database Backup
+Daily automated backups, 30-day retention
+BONK Transfer Latency
+Approved withdrawals processed within 24h
+Security Audit
+Third-party pen test before public launch
+
+
+12. Development Milestones
+
+
+Phase
+Deliverable
+Target
+Phase 1
+Bot skeleton + initData auth + DB schema + basic home screen
+Week 1–2
+Phase 2
+Task Center + Adsgram integration + server-side ad callback
+Week 3–4
+Phase 3
+Referral system + verified ref tracking + bot notifications
+Week 5
+Phase 4
+Withdraw screen + Solana BONK transfer + withdrawal queue
+Week 6–7
+Phase 5
+Admin panel (users, withdrawals, tasks, analytics)
+Week 8
+Phase 6
+Anti-fraud hardening + rate limiting + Redis integration
+Week 9
+Phase 7
+QA, load testing, security review, bug fixes
+Week 10
+Phase 8
+Soft launch (closed beta) → public launch
+Week 11–12
+
+
+13. Out of Scope (v1.0)
+Multi-token support (BONK only at launch)
+NFT rewards
+Web version outside Telegram
+iOS/Android native app
+P2P transfers between users
+Staking or yield mechanics
+
+14. Open Questions
+Final minimum withdrawal amount — confirm with tokenomics team
+Ad network preference: Adsgram vs Monetag vs both?
+Withdrawal processing: manual admin approval or fully automated on-chain?
+BONK treasury wallet management: hot wallet vs multi-sig?
+KYC requirement threshold: at what balance/withdrawal amount?
+Community task sponsorship pricing model for third parties?
+
+
+End of Document — BonkHub PRD v1.0

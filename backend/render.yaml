@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: bonkearn-backend-api
+    env: node
+    region: singapore
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 4000
+      - key: BOT_TOKEN
+        value: 8890324263:AAFX7aMfJBLzCeRxibAcTTMwpyzFbM3Dvc8
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_PASSWORD
+        value: admin123
