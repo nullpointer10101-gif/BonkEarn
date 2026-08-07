@@ -51,12 +51,13 @@ function authenticateToken(req, res, next) {
 
 // --- 6.1 AUTHENTICATION ENDPOINTS ---
 app.post('/auth/login', (req, res) => {
-  const { initData, referrerId, deviceId: clientDeviceId } = req.body;
+  const { initData, referrerId, deviceId: clientDeviceId, persistentToken: clientPersistentToken, fpVisitorId } = req.body;
   let tgUser = verifyTelegramInitData(initData);
 
   // Extract client IP and Device Fingerprint
   const clientIp = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1').split(',')[0].trim();
-  const deviceId = clientDeviceId || req.headers['user-agent'] || 'dev_fingerprint_default';
+  const deviceId = clientDeviceId || fpVisitorId || req.headers['user-agent'] || 'dev_fingerprint_default';
+  const persistentToken = clientPersistentToken || ('token_' + deviceId);
 
   // Fallback for development/testing if initData is raw JSON or demo user
   if (!tgUser && req.body.demoUser) {
@@ -74,35 +75,44 @@ app.post('/auth/login', (req, res) => {
 
   const todayStr = new Date().toISOString().split('T')[0];
 
-  // Upsert user
+  // Check if user is already registered
   let user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
   if (!user) {
     let validReferrer = null;
     let refRejectReason = null;
 
-    // Strict Anti-Fraud Multi-Account HARD BLOCK
-    const existingDeviceUser = db.prepare('SELECT id FROM users WHERE device_id = ? AND id != ?').get(deviceId, userId);
-    if (existingDeviceUser) {
+    // 1. Strict Anti-Fraud Multi-Account HARD BLOCK on Device ID / Fingerprint
+    const existingDeviceUser = db.prepare('SELECT * FROM users WHERE device_id = ?').get(deviceId, userId);
+    if (existingDeviceUser && existingDeviceUser.id !== userId) {
       const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
       db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
-        .run(txId, userId, 'anti_fraud_alert', 0, `⛔ HARD BLOCKED REGISTRATION: Device matches existing User #${existingDeviceUser.id}`);
+        .run(txId, userId, 'anti_fraud_alert', 0, `⛔ HARD BLOCKED REGISTRATION: Device ID matches existing User #${existingDeviceUser.id}`);
       
       return res.status(403).json({ 
-        error: `⛔ FORBIDDEN: Duplicate account creation blocked. An account is already registered on this device (User #${existingDeviceUser.id}). Multi-accounting is strictly prohibited.` 
+        error: `⛔ FORBIDDEN: Duplicate account creation blocked. This physical device is already registered with User #${existingDeviceUser.id} (@${existingDeviceUser.username || 'user'}). Multi-accounting is strictly prohibited.` 
       });
     }
 
-    const sameIpCount = clientIp !== '127.0.0.1' ? db.prepare('SELECT COUNT(*) as c FROM users WHERE ip_address = ? AND id != ?').get(clientIp, userId).c : 0;
-    let isMultiAccount = sameIpCount >= 2;
-    if (isMultiAccount) {
-      refRejectReason = `MULTI-ACCOUNT SUSPECTED: ${sameIpCount} accounts registered from IP ${clientIp}`;
+    // 2. Strict Anti-Fraud Multi-Account HARD BLOCK on Persistent Device Token
+    const existingTokenUser = db.prepare('SELECT * FROM users WHERE persistent_token = ?').get(persistentToken, userId);
+    if (existingTokenUser && existingTokenUser.id !== userId) {
+      const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+      db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
+        .run(txId, userId, 'anti_fraud_alert', 0, `⛔ HARD BLOCKED REGISTRATION: Persistent device token matches User #${existingTokenUser.id}`);
+      
+      return res.status(403).json({ 
+        error: `⛔ FORBIDDEN: Duplicate account creation blocked. Device storage token is already linked to User #${existingTokenUser.id}. Only 1 account per device is allowed.` 
+      });
     }
 
-    if (referrerId && Number(referrerId) !== userId && !isMultiAccount) {
+    // 3. Referral Anti-Sybil & Anti-Self Referral Validation
+    if (referrerId && Number(referrerId) !== userId) {
       const refUser = db.prepare('SELECT * FROM users WHERE id = ?').get(Number(referrerId));
       if (refUser) {
         if (refUser.device_id && refUser.device_id === deviceId) {
           refRejectReason = 'REJECTED: Referrer has same Device Fingerprint';
+        } else if (refUser.persistent_token && refUser.persistent_token === persistentToken) {
+          refRejectReason = 'REJECTED: Referrer has same Device Storage Token';
         } else if (refUser.ip_address && refUser.ip_address === clientIp && clientIp !== '127.0.0.1') {
           refRejectReason = 'REJECTED: Referrer has same IP Address';
         } else {
@@ -111,10 +121,11 @@ app.post('/auth/login', (req, res) => {
       }
     }
     
+    // Register new user
     db.prepare(`
-      INSERT INTO users (id, username, first_name, ads_date, referrer_id, ip_address, device_id, flagged)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(userId, username, firstName, todayStr, validReferrer, clientIp, deviceId, isMultiAccount ? 1 : 0);
+      INSERT INTO users (id, username, first_name, ads_date, referrer_id, ip_address, device_id, persistent_token, flagged)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(userId, username, firstName, todayStr, validReferrer, clientIp, deviceId, persistentToken, 0);
 
     if (validReferrer) {
       // Award signup bonus (+100 BONK) to referrer
@@ -130,8 +141,8 @@ app.post('/auth/login', (req, res) => {
     }
     user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
   } else {
-    // Update active IP and Device ID
-    db.prepare('UPDATE users SET ip_address = ?, device_id = ? WHERE id = ?').run(clientIp, deviceId, userId);
+    // Update active IP, Device ID, and Persistent Token on existing account login
+    db.prepare('UPDATE users SET ip_address = ?, device_id = ?, persistent_token = ? WHERE id = ?').run(clientIp, deviceId, persistentToken, userId);
     // Check UTC date reset for daily ad counter
     if (user.ads_date !== todayStr) {
       db.prepare('UPDATE users SET ads_watched_today = 0, ads_date = ? WHERE id = ?').run(todayStr, userId);

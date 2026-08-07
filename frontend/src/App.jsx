@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import { 
   Home, 
   CheckCircle2, 
@@ -34,11 +35,91 @@ import {
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
 
+async function getAdvancedDeviceIdentity() {
+  // 1. Universal Storage Persistence (localStorage, sessionStorage, cookie)
+  let persistentToken = '';
+  try {
+    persistentToken = localStorage.getItem('bonk_persistent_device_id') || sessionStorage.getItem('bonk_persistent_device_id') || '';
+    if (!persistentToken) {
+      const match = document.cookie.match(/bonk_device_token=([^;]+)/);
+      if (match) persistentToken = match[1];
+    }
+    if (!persistentToken) {
+      persistentToken = 'dev_uuid_' + Math.random().toString(36).substring(2, 12) + '_' + Date.now().toString(36);
+      localStorage.setItem('bonk_persistent_device_id', persistentToken);
+      sessionStorage.setItem('bonk_persistent_device_id', persistentToken);
+      document.cookie = `bonk_device_token=${persistentToken}; max-age=315360000; path=/; SameSite=Lax`;
+    }
+  } catch (e) {}
+
+  // 2. Enterprise FingerprintJS visitorId
+  let fpVisitorId = '';
+  try {
+    const fp = await FingerprintJS.load();
+    const result = await fp.get();
+    fpVisitorId = result.visitorId || '';
+  } catch (e) {}
+
+  // 3. WebGL GPU Unmasked Renderer Hash
+  let webglHash = '';
+  try {
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (gl) {
+      const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+      if (debugInfo) {
+        webglHash = (gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || '') + '___' + (gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || '');
+      }
+    }
+  } catch (e) {}
+
+  // 4. Canvas Complex Geometric & Color Blend Hash
+  let canvasHash = '';
+  try {
+    const c = document.createElement('canvas');
+    c.width = 200;
+    c.height = 50;
+    const ctx = c.getContext('2d');
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = '#f60';
+    ctx.fillRect(125, 1, 62, 20);
+    ctx.fillStyle = '#069';
+    ctx.font = '11pt Arial';
+    ctx.fillText('BonkAntiSybil🛡️2026', 2, 15);
+    ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+    ctx.font = '18pt Arial';
+    ctx.fillText('BonkAntiSybil🛡️2026', 4, 45);
+    canvasHash = c.toDataURL().slice(-40);
+  } catch (e) {}
+
+  // 5. Screen & Hardware Concurrency Hash
+  const hardwareRaw = [
+    navigator.userAgent || '',
+    screen.width,
+    screen.height,
+    screen.colorDepth || 24,
+    navigator.language || 'en',
+    navigator.hardwareConcurrency || 2,
+    navigator.maxTouchPoints || 0,
+    webglHash,
+    canvasHash,
+    fpVisitorId
+  ].join(':::');
+
+  let deviceHash = fpVisitorId || ('hw_' + btoa(unescape(encodeURIComponent(hardwareRaw))).replace(/[^a-zA-Z0-9]/g, '').slice(0, 32));
+
+  return {
+    deviceId: deviceHash,
+    persistentToken: persistentToken,
+    fpVisitorId: fpVisitorId,
+    webglRenderer: webglHash
+  };
+}
+
 export default function App() {
   const [activeTab, setActiveTab] = useState('home'); // 'home' | 'tasks' | 'withdraw' | 'admin'
   const [showRefModal, setShowRefModal] = useState(false);
   const [token, setToken] = useState(null);
-  const [isPulsing, setIsPulsing] = useState(false);
   const [user, setUser] = useState({
     id: 99887766,
     username: 'crypto_earner',
@@ -48,54 +129,50 @@ export default function App() {
     ads_watched_today: 4,
     referral_count: 5,
     verified_ref_count: 3,
-    withdrawal_unlocked: 1
+    withdrawal_unlocked: 1,
+    flagged: 0
   });
 
   const [adsStatus, setAdsStatus] = useState({
     adsWatchedToday: 4,
-    dailyCap: 10,
-    currentStep: 1,
-    activeSessionId: null
+    dailyCap: 15,
+    remainingToday: 11,
+    isLimitReached: false,
+    rewardPerAd: 1200,
+    baseReward: 1000,
+    bonusReward: 200,
+    multiplier: '1.2x',
+    activeMultiplierTier: 'Active Earner',
+    todayDate: new Date().toISOString().split('T')[0]
   });
 
-  const [tasks, setTasks] = useState([
-    { id: 't1', title: 'Join Official Telegram Channel', reward_amount: 5000, completed: false, url: 'https://t.me/EarnOfficialChannel' },
-    { id: 't2', title: 'Follow Official X (Twitter)', reward_amount: 5000, completed: false, url: 'https://x.com/EarnAppOfficial' },
-    { id: 't3', title: 'Visit Sponsor Website', reward_amount: 2500, completed: true, url: 'https://earn.app/sponsor' }
-  ]);
+  const [tasks, setTasks] = useState([]);
+  const [referrals, setReferrals] = useState([]);
+  const [withdrawals, setWithdrawals] = useState([]);
+  const [transactions, setTransactions] = useState([]);
 
+  // Ad viewing state machine
+  const [isWatchingAd, setIsWatchingAd] = useState(false);
+  const [adTimer, setAdTimer] = useState(15);
+  const [adStep, setAdStep] = useState(0); // 0: idle, 1: watching, 2: completing, 3: rewarded
+  const [activeSession, setActiveSession] = useState(null);
+
+  // Withdraw Form State
+  const [withdrawAmount, setWithdrawAmount] = useState('');
+  const [walletAddress, setWalletAddress] = useState('');
+  const [withdrawMsg, setWithdrawMsg] = useState('');
   const [withdrawHistory, setWithdrawHistory] = useState([
     { id: 'w_101', amount: 50000, wallet_address: '7xKXtg2CW87d9C72...89aX', status: 'completed', requested_at: '2026-08-06 14:30' }
   ]);
 
-  const [adminQueue, setAdminQueue] = useState([
-    { id: 'w_201', user_id: 99887766, amount: 50000, wallet_address: '9zKYtg2CW87d9C72...12bZ', status: 'pending', requested_at: '2026-08-07 20:15' }
-  ]);
-  const [adminStats, setAdminStats] = useState({ totalUsers: 1, totalAds: 8, pendingWithdrawals: 1 });
-
-  const [withdrawAmount, setWithdrawAmount] = useState('');
-  const [walletAddress, setWalletAddress] = useState('');
-  const [withdrawMsg, setWithdrawMsg] = useState('');
+  // Toast System
   const [toastMsg, setToastMsg] = useState('');
 
   const [isHardBlocked, setIsHardBlocked] = useState(false);
   const [hardBlockReason, setHardBlockReason] = useState('');
 
-  // Auto Login on mount with Hardware & Canvas Anti-Bypass Device Fingerprint
+  // Auto Login on mount with Enterprise Hardware, FingerprintJS & Universal Storage Multi-Account Protection
   useEffect(() => {
-    let canvasHash = '';
-    try {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      ctx.textBaseline = 'top';
-      ctx.font = '14px Arial';
-      ctx.fillText('BonkEarnAntiBypass2026', 2, 2);
-      canvasHash = canvas.toDataURL().slice(-30);
-    } catch (e) {}
-
-    const rawFp = (navigator.userAgent || '') + screen.width + 'x' + screen.height + (screen.colorDepth || 24) + (navigator.language || 'en') + (navigator.hardwareConcurrency || 2) + canvasHash;
-    const deviceFingerprint = 'dev_' + btoa(rawFp).replace(/[^a-zA-Z0-9]/g, '').slice(0, 32);
-    
     const tg = window.Telegram?.WebApp;
     if (tg) {
       tg.ready();
@@ -103,48 +180,69 @@ export default function App() {
     }
 
     const tgInitData = tg?.initData || '';
+    const currentTelegramUserId = tg?.initDataUnsafe?.user?.id;
     const urlParams = new URLSearchParams(window.location.search);
     const refParam = tg?.initDataUnsafe?.start_param || urlParams.get('start') || urlParams.get('tgWebAppStartParam');
 
-    const authPayload = {
-      initData: tgInitData,
-      referrerId: refParam,
-      deviceId: deviceFingerprint
-    };
-
-    // Only attach demoUser fallback if NOT running inside Telegram
-    if (!tgInitData) {
-      authPayload.demoUser = { id: 99887766, username: 'crypto_earner', first_name: 'Alex' };
+    // LocalStorage / Device bound Telegram User ID check
+    const previousBoundUserId = localStorage.getItem('bonk_bound_tg_user_id');
+    if (currentTelegramUserId && previousBoundUserId && String(previousBoundUserId) !== String(currentTelegramUserId)) {
+      setIsHardBlocked(true);
+      setHardBlockReason(`⛔ ACCESS FORBIDDEN: This physical device is already registered to Telegram User #${previousBoundUserId}. Creating or using multiple accounts on the same device is strictly prohibited.`);
+      return;
     }
 
-    fetch(`${API_BASE}/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(authPayload)
-    })
-      .then(res => {
-        if (res.status === 403) {
-          res.json().then(data => {
+    getAdvancedDeviceIdentity().then(({ deviceId, persistentToken, fpVisitorId, webglRenderer }) => {
+      const authPayload = {
+        initData: tgInitData,
+        referrerId: refParam,
+        deviceId: deviceId,
+        persistentToken: persistentToken,
+        fpVisitorId: fpVisitorId,
+        webglRenderer: webglRenderer
+      };
+
+      // Only attach demoUser fallback if NOT running inside Telegram
+      if (!tgInitData) {
+        authPayload.demoUser = { id: 99887766, username: 'crypto_earner', first_name: 'Alex' };
+      }
+
+      fetch(`${API_BASE}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(authPayload)
+      })
+        .then(res => {
+          if (res.status === 403) {
+            res.json().then(data => {
+              setIsHardBlocked(true);
+              setHardBlockReason(data.error || '⛔ FORBIDDEN: Duplicate account creation blocked on this device.');
+            });
+            return null;
+          }
+          return res.json();
+        })
+        .then(data => {
+          if (data && data.error && (data.error.includes('FORBIDDEN') || data.error.includes('Multi-account') || data.error.includes('Duplicate'))) {
             setIsHardBlocked(true);
-            setHardBlockReason(data.error || '⛔ FORBIDDEN: Duplicate account creation blocked on this device.');
-          });
-          return null;
-        }
-        return res.json();
-      })
-      .then(data => {
-        if (data && data.error && (data.error.includes('FORBIDDEN') || data.error.includes('Multi-account'))) {
-          setIsHardBlocked(true);
-          setHardBlockReason(data.error);
-          return;
-        }
-        if (data && data.token) {
-          setToken(data.token);
-          setUser(data.user);
-          fetchUserData(data.token);
-        }
-      })
-      .catch(() => console.log('Running in demo mock mode'));
+            setHardBlockReason(data.error);
+            return;
+          }
+          if (data && data.token) {
+            setToken(data.token);
+            setUser(data.user);
+            if (data.user?.id) {
+              try {
+                localStorage.setItem('bonk_bound_tg_user_id', String(data.user.id));
+                localStorage.setItem('bonk_persistent_device_id', persistentToken);
+                document.cookie = `bonk_device_token=${persistentToken}; max-age=315360000; path=/; SameSite=Lax`;
+              } catch (e) {}
+            }
+            fetchUserData(data.token);
+          }
+        })
+        .catch(() => console.log('Running in demo mock mode'));
+    });
   }, []);
 
   const fetchUserData = (jwtToken) => {

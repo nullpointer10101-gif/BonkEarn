@@ -123,6 +123,28 @@ class DbWrapper {
           return { c: total };
         }
 
+        if (cleanSql.includes('FROM users WHERE device_id = ?')) {
+          const devId = String(params[0] || '');
+          const excludeId = params[1] !== undefined ? Number(params[1]) : -1;
+          return memoryDb.users.find(u => u.device_id && u.device_id === devId && u.id !== excludeId) || null;
+        }
+
+        if (cleanSql.includes('FROM users WHERE persistent_token = ?')) {
+          const token = String(params[0] || '');
+          const excludeId = params[1] !== undefined ? Number(params[1]) : -1;
+          return memoryDb.users.find(u => u.persistent_token && u.persistent_token === token && u.id !== excludeId) || null;
+        }
+
+        if (cleanSql.includes('FROM users WHERE ip_address = ?')) {
+          const ip = String(params[0] || '');
+          const excludeId = params[1] !== undefined ? Number(params[1]) : -1;
+          if (cleanSql.includes('COUNT(*)')) {
+            const count = memoryDb.users.filter(u => u.ip_address && u.ip_address === ip && u.id !== excludeId && ip !== '127.0.0.1').length;
+            return { c: count, count };
+          }
+          return memoryDb.users.find(u => u.ip_address && u.ip_address === ip && u.id !== excludeId && ip !== '127.0.0.1') || null;
+        }
+
         if (cleanSql.includes('SELECT COUNT(*) as c FROM withdrawals WHERE status = "pending"')) {
           const count = memoryDb.withdrawals.filter(w => w.status === 'pending').length;
           return { c: count };
@@ -187,17 +209,20 @@ class DbWrapper {
         if (cleanSql.includes('INSERT INTO users')) {
           const newUser = {
             id: Number(params[0]),
-            username: params[1],
-            first_name: params[2],
+            username: params[1] || '',
+            first_name: params[2] || 'User',
             balance: 0,
             ads_watched_total: 0,
             ads_watched_today: 0,
             ads_date: params[3],
             referrer_id: params[4] ? Number(params[4]) : null,
+            ip_address: params[5] || '127.0.0.1',
+            device_id: params[6] || '',
+            persistent_token: params[7] || '',
+            flagged: params[8] !== undefined ? Number(params[8]) : 0,
             referral_count: 0,
             verified_ref_count: 0,
             withdrawal_unlocked: 0,
-            flagged: 0,
             created_at: new Date().toISOString()
           };
           memoryDb.users.push(newUser);
@@ -242,6 +267,19 @@ class DbWrapper {
           if (u) {
             u.verified_ref_count += 1;
             u.balance += 10000;
+            saveData(memoryDb);
+          }
+          return { changes: 1 };
+        }
+
+        if (cleanSql.includes('UPDATE users SET ip_address')) {
+          const u = memoryDb.users.find(x => x.id === Number(params[params.length - 1]));
+          if (u) {
+            u.ip_address = params[0] || u.ip_address;
+            u.device_id = params[1] || u.device_id;
+            if (params.length > 3) {
+              u.persistent_token = params[2] || u.persistent_token;
+            }
             saveData(memoryDb);
           }
           return { changes: 1 };
