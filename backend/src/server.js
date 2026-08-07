@@ -2,6 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
+import dotenv from 'dotenv';
+dotenv.config();
+
 import db, { resetDatabase } from './db.js';
 
 const app = express();
@@ -643,10 +646,130 @@ app.post('/admin/withdraw/:id/reject', (req, res) => {
 });
 
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  res.json({ status: 'ok', bot: 'BonkEarnSol_bot', timestamp: new Date().toISOString() });
 });
+
+// --- TELEGRAM BOT INTEGRATION (Instant Response & Webhook Support) ---
+import { Telegraf } from 'telegraf';
+
+const MINI_APP_URL = process.env.MINI_APP_URL || 'https://bonk-earn.vercel.app';
+const BONK_IMAGE_URL = 'https://raw.githubusercontent.com/nullpointer10101-gif/BonkEarn/main/frontend/public/bonk_coin.png';
+
+let botInstance = null;
+
+if (BOT_TOKEN && BOT_TOKEN !== 'MOCK_BOT_TOKEN' && BOT_TOKEN.includes(':')) {
+  try {
+    botInstance = new Telegraf(BOT_TOKEN);
+
+    const getBotWelcomeKeyboard = (startPayload) => {
+      const launchUrl = startPayload ? `${MINI_APP_URL}?start=${startPayload}` : MINI_APP_URL;
+      return {
+        inline_keyboard: [
+          [
+            {
+              text: '🚀 Launch BONK Mini App',
+              web_app: { url: launchUrl }
+            }
+          ],
+          [
+            { text: '📢 Official Channel', url: 'https://t.me/BonkEarnNews' },
+            { text: '💳 Payment Proofs', url: 'https://t.me/BonkEarnPayouts' }
+          ],
+          [
+            { text: '💬 Community Chat', url: 'https://t.me/BonkEarnChat' },
+            { text: '👥 Invite Friends', url: `https://t.me/share/url?url=https://t.me/BonkEarnSol_bot/app?startapp=r_${startPayload || 'earn'}&text=🎁 Join BONK Earn and get 10,000 free BONK tokens instantly!` }
+          ]
+        ]
+      };
+    };
+
+    botInstance.start(async (ctx) => {
+      const startPayload = ctx.startPayload || '';
+      const firstName = ctx.from?.first_name || 'Earner';
+
+      const caption = 
+        `🐕 *Welcome to BONK Earn, ${firstName}!* 🚀\n\n` +
+        `The #1 Solana Meme Reward Bot! Earn free *$BONK* by watching verified sponsor ads, completing daily tasks & inviting friends.\n\n` +
+        `⚡ *REWARD SYSTEM:*\n` +
+        `🎁 *+10,000 BONK* Free Welcome Bonus\n` +
+        `🎬 *+1,200 BONK* per Video Ad (10 Daily)\n` +
+        `👥 *+10,000 BONK* per Valid Referral\n` +
+        `🏆 *Daily Solana Airdrops & Leaderboards*\n\n` +
+        `💳 *Direct Solana SPL Transfers* to Phantom, Solflare, OKX & Binance.\n\n` +
+        `👇 *Tap below to launch the Mini App and claim your 10,000 BONK:*`;
+
+      try {
+        await ctx.replyWithPhoto(BONK_IMAGE_URL, {
+          caption,
+          parse_mode: 'Markdown',
+          reply_markup: getBotWelcomeKeyboard(startPayload)
+        });
+      } catch (err) {
+        await ctx.reply(caption, {
+          parse_mode: 'Markdown',
+          reply_markup: getBotWelcomeKeyboard(startPayload)
+        });
+      }
+    });
+
+    botInstance.help((ctx) => {
+      ctx.reply(
+        `🐕 *BonkEarn Quick Guide:*\n\n` +
+        `1. Tap the button below to launch the Mini App.\n` +
+        `2. Complete tasks & watch sponsor ads.\n` +
+        `3. Share your referral link for 10,000 BONK per friend.\n` +
+        `4. Instant Solana withdrawals (min 100k BONK).\n\n` +
+        `📢 Updates: @BonkEarnNews\n` +
+        `💳 Proofs: @BonkEarnPayouts`,
+        {
+          parse_mode: 'Markdown',
+          reply_markup: getBotWelcomeKeyboard('')
+        }
+      );
+    });
+
+    // Webhook Route for Zero-Delay Incoming Updates
+    app.use('/api/bot-webhook', (req, res) => {
+      botInstance.handleUpdate(req.body, res);
+    });
+
+    // Launch bot
+    const RENDER_EXTERNAL_URL = process.env.RENDER_EXTERNAL_URL;
+    if (RENDER_EXTERNAL_URL) {
+      const webhookUrl = `${RENDER_EXTERNAL_URL}/api/bot-webhook`;
+      botInstance.telegram.setWebhook(webhookUrl).then(() => {
+        console.log(`⚡ Telegram Webhook successfully active at ${webhookUrl}`);
+      }).catch(err => {
+        console.warn('Webhook setup notice, starting polling fallback:', err.message);
+        botInstance.launch({ dropPendingUpdates: true });
+      });
+    } else {
+      botInstance.launch({ dropPendingUpdates: true }).then(() => {
+        console.log('⚡ Telegram Bot polling active with 0ms delay!');
+      }).catch(err => {
+        console.warn('Bot launch notice:', err.message);
+      });
+    }
+  } catch (err) {
+    console.error('Error initializing Telegram bot in server:', err);
+  }
+}
+
+// Keep-Alive Ping every 4 minutes to prevent Render Free Tier sleep
+const RENDER_URL = process.env.RENDER_EXTERNAL_URL;
+if (RENDER_URL) {
+  setInterval(async () => {
+    try {
+      const res = await fetch(`${RENDER_URL}/health`);
+      console.log(`[Keep-Alive] Pinged ${RENDER_URL}/health: ${res.status}`);
+    } catch (e) {
+      console.warn('[Keep-Alive] Ping notice:', e.message);
+    }
+  }, 4 * 60 * 1000);
+}
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-  console.log(`⚡ BonkEarn Backend API running on port ${PORT}`);
+  console.log(`⚡ BonkEarn Backend API & Bot running on port ${PORT}`);
 });
+
