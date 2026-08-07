@@ -649,7 +649,7 @@ export default function App() {
       return;
     }
     
-    showToast('▶ Launching Verified Ad Video (15s minimum)...');
+    showToast('▶ Launching Video Ad (15s required)...');
     setAdsStatus(prev => ({ ...prev, isWatching: true, watchCountdown: 15, currentStep: 1 }));
 
     const startSession = (sessId) => {
@@ -663,12 +663,13 @@ export default function App() {
           }
         })
           .then((res) => {
-            setAdsStatus(prev => ({ ...prev, currentStep: 3, activeSessionId: sessId, isWatching: false }));
-            showToast(`✅ Ad view verified by ${res.provider}! Claim +1,200 BONK.`);
+            setAdsStatus(prev => ({ ...prev, currentStep: 2, activeSessionId: sessId, isWatching: false }));
+            showToast(`✅ Ad view completed (${res.provider})! Click VERIFY to proceed.`);
           })
           .catch((err) => {
-            setAdsStatus(prev => ({ ...prev, isWatching: false }));
-            showToast(`⚠️ ${err.message || 'Ad playback incomplete. Please watch full 15s.'}`);
+            // Early close / skip / ad block -> Cancel session and keep steps locked
+            setAdsStatus(prev => ({ ...prev, isWatching: false, currentStep: 1, activeSessionId: null }));
+            showToast(`⚠️ ${err.message || 'Ad was closed early. No reward credited.'}`);
           });
       });
     };
@@ -694,7 +695,7 @@ export default function App() {
         })
         .catch(() => {
           showToast('❌ Server error starting ad session. Please try again.');
-          setAdsStatus(prev => ({ ...prev, isWatching: false }));
+          setAdsStatus(prev => ({ ...prev, isWatching: false, activeSessionId: null }));
         });
     } else {
       startSession('ad_local_' + Date.now());
@@ -706,13 +707,13 @@ export default function App() {
       fetch(`${API_BASE}/ads/callback`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId: adsStatus.activeSessionId })
+        body: JSON.stringify({ sessionId: adsStatus.activeSessionId, adToken: 'user_verified' })
       })
         .then(res => res.json())
         .then(data => {
           if (data.success) {
             setAdsStatus(prev => ({ ...prev, currentStep: 3 }));
-            showToast('✅ Ad verified by server! Claim your reward.');
+            showToast('✅ Ad verified by server! Click CLAIM to get +1,200 BONK.');
           } else {
             showToast(`⚠️ ${data.error || 'Playback too short. Please watch full 15s.'}`);
           }
@@ -721,8 +722,8 @@ export default function App() {
           showToast('⚠️ Verification failed. Please ensure full 15s view.');
         });
     } else {
-      setAdsStatus(prev => ({ ...prev, currentStep: 3 }));
-      showToast('Ad verified! Claim your reward.');
+      showToast('⚠️ Active session expired. Please click START to watch an ad.');
+      setAdsStatus(prev => ({ ...prev, currentStep: 1, activeSessionId: null }));
     }
   };
 

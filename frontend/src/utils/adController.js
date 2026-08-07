@@ -1,10 +1,52 @@
-// GigaPub (Primary) & Monetag (Backup) Ad Controller
+// GigaPub (Primary) & Monetag (Backup) Ad Controller with Strict Anti-Cheat & High-CPM Compliance
 import { AD_CONFIG } from '../config/ads.js';
 
 export async function triggerAdPlayback({ sessionId, apiBase, token, onProgress }) {
   return new Promise((resolve, reject) => {
-    let adProvider = 'GigaPub';
-    let invoked = false;
+    let watchStartTime = Date.now();
+    let isFinished = false;
+    let visibilityWatchSeconds = 0;
+
+    // Track active visibility & progress
+    const visibilityTimer = setInterval(() => {
+      visibilityWatchSeconds += 1;
+      if (onProgress) {
+        const remaining = Math.max(0, 15 - visibilityWatchSeconds);
+        onProgress(remaining, 15);
+      }
+    }, 1000);
+
+    const cleanup = () => {
+      clearInterval(visibilityTimer);
+    };
+
+    const handleAdSuccess = async (providerName) => {
+      if (isFinished) return;
+      isFinished = true;
+      cleanup();
+
+      const totalElapsed = (Date.now() - watchStartTime) / 1000;
+      console.log(`[AdController] Ad finished on ${providerName}. Total elapsed: ${totalElapsed.toFixed(1)}s`);
+
+      // High-CPM Anti-Cheat: Reject if closed in under 12 seconds
+      if (totalElapsed < 12) {
+        return reject(new Error(`⚠️ Ad closed too quickly (${Math.floor(totalElapsed)}s). You must watch the complete 15s video ad to earn rewards!`));
+      }
+
+      resolve({
+        success: true,
+        provider: providerName,
+        elapsedSeconds: Math.floor(totalElapsed)
+      });
+    };
+
+    const handleAdFailure = (providerName, error) => {
+      if (isFinished) return;
+      isFinished = true;
+      cleanup();
+      console.warn(`[AdController] Ad dismiss/error on ${providerName}:`, error);
+      reject(new Error(`⚠️ Ad playback was closed or skipped early. Please watch the full 15s ad without closing!`));
+    };
 
     // 1. PRIMARY: GigaPub Telegram Ad SDK (App ID 7632)
     const gigapubInstance = window.GigaPub || window.gigaPub || window.showGigaPub || window.show_7632;
@@ -13,80 +55,61 @@ export async function triggerAdPlayback({ sessionId, apiBase, token, onProgress 
       try {
         console.log('▶ Launching Primary: GigaPub Telegram Ad Network (ID 7632)');
         if (typeof gigapubInstance === 'function') {
-          gigapubInstance();
-          invoked = true;
-          adProvider = 'GigaPub';
+          const res = gigapubInstance();
+          if (res && typeof res.then === 'function') {
+            res
+              .then(() => handleAdSuccess('GigaPub'))
+              .catch((err) => {
+                console.warn('GigaPub dismissed or failed, trying Monetag:', err);
+                tryMonetagBackup(handleAdSuccess, handleAdFailure);
+              });
+            return;
+          }
         } else if (gigapubInstance.showAd || gigapubInstance.show) {
           const showFn = gigapubInstance.showAd || gigapubInstance.show;
-          showFn.call(gigapubInstance, { id: AD_CONFIG.GIGAPUB.APP_ID || '7632' });
-          invoked = true;
-          adProvider = 'GigaPub';
+          showFn.call(gigapubInstance, {
+            id: AD_CONFIG.GIGAPUB.APP_ID || '7632',
+            onSuccess: () => handleAdSuccess('GigaPub'),
+            onError: (err) => {
+              console.warn('GigaPub error, trying Monetag:', err);
+              tryMonetagBackup(handleAdSuccess, handleAdFailure);
+            }
+          });
+          return;
         }
       } catch (e) {
-        console.warn('GigaPub trigger notice:', e);
+        console.warn('GigaPub trigger exception:', e);
       }
     }
 
-    // 2. BACKUP / FAILOVER: Monetag Telegram Mini App SDK (Zone 11527259)
-    if (!invoked) {
-      const monetagFnName = AD_CONFIG.MONETAG.SDK_FN || 'show_11527259';
-      const monetagFn = window[monetagFnName] || window.show_11527259;
-
-      if (typeof monetagFn === 'function') {
-        try {
-          console.log(`▶ Triggering Backup: Monetag SDK [${monetagFnName}]`);
-          monetagFn();
-          adProvider = 'Monetag';
-          invoked = true;
-        } catch (e) {
-          console.warn('Monetag trigger notice:', e);
-        }
-      }
-    }
-
-    // 3. MANDATORY: Full 15-second compliance timer for High CPM & Anti-Cheat
-    console.log(`⚡ Running mandatory 15s High-CPM watch session [${adProvider}]`);
-    runRewardedTimer(15, onProgress, async () => {
-      await verifyWithBackend(sessionId, apiBase, token, adProvider, resolve, reject);
-    });
+    // 2. BACKUP: Monetag SDK
+    tryMonetagBackup(handleAdSuccess, handleAdFailure);
   });
 }
 
-function runRewardedTimer(seconds, onProgress, onComplete) {
-  let remaining = seconds;
-  if (onProgress) onProgress(remaining, seconds);
+function tryMonetagBackup(onSuccess, onFailure) {
+  const monetagFnName = AD_CONFIG.MONETAG.SDK_FN || 'show_11527259';
+  const monetagFn = window[monetagFnName] || window.show_11527259;
 
-  const interval = setInterval(() => {
-    remaining -= 1;
-    if (onProgress) onProgress(remaining, seconds);
-    if (remaining <= 0) {
-      clearInterval(interval);
-      onComplete();
-    }
-  }, 1000);
-}
-
-async function verifyWithBackend(sessionId, apiBase, token, providerName, resolve, reject) {
-  if (token && sessionId) {
+  if (typeof monetagFn === 'function') {
     try {
-      const res = await fetch(`${apiBase}/ads/callback`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          sessionId, 
-          adToken: `${providerName.toLowerCase().replace(/[^a-z0-9]/g, '')}_verified` 
-        })
-      });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        resolve({ success: true, provider: providerName, step: 2 });
+      console.log(`▶ Triggering Backup: Monetag SDK [${monetagFnName}]`);
+      const adPromise = monetagFn();
+      if (adPromise && typeof adPromise.then === 'function') {
+        adPromise
+          .then(() => onSuccess('Monetag'))
+          .catch((err) => onFailure('Monetag', err));
+        return;
       } else {
-        if (reject) reject(new Error(data.error || 'Ad verification rejected by server'));
+        onSuccess('Monetag');
+        return;
       }
-    } catch (err) {
-      if (reject) reject(err);
+    } catch (e) {
+      onFailure('Monetag', e);
+      return;
     }
-  } else {
-    resolve({ success: true, provider: 'Local Ad', step: 2 });
   }
+
+  onFailure('AdNetwork', new Error('Ad SDK not loaded or ad-blocker detected'));
 }
+
