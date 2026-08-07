@@ -78,22 +78,35 @@ export default function App() {
   const [withdrawMsg, setWithdrawMsg] = useState('');
   const [toastMsg, setToastMsg] = useState('');
 
-  // Auto Login on mount with Device Fingerprint
+  // Auto Login on mount with Device Fingerprint & Telegram WebApp User Context
   useEffect(() => {
     const deviceFingerprint = 'dev_' + btoa(navigator.userAgent + screen.width + 'x' + screen.height + (navigator.language || 'en')).replace(/=/g, '').slice(0, 24);
     
-    // Check if start_param (referrerId) passed via Telegram WebApp or URL params
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
+
+    const tgInitData = tg?.initData || '';
     const urlParams = new URLSearchParams(window.location.search);
-    const refParam = urlParams.get('start') || urlParams.get('tgWebAppStartParam');
+    const refParam = tg?.initDataUnsafe?.start_param || urlParams.get('start') || urlParams.get('tgWebAppStartParam');
+
+    const authPayload = {
+      initData: tgInitData,
+      referrerId: refParam,
+      deviceId: deviceFingerprint
+    };
+
+    // Only attach demoUser fallback if NOT running inside Telegram
+    if (!tgInitData) {
+      authPayload.demoUser = { id: 99887766, username: 'crypto_earner', first_name: 'Alex' };
+    }
 
     fetch(`${API_BASE}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        demoUser: { id: 99887766, username: 'crypto_earner', first_name: 'Alex' },
-        referrerId: refParam,
-        deviceId: deviceFingerprint
-      })
+      body: JSON.stringify(authPayload)
     })
       .then(res => res.json())
       .then(data => {

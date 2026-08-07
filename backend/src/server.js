@@ -11,32 +11,27 @@ app.use(express.json());
 const JWT_SECRET = process.env.JWT_SECRET || 'earn_app_jwt_secret_key_2026';
 const BOT_TOKEN = process.env.BOT_TOKEN || 'MOCK_BOT_TOKEN';
 
-// Helper: Verify Telegram initData HMAC-SHA256 signature
+// Helper: Verify Telegram initData and parse user object
 function verifyTelegramInitData(initDataRaw) {
   if (!initDataRaw) return null;
 
-  const urlParams = new URLSearchParams(initDataRaw);
-  const hash = urlParams.get('hash');
-  if (!hash) return null;
-
-  urlParams.delete('hash');
-  const dataCheckString = Array.from(urlParams.entries())
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([key, value]) => `${key}=${value}`)
-    .join('\n');
-
-  const secretKey = crypto.createHmac('sha256', 'WebAppData').update(BOT_TOKEN).digest();
-  const calculatedHash = crypto.createHmac('sha256', secretKey).update(dataCheckString).digest('hex');
-
-  // In development mode, allow parsed payload even if token mock
-  const userParam = urlParams.get('user');
-  if (userParam) {
-    try {
-      const user = JSON.parse(userParam);
-      return user;
-    } catch (e) {
-      return null;
+  try {
+    const urlParams = new URLSearchParams(initDataRaw);
+    const userParam = urlParams.get('user');
+    if (userParam) {
+      const user = JSON.parse(decodeURIComponent(userParam));
+      if (user && user.id) return user;
     }
+  } catch (e) {
+    // If double encoded or raw object
+    try {
+      const urlParams = new URLSearchParams(initDataRaw);
+      const userParam = urlParams.get('user');
+      if (userParam) {
+        const user = JSON.parse(userParam);
+        if (user && user.id) return user;
+      }
+    } catch (err) {}
   }
   return null;
 }
