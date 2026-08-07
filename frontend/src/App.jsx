@@ -659,12 +659,14 @@ export default function App() {
           <>
             <div className="brand-title">🐕 BONK EARN</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <button 
-                onClick={() => { setActiveTab('admin'); fetchAdminData(); }}
-                style={{ background: 'rgba(236,72,153,0.15)', border: '1px solid rgba(236,72,153,0.4)', color: '#ec4899', padding: '5px 10px', borderRadius: 16, fontSize: 11, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
-              >
-                <ShieldCheck size={14} /> Admin
-              </button>
+              {([6909180225, 99887766].includes(Number(user.id))) && (
+                <button 
+                  onClick={() => { setActiveTab('admin'); fetchAdminData(); }}
+                  style={{ background: 'rgba(236,72,153,0.15)', border: '1px solid rgba(236,72,153,0.4)', color: '#ec4899', padding: '5px 10px', borderRadius: 16, fontSize: 11, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
+                >
+                  <ShieldCheck size={14} /> Admin
+                </button>
+              )}
               <div className="user-badge">
                 <span>@{user.username || 'user'}</span>
                 <span style={{ opacity: 0.5 }}>#{user.id}</span>
