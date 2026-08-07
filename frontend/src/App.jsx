@@ -78,6 +78,9 @@ export default function App() {
   const [withdrawMsg, setWithdrawMsg] = useState('');
   const [toastMsg, setToastMsg] = useState('');
 
+  const [isHardBlocked, setIsHardBlocked] = useState(false);
+  const [hardBlockReason, setHardBlockReason] = useState('');
+
   // Auto Login on mount with Hardware & Canvas Anti-Bypass Device Fingerprint
   useEffect(() => {
     let canvasHash = '';
@@ -119,9 +122,23 @@ export default function App() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(authPayload)
     })
-      .then(res => res.json())
+      .then(res => {
+        if (res.status === 403) {
+          res.json().then(data => {
+            setIsHardBlocked(true);
+            setHardBlockReason(data.error || '⛔ FORBIDDEN: Duplicate account creation blocked on this device.');
+          });
+          return null;
+        }
+        return res.json();
+      })
       .then(data => {
-        if (data.token) {
+        if (data && data.error && (data.error.includes('FORBIDDEN') || data.error.includes('Multi-account'))) {
+          setIsHardBlocked(true);
+          setHardBlockReason(data.error);
+          return;
+        }
+        if (data && data.token) {
           setToken(data.token);
           setUser(data.user);
           fetchUserData(data.token);
@@ -637,6 +654,40 @@ export default function App() {
       setWithdrawMsg('✅ Withdrawal request submitted! Status: Pending.');
     }
   };
+
+  if (isHardBlocked) {
+    return (
+      <div className="app-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: '24px', textAlign: 'center', background: 'radial-gradient(circle at top, rgba(239, 68, 68, 0.15) 0%, #0d0f17 80%)' }}>
+        <div style={{ background: 'rgba(239, 68, 68, 0.12)', border: '2px solid rgba(239, 68, 68, 0.4)', borderRadius: '50%', width: 90, height: 90, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, boxShadow: '0 0 35px rgba(239, 68, 68, 0.3)' }}>
+          <AlertTriangle size={48} color="#ef4444" />
+        </div>
+        <h2 style={{ fontSize: 22, fontWeight: 900, color: '#ef4444', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+          Access Forbidden
+        </h2>
+        <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(239, 68, 68, 0.25)', borderRadius: 16, padding: '18px 20px', maxWidth: 420, marginBottom: 24 }}>
+          <p style={{ fontSize: 14, color: '#fca5a5', lineHeight: 1.6, margin: 0, fontWeight: 600 }}>
+            {hardBlockReason || '⛔ Duplicate account creation blocked. An account is already registered on this device.'}
+          </p>
+        </div>
+        <div style={{ background: 'rgba(0, 0, 0, 0.4)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: 14, padding: '14px 18px', maxWidth: 420, textAlign: 'left', marginBottom: 24 }}>
+          <div style={{ fontSize: 12, fontWeight: 800, color: '#fbbf24', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+            🛡️ Anti-Fraud & Fair Play Policy:
+          </div>
+          <ul style={{ fontSize: 12, color: 'rgba(255, 255, 255, 0.7)', margin: 0, paddingLeft: 18, lineHeight: 1.6 }}>
+            <li>Only <strong>1 account per physical device</strong> is permitted.</li>
+            <li>Multi-accounting, referral spoofing, and self-referrals are permanently blocked.</li>
+            <li>If you believe this is an error, please reach out to official support.</li>
+          </ul>
+        </div>
+        <button 
+          onClick={() => window.location.reload()} 
+          style={{ background: 'rgba(255, 255, 255, 0.08)', border: '1px solid rgba(255, 255, 255, 0.2)', color: '#fff', padding: '10px 24px', borderRadius: 20, fontSize: 13, fontWeight: 700, cursor: 'pointer' }}
+        >
+          🔄 Retry Connection
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="app-container">

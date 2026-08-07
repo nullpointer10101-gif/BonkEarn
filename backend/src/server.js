@@ -80,16 +80,21 @@ app.post('/auth/login', (req, res) => {
     let validReferrer = null;
     let refRejectReason = null;
 
-    // Strict Anti-Fraud Multi-Account Detection
+    // Strict Anti-Fraud Multi-Account HARD BLOCK
     const existingDeviceUser = db.prepare('SELECT id FROM users WHERE device_id = ? AND id != ?').get(deviceId, userId);
-    const sameIpCount = clientIp !== '127.0.0.1' ? db.prepare('SELECT COUNT(*) as c FROM users WHERE ip_address = ? AND id != ?').get(clientIp, userId).c : 0;
-
-    let isMultiAccount = false;
     if (existingDeviceUser) {
-      isMultiAccount = true;
-      refRejectReason = `MULTI-ACCOUNT BLOCKED: Device fingerprint matches User #${existingDeviceUser.id}`;
-    } else if (sameIpCount >= 2) {
-      isMultiAccount = true;
+      const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+      db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
+        .run(txId, userId, 'anti_fraud_alert', 0, `⛔ HARD BLOCKED REGISTRATION: Device matches existing User #${existingDeviceUser.id}`);
+      
+      return res.status(403).json({ 
+        error: `⛔ FORBIDDEN: Duplicate account creation blocked. An account is already registered on this device (User #${existingDeviceUser.id}). Multi-accounting is strictly prohibited.` 
+      });
+    }
+
+    const sameIpCount = clientIp !== '127.0.0.1' ? db.prepare('SELECT COUNT(*) as c FROM users WHERE ip_address = ? AND id != ?').get(clientIp, userId).c : 0;
+    let isMultiAccount = sameIpCount >= 2;
+    if (isMultiAccount) {
       refRejectReason = `MULTI-ACCOUNT SUSPECTED: ${sameIpCount} accounts registered from IP ${clientIp}`;
     }
 
