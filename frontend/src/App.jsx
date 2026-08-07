@@ -894,9 +894,14 @@ export default function App() {
   if (isLoadingAuth) {
     return (
       <div className="app-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', textAlign: 'center' }}>
-        <div className="loader-spinner" style={{ width: 44, height: 44, border: '3px solid rgba(139, 92, 246, 0.2)', borderTopColor: '#8b5cf6', borderRadius: '50%', animation: 'spin 0.8s linear infinite', marginBottom: 16 }}></div>
-        <div style={{ fontWeight: 800, fontSize: 18, color: '#fff', letterSpacing: '0.5px' }}>🐕 BONK EARN</div>
-        <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 6 }}>Loading your account...</div>
+        <img 
+          src="/bonk_coin.png" 
+          alt="Official BONK Token" 
+          style={{ width: 80, height: 80, borderRadius: '50%', marginBottom: 16, boxShadow: '0 0 35px rgba(245, 158, 11, 0.5), 0 0 70px rgba(139, 92, 246, 0.3)', border: '2px solid rgba(251, 191, 36, 0.5)' }} 
+        />
+        <div className="loader-spinner" style={{ width: 28, height: 28, border: '2.5px solid rgba(139, 92, 246, 0.25)', borderTopColor: '#f59e0b', borderRadius: '50%', animation: 'spin 0.8s linear infinite', marginBottom: 12 }}></div>
+        <div style={{ fontWeight: 800, fontSize: 19, color: '#fff', letterSpacing: '0.5px' }}>BONK EARN</div>
+        <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 4 }}>Loading your account...</div>
       </div>
     );
   }
@@ -931,7 +936,14 @@ export default function App() {
           </div>
         ) : (
           <>
-            <div className="brand-title">🐕 BONK EARN</div>
+            <div className="brand-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <img 
+                src="/bonk_coin.png" 
+                alt="BONK" 
+                style={{ width: 28, height: 28, borderRadius: '50%', border: '1.5px solid rgba(251, 191, 36, 0.6)', boxShadow: '0 0 10px rgba(245, 158, 11, 0.3)' }} 
+              />
+              <span>BONK EARN</span>
+            </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               {([6909180225, 99887766].includes(Number(user.id))) && (
                 <button 
@@ -953,13 +965,28 @@ export default function App() {
       {/* SCREEN 1: HOME */}
       {activeTab === 'home' && (
         <div>
-          <div className={`balance-card ${isPulsing ? 'reward-pulse' : ''}`}>
+          <div className={`balance-card ${isPulsing ? 'reward-pulse' : ''}`} style={{ position: 'relative', overflow: 'hidden' }}>
+            <img 
+              src="/bonk_coin.png" 
+              alt="BONK" 
+              style={{ 
+                position: 'absolute', 
+                right: 14, 
+                top: 14, 
+                width: 62, 
+                height: 62, 
+                borderRadius: '50%', 
+                border: '2px solid rgba(251, 191, 36, 0.5)',
+                boxShadow: '0 0 25px rgba(245, 158, 11, 0.35)',
+                pointerEvents: 'none'
+              }} 
+            />
             <div className="balance-label">Total Balance</div>
-            <div className="balance-amount">
+            <div className="balance-amount" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               {user.balance.toLocaleString()}
               <span className="token-symbol">BONK</span>
             </div>
-            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)', display: 'flex', alignItems: 'center', gap: 6 }}>
+            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.75)', display: 'flex', alignItems: 'center', gap: 6 }}>
               <Sparkles size={14} color="#f472b6" /> Solana SPL Token Rewards
             </div>
           </div>

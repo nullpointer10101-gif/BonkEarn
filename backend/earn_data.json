@@ -23,9 +23,9 @@
       "id": 777000111,
       "username": "anti_skip_tester",
       "first_name": "AntiSkip",
-      "balance": 1200,
-      "ads_watched_total": 1,
-      "ads_watched_today": 1,
+      "balance": 2400,
+      "ads_watched_total": 2,
+      "ads_watched_today": 2,
       "ads_date": "2026-08-07",
       "referrer_id": null,
       "ip_address": "::1",
@@ -36,7 +36,7 @@
       "verified_ref_count": 0,
       "withdrawal_unlocked": 0,
       "created_at": "2026-08-07T20:17:11.807Z",
-      "last_ad_watched_at": "2026-08-07T20:17:26.362Z"
+      "last_ad_watched_at": "2026-08-07T20:23:16.320Z"
     }
   ],
   "ad_sessions": [
@@ -111,6 +111,15 @@
       "reward_amount": 1200,
       "created_at": "2026-08-07T20:17:11.829Z",
       "claimed_at": "2026-08-07T20:17:26.361Z"
+    },
+    {
+      "id": "ad_1786134181773_kxo8w",
+      "user_id": 777000111,
+      "step": 3,
+      "ad_token": "token_agr7h21x2",
+      "reward_amount": 1200,
+      "created_at": "2026-08-07T20:23:01.773Z",
+      "claimed_at": "2026-08-07T20:23:16.317Z"
     }
   ],
   "tasks": [
@@ -184,6 +193,14 @@
       "amount": 1200,
       "description": "Watched Premium Video Ad (Session: ad_1786133831829_fivr1)",
       "created_at": "2026-08-07T20:17:26.362Z"
+    },
+    {
+      "id": "tx_1786134196320_arxv",
+      "user_id": 777000111,
+      "type": "ad_reward",
+      "amount": 1200,
+      "description": "Watched Premium Video Ad (Session: ad_1786134181773_kxo8w)",
+      "created_at": "2026-08-07T20:23:16.321Z"
     }
   ]
 }
