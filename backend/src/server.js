@@ -312,14 +312,19 @@ app.post('/ads/callback', (req, res) => {
   const { sessionId, adToken, signature } = req.body;
   let session = db.prepare('SELECT * FROM ad_sessions WHERE id = ?').get(sessionId);
 
-  if (!session) {
-    // Fail-safe: Register verified session if not present in memory
-    const targetSessionId = sessionId || ('ad_' + Date.now());
-    db.prepare(`
-      INSERT INTO ad_sessions (id, user_id, step, ad_token, reward_amount)
-      VALUES (?, 0, 2, ?, 1200)
-    `).run(targetSessionId, adToken || 'fallback_token');
-    return res.json({ success: true, step: 2, provider: 'Verified Ad' });
+  if (!session || !session.created_at) {
+    return res.status(404).json({ error: '⚠️ Ad session not found. Please click START to watch an ad.' });
+  }
+
+  // Strict 14s Minimum Duration Verification on Verification Step
+  const MIN_WATCH_MS = 14000;
+  const elapsedMs = Date.now() - new Date(session.created_at).getTime();
+  if (elapsedMs < MIN_WATCH_MS) {
+    const remainingSec = Math.ceil((MIN_WATCH_MS - elapsedMs) / 1000);
+    return res.status(400).json({ 
+      error: `⚠️ Ad watch incomplete! Please watch the full 15 seconds before verifying (${remainingSec}s remaining).`,
+      remainingSec
+    });
   }
 
   // Update session state to step 2 (verified view)
@@ -340,29 +345,28 @@ app.post('/ads/claim', authenticateToken, (req, res) => {
     return res.status(400).json({ error: `Daily ad cap (${DAILY_CAP}/${DAILY_CAP}) reached.` });
   }
 
-  let session = db.prepare('SELECT * FROM ad_sessions WHERE id = ? AND user_id = ?').get(sessionId, userId);
+  const session = db.prepare('SELECT * FROM ad_sessions WHERE id = ? AND user_id = ?').get(sessionId, userId);
   
-  if (!session) {
-    // Fail-safe auto-recovery for authenticated user
-    const fallbackId = sessionId || ('ad_' + Date.now() + '_' + userId);
-    db.prepare(`
-      INSERT INTO ad_sessions (id, user_id, step, ad_token, reward_amount)
-      VALUES (?, ?, 2, 'recovered_token', 1200)
-    `).run(fallbackId, userId);
-    session = { id: fallbackId, user_id: userId, step: 2, reward_amount: 1200, claimed_at: null };
+  if (!session || !session.created_at) {
+    return res.status(400).json({ error: '⚠️ Valid active ad session not found. Please click START to watch an ad.' });
   }
 
-  if (session.claimed_at) return res.status(400).json({ error: 'Ad reward already claimed' });
+  if (session.claimed_at) {
+    return res.status(400).json({ error: '⚠️ Ad reward has already been claimed.' });
+  }
+
+  if (session.step < 2) {
+    return res.status(400).json({ error: '⚠️ Please verify playback in Step 2 before claiming your reward.' });
+  }
 
   // 2. Minimum Watch Duration Verification (Anti-Cheat / High CPM compliance)
-  const MIN_WATCH_MS = 10000; // 10s minimum elapsed for valid rewarded video
-  if (session.created_at) {
-    const elapsedMs = Date.now() - new Date(session.created_at).getTime();
-    if (elapsedMs < MIN_WATCH_MS) {
-      return res.status(400).json({ 
-        error: `⚠️ Incomplete view! You must watch the complete video ad (minimum 15s) to receive your reward.` 
-      });
-    }
+  const MIN_WATCH_MS = 14000; // 14s minimum elapsed for valid rewarded video
+  const elapsedMs = Date.now() - new Date(session.created_at).getTime();
+  if (elapsedMs < MIN_WATCH_MS) {
+    const remainingSec = Math.ceil((MIN_WATCH_MS - elapsedMs) / 1000);
+    return res.status(400).json({ 
+      error: `⚠️ Incomplete view! You must watch the complete video ad (minimum 15s) to receive your reward (${remainingSec}s remaining).` 
+    });
   }
 
   const nowStr = new Date().toISOString();

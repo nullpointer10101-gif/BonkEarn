@@ -649,8 +649,8 @@ export default function App() {
       return;
     }
     
-    showToast('▶ Launching GigaPub Ad Network...');
-    setAdsStatus(prev => ({ ...prev, isWatching: true, watchCountdown: 15 }));
+    showToast('▶ Launching Verified Ad Video (15s minimum)...');
+    setAdsStatus(prev => ({ ...prev, isWatching: true, watchCountdown: 15, currentStep: 1 }));
 
     const startSession = (sessId) => {
       import('./utils/adController.js').then(({ triggerAdPlayback }) => {
@@ -663,12 +663,12 @@ export default function App() {
           }
         })
           .then((res) => {
-            setAdsStatus(prev => ({ ...prev, currentStep: 2, activeSessionId: sessId, isWatching: false }));
-            showToast(`✅ Ad view verified by ${res.provider}!`);
+            setAdsStatus(prev => ({ ...prev, currentStep: 3, activeSessionId: sessId, isWatching: false }));
+            showToast(`✅ Ad view verified by ${res.provider}! Claim +1,200 BONK.`);
           })
           .catch((err) => {
             setAdsStatus(prev => ({ ...prev, isWatching: false }));
-            showToast(`⚠️ Ad playback issue: ${err.message || 'Dismissed'}`);
+            showToast(`⚠️ ${err.message || 'Ad playback incomplete. Please watch full 15s.'}`);
           });
       });
     };
@@ -681,6 +681,7 @@ export default function App() {
         .then(res => res.json())
         .then(data => {
           if (data.success) {
+            setAdsStatus(prev => ({ ...prev, activeSessionId: data.sessionId }));
             startSession(data.sessionId);
           } else {
             showToast(`❌ ${data.error}`);
@@ -691,7 +692,10 @@ export default function App() {
             }));
           }
         })
-        .catch(() => startSession('ad_local_' + Date.now()));
+        .catch(() => {
+          showToast('❌ Server error starting ad session. Please try again.');
+          setAdsStatus(prev => ({ ...prev, isWatching: false }));
+        });
     } else {
       startSession('ad_local_' + Date.now());
     }
@@ -706,12 +710,15 @@ export default function App() {
       })
         .then(res => res.json())
         .then(data => {
-          setAdsStatus(prev => ({ ...prev, currentStep: 3 }));
-          showToast('Ad verified by server! Claim your reward.');
+          if (data.success) {
+            setAdsStatus(prev => ({ ...prev, currentStep: 3 }));
+            showToast('✅ Ad verified by server! Claim your reward.');
+          } else {
+            showToast(`⚠️ ${data.error || 'Playback too short. Please watch full 15s.'}`);
+          }
         })
         .catch(() => {
-          setAdsStatus(prev => ({ ...prev, currentStep: 3 }));
-          showToast('Ad verified! Claim your reward.');
+          showToast('⚠️ Verification failed. Please ensure full 15s view.');
         });
     } else {
       setAdsStatus(prev => ({ ...prev, currentStep: 3 }));
@@ -720,6 +727,11 @@ export default function App() {
   };
 
   const handleClaimAd = () => {
+    if (adsStatus.currentStep < 3) {
+      showToast('⚠️ You must watch the complete 15s ad before claiming!');
+      return;
+    }
+
     if (token && adsStatus.activeSessionId) {
       fetch(`${API_BASE}/ads/claim`, {
         method: 'POST',
@@ -733,7 +745,7 @@ export default function App() {
               ...prev,
               balance: data.newBalance,
               ads_watched_today: data.adsWatchedToday,
-              ads_watched_total: prev.ads_watched_total + 1
+              ads_watched_total: (prev.ads_watched_total || 0) + 1
             }));
             setAdsStatus(prev => ({ 
               ...prev, 
@@ -746,35 +758,11 @@ export default function App() {
             showToast(`❌ ${data.error}`);
           }
         })
-        .catch(() => {
-          setUser(prev => ({
-            ...prev,
-            balance: prev.balance + 1200,
-            ads_watched_today: (prev.ads_watched_today || 0) + 1,
-            ads_watched_total: prev.ads_watched_total + 1
-          }));
-          setAdsStatus(prev => ({ 
-            ...prev, 
-            currentStep: 1, 
-            activeSessionId: null,
-            cooldownRemaining: 20 
-          }));
-          triggerCelebration('🎉 +1,200 BONK credited!');
+        .catch((err) => {
+          showToast('❌ Network error claiming ad reward. Please try again.');
         });
     } else {
-      setUser(prev => ({
-        ...prev,
-        balance: prev.balance + 1200,
-        ads_watched_today: (prev.ads_watched_today || 0) + 1,
-        ads_watched_total: prev.ads_watched_total + 1
-      }));
-      setAdsStatus(prev => ({ 
-        ...prev, 
-        currentStep: 1, 
-        activeSessionId: null,
-        cooldownRemaining: 20 
-      }));
-      triggerCelebration('🎉 +1,200 BONK credited!');
+      showToast('⚠️ Active session expired. Please click START to watch an ad.');
     }
   };
 
@@ -1116,38 +1104,38 @@ export default function App() {
               {/* Step 2 */}
               <div className="step-row">
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <div className="step-num" style={{ background: adsStatus.currentStep >= 2 ? '#f59e0b' : '#374151' }}>2</div>
+                  <div className="step-num" style={{ background: adsStatus.currentStep >= 3 ? '#10b981' : adsStatus.currentStep === 2 ? '#f59e0b' : '#374151' }}>2</div>
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: 14 }}>Verify Playback</div>
-                    <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Auto-verifies complete 15s duration</div>
+                    <div style={{ fontWeight: 700, fontSize: 14 }}>Verify Playback & Sponsor</div>
+                    <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Auto-verifies full 15s view duration</div>
                   </div>
                 </div>
                 <button 
-                  className={`btn-primary btn-gold ${adsStatus.currentStep !== 2 ? 'btn-disabled' : ''}`}
+                  className={`btn-primary btn-gold ${adsStatus.currentStep !== 2 || adsStatus.isWatching ? 'btn-disabled' : ''}`}
                   onClick={handleVerifyAd}
-                  disabled={adsStatus.currentStep !== 2}
+                  disabled={adsStatus.currentStep !== 2 || adsStatus.isWatching}
                   style={{ width: 'auto', padding: '8px 14px', fontSize: 12, minWidth: 90 }}
                 >
-                  {adsStatus.currentStep < 2 ? 'LOCKED' : 'VERIFIED'}
+                  {adsStatus.currentStep >= 3 ? 'VERIFIED ✅' : adsStatus.currentStep === 2 ? 'VERIFY' : 'LOCKED'}
                 </button>
               </div>
 
               {/* Step 3 */}
               <div className="step-row">
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <div className="step-num" style={{ background: adsStatus.currentStep >= 2 ? '#10b981' : '#374151' }}>3</div>
+                  <div className="step-num" style={{ background: adsStatus.currentStep === 3 ? '#10b981' : '#374151' }}>3</div>
                   <div>
                     <div style={{ fontWeight: 700, fontSize: 14 }}>Claim Reward</div>
-                    <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>+1,200 BONK instantly credited</div>
+                    <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>+1,200 BONK credited to balance</div>
                   </div>
                 </div>
                 <button 
-                  className={`btn-primary btn-green ${adsStatus.currentStep < 2 ? 'btn-disabled' : ''}`}
+                  className={`btn-primary btn-green ${adsStatus.currentStep !== 3 || adsStatus.isWatching ? 'btn-disabled' : ''}`}
                   onClick={handleClaimAd}
-                  disabled={adsStatus.currentStep < 2}
+                  disabled={adsStatus.currentStep !== 3 || adsStatus.isWatching}
                   style={{ width: 'auto', padding: '8px 14px', fontSize: 12, minWidth: 90 }}
                 >
-                  CLAIM
+                  {adsStatus.currentStep === 3 ? 'CLAIM' : 'LOCKED'}
                 </button>
               </div>
             </div>
