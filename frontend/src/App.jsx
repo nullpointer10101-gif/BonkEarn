@@ -78,9 +78,20 @@ export default function App() {
   const [withdrawMsg, setWithdrawMsg] = useState('');
   const [toastMsg, setToastMsg] = useState('');
 
-  // Auto Login on mount with Device Fingerprint & Telegram WebApp User Context
+  // Auto Login on mount with Hardware & Canvas Anti-Bypass Device Fingerprint
   useEffect(() => {
-    const deviceFingerprint = 'dev_' + btoa(navigator.userAgent + screen.width + 'x' + screen.height + (navigator.language || 'en')).replace(/=/g, '').slice(0, 24);
+    let canvasHash = '';
+    try {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      ctx.textBaseline = 'top';
+      ctx.font = '14px Arial';
+      ctx.fillText('BonkEarnAntiBypass2026', 2, 2);
+      canvasHash = canvas.toDataURL().slice(-30);
+    } catch (e) {}
+
+    const rawFp = (navigator.userAgent || '') + screen.width + 'x' + screen.height + (screen.colorDepth || 24) + (navigator.language || 'en') + (navigator.hardwareConcurrency || 2) + canvasHash;
+    const deviceFingerprint = 'dev_' + btoa(rawFp).replace(/[^a-zA-Z0-9]/g, '').slice(0, 32);
     
     const tg = window.Telegram?.WebApp;
     if (tg) {

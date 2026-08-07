@@ -80,13 +80,26 @@ app.post('/auth/login', (req, res) => {
     let validReferrer = null;
     let refRejectReason = null;
 
-    if (referrerId && Number(referrerId) !== userId) {
+    // Strict Anti-Fraud Multi-Account Detection
+    const existingDeviceUser = db.prepare('SELECT id FROM users WHERE device_id = ? AND id != ?').get(deviceId, userId);
+    const sameIpCount = clientIp !== '127.0.0.1' ? db.prepare('SELECT COUNT(*) as c FROM users WHERE ip_address = ? AND id != ?').get(clientIp, userId).c : 0;
+
+    let isMultiAccount = false;
+    if (existingDeviceUser) {
+      isMultiAccount = true;
+      refRejectReason = `MULTI-ACCOUNT BLOCKED: Device fingerprint matches User #${existingDeviceUser.id}`;
+    } else if (sameIpCount >= 2) {
+      isMultiAccount = true;
+      refRejectReason = `MULTI-ACCOUNT SUSPECTED: ${sameIpCount} accounts registered from IP ${clientIp}`;
+    }
+
+    if (referrerId && Number(referrerId) !== userId && !isMultiAccount) {
       const refUser = db.prepare('SELECT * FROM users WHERE id = ?').get(Number(referrerId));
       if (refUser) {
         if (refUser.device_id && refUser.device_id === deviceId) {
-          refRejectReason = 'REJECTED: Same Device Fingerprint detected';
+          refRejectReason = 'REJECTED: Referrer has same Device Fingerprint';
         } else if (refUser.ip_address && refUser.ip_address === clientIp && clientIp !== '127.0.0.1') {
-          refRejectReason = 'REJECTED: Same IP Address detected';
+          refRejectReason = 'REJECTED: Referrer has same IP Address';
         } else {
           validReferrer = refUser.id;
         }
@@ -94,9 +107,9 @@ app.post('/auth/login', (req, res) => {
     }
     
     db.prepare(`
-      INSERT INTO users (id, username, first_name, ads_date, referrer_id, ip_address, device_id)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `).run(userId, username, firstName, todayStr, validReferrer, clientIp, deviceId);
+      INSERT INTO users (id, username, first_name, ads_date, referrer_id, ip_address, device_id, flagged)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(userId, username, firstName, todayStr, validReferrer, clientIp, deviceId, isMultiAccount ? 1 : 0);
 
     if (validReferrer) {
       // Award signup bonus (+100 BONK) to referrer
@@ -313,6 +326,9 @@ app.post('/withdraw/request', authenticateToken, (req, res) => {
   const user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
   
   if (!user) return res.status(404).json({ error: 'User not found' });
+  if (user.flagged) {
+    return res.status(403).json({ error: '🚨 Account suspended for Anti-Fraud / Multi-Account policy violation. Withdrawals disabled.' });
+  }
   if (user.balance < amount) return res.status(400).json({ error: 'Insufficient balance' });
   if (amount < 50000) return res.status(400).json({ error: 'Minimum withdrawal is 50,000 BONK' });
   
