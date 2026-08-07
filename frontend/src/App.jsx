@@ -52,15 +52,7 @@ async function getAdvancedDeviceIdentity() {
     }
   } catch (e) {}
 
-  // 2. Enterprise FingerprintJS visitorId
-  let fpVisitorId = '';
-  try {
-    const fp = await FingerprintJS.load();
-    const result = await fp.get();
-    fpVisitorId = result.visitorId || '';
-  } catch (e) {}
-
-  // 3. WebGL GPU Unmasked Renderer Hash
+  // 2. WebGL GPU Unmasked Renderer Hash
   let webglHash = '';
   try {
     const canvas = document.createElement('canvas');
@@ -73,26 +65,23 @@ async function getAdvancedDeviceIdentity() {
     }
   } catch (e) {}
 
-  // 4. Canvas Complex Geometric & Color Blend Hash
+  // 3. Fast Canvas Geometric & Color Blend Hash
   let canvasHash = '';
   try {
     const c = document.createElement('canvas');
-    c.width = 200;
-    c.height = 50;
+    c.width = 160;
+    c.height = 40;
     const ctx = c.getContext('2d');
     ctx.textBaseline = 'alphabetic';
     ctx.fillStyle = '#f60';
-    ctx.fillRect(125, 1, 62, 20);
+    ctx.fillRect(100, 1, 50, 15);
     ctx.fillStyle = '#069';
     ctx.font = '11pt Arial';
-    ctx.fillText('BonkAntiSybil🛡️2026', 2, 15);
-    ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
-    ctx.font = '18pt Arial';
-    ctx.fillText('BonkAntiSybil🛡️2026', 4, 45);
-    canvasHash = c.toDataURL().slice(-40);
+    ctx.fillText('Bonk2026', 2, 15);
+    canvasHash = c.toDataURL().slice(-30);
   } catch (e) {}
 
-  // 5. Screen & Hardware Concurrency Hash
+  // 4. Instant Hardware Concurrency & Screen Signature
   const hardwareRaw = [
     navigator.userAgent || '',
     screen.width,
@@ -102,14 +91,21 @@ async function getAdvancedDeviceIdentity() {
     navigator.hardwareConcurrency || 2,
     navigator.maxTouchPoints || 0,
     webglHash,
-    canvasHash,
-    fpVisitorId
+    canvasHash
   ].join(':::');
 
-  let deviceHash = fpVisitorId || ('hw_' + btoa(unescape(encodeURIComponent(hardwareRaw))).replace(/[^a-zA-Z0-9]/g, '').slice(0, 32));
+  const fastDeviceHash = 'hw_' + btoa(unescape(encodeURIComponent(hardwareRaw))).replace(/[^a-zA-Z0-9]/g, '').slice(0, 32);
+
+  // 5. Non-blocking FingerprintJS with 200ms timeout race
+  let fpVisitorId = '';
+  try {
+    const fpPromise = FingerprintJS.load().then(fp => fp.get()).then(res => res.visitorId);
+    const timeoutPromise = new Promise(resolve => setTimeout(() => resolve(''), 200));
+    fpVisitorId = await Promise.race([fpPromise, timeoutPromise]) || '';
+  } catch (e) {}
 
   return {
-    deviceId: deviceHash,
+    deviceId: fpVisitorId || fastDeviceHash,
     persistentToken: persistentToken,
     fpVisitorId: fpVisitorId,
     webglRenderer: webglHash
@@ -120,29 +116,32 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('home'); // 'home' | 'tasks' | 'withdraw' | 'admin'
   const [showRefModal, setShowRefModal] = useState(false);
   const [token, setToken] = useState(null);
+  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+  
+  // Real clean initial state - 0 fake balance
   const [user, setUser] = useState({
-    id: 99887766,
-    username: 'crypto_earner',
-    first_name: 'Alex',
-    balance: 81000,
-    ads_watched_total: 10,
-    ads_watched_today: 4,
-    referral_count: 5,
-    verified_ref_count: 3,
-    withdrawal_unlocked: 1,
+    id: 0,
+    username: '',
+    first_name: 'Earner',
+    balance: 0,
+    ads_watched_total: 0,
+    ads_watched_today: 0,
+    referral_count: 0,
+    verified_ref_count: 0,
+    withdrawal_unlocked: 0,
     flagged: 0
   });
 
   const [adsStatus, setAdsStatus] = useState({
-    adsWatchedToday: 4,
+    adsWatchedToday: 0,
     dailyCap: 15,
-    remainingToday: 11,
+    remainingToday: 15,
     isLimitReached: false,
     rewardPerAd: 1200,
     baseReward: 1000,
     bonusReward: 200,
-    multiplier: '1.2x',
-    activeMultiplierTier: 'Active Earner',
+    multiplier: '1.0x',
+    activeMultiplierTier: 'Standard Tier',
     todayDate: new Date().toISOString().split('T')[0]
   });
 
@@ -161,9 +160,7 @@ export default function App() {
   const [withdrawAmount, setWithdrawAmount] = useState('');
   const [walletAddress, setWalletAddress] = useState('');
   const [withdrawMsg, setWithdrawMsg] = useState('');
-  const [withdrawHistory, setWithdrawHistory] = useState([
-    { id: 'w_101', amount: 50000, wallet_address: '7xKXtg2CW87d9C72...89aX', status: 'completed', requested_at: '2026-08-06 14:30' }
-  ]);
+  const [withdrawHistory, setWithdrawHistory] = useState([]);
 
   // Toast System
   const [toastMsg, setToastMsg] = useState('');
@@ -171,12 +168,16 @@ export default function App() {
   const [isHardBlocked, setIsHardBlocked] = useState(false);
   const [hardBlockReason, setHardBlockReason] = useState('');
 
-  // Auto Login on mount with Enterprise Hardware, FingerprintJS & Universal Storage Multi-Account Protection
+  // Auto Login on mount with Fast Enterprise Hardware & Universal Storage Multi-Account Protection
   useEffect(() => {
     const tg = window.Telegram?.WebApp;
     if (tg) {
-      tg.ready();
-      tg.expand();
+      try {
+        tg.setHeaderColor?.('#0d0b18');
+        tg.setBackgroundColor?.('#0d0b18');
+        tg.ready();
+        tg.expand();
+      } catch (e) {}
     }
 
     const tgInitData = tg?.initData || '';
@@ -207,6 +208,7 @@ export default function App() {
           if (res.status === 403) {
             res.json().then(data => {
               setIsHardBlocked(true);
+              setIsLoadingAuth(false);
               setHardBlockReason(data.error || '⛔ FORBIDDEN: Duplicate account creation blocked on this device.');
             });
             return null;
@@ -214,6 +216,7 @@ export default function App() {
           return res.json();
         })
         .then(data => {
+          setIsLoadingAuth(false);
           if (!data) return;
           if (data.error && (data.error.includes('FORBIDDEN') || data.error.includes('Multi-account') || data.error.includes('Duplicate'))) {
             setIsHardBlocked(true);
@@ -234,7 +237,10 @@ export default function App() {
             fetchUserData(data.token);
           }
         })
-        .catch(() => console.log('Running in demo mock mode'));
+        .catch(() => {
+          setIsLoadingAuth(false);
+          console.log('Running in demo mock mode');
+        });
     });
   }, []);
 
@@ -781,6 +787,16 @@ export default function App() {
         >
           🔄 Retry Connection
         </button>
+      </div>
+    );
+  }
+
+  if (isLoadingAuth) {
+    return (
+      <div className="app-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', textAlign: 'center' }}>
+        <div className="loader-spinner" style={{ width: 44, height: 44, border: '3px solid rgba(139, 92, 246, 0.2)', borderTopColor: '#8b5cf6', borderRadius: '50%', animation: 'spin 0.8s linear infinite', marginBottom: 16 }}></div>
+        <div style={{ fontWeight: 800, fontSize: 18, color: '#fff', letterSpacing: '0.5px' }}>🐕 BONK EARN</div>
+        <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 6 }}>Loading your account...</div>
       </div>
     );
   }
