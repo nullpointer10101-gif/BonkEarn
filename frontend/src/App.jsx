@@ -180,17 +180,8 @@ export default function App() {
     }
 
     const tgInitData = tg?.initData || '';
-    const currentTelegramUserId = tg?.initDataUnsafe?.user?.id;
     const urlParams = new URLSearchParams(window.location.search);
     const refParam = tg?.initDataUnsafe?.start_param || urlParams.get('start') || urlParams.get('tgWebAppStartParam');
-
-    // LocalStorage / Device bound Telegram User ID check
-    const previousBoundUserId = localStorage.getItem('bonk_bound_tg_user_id');
-    if (currentTelegramUserId && previousBoundUserId && String(previousBoundUserId) !== String(currentTelegramUserId)) {
-      setIsHardBlocked(true);
-      setHardBlockReason(`⛔ ACCESS FORBIDDEN: This physical device is already registered to Telegram User #${previousBoundUserId}. Creating or using multiple accounts on the same device is strictly prohibited.`);
-      return;
-    }
 
     getAdvancedDeviceIdentity().then(({ deviceId, persistentToken, fpVisitorId, webglRenderer }) => {
       const authPayload = {
@@ -223,12 +214,14 @@ export default function App() {
           return res.json();
         })
         .then(data => {
-          if (data && data.error && (data.error.includes('FORBIDDEN') || data.error.includes('Multi-account') || data.error.includes('Duplicate'))) {
+          if (!data) return;
+          if (data.error && (data.error.includes('FORBIDDEN') || data.error.includes('Multi-account') || data.error.includes('Duplicate'))) {
             setIsHardBlocked(true);
             setHardBlockReason(data.error);
             return;
           }
-          if (data && data.token) {
+          if (data.token) {
+            setIsHardBlocked(false);
             setToken(data.token);
             setUser(data.user);
             if (data.user?.id) {
@@ -269,6 +262,11 @@ export default function App() {
 
     fetchAdminData();
   };
+
+  const [isPulsing, setIsPulsing] = useState(false);
+  const [adminStats, setAdminStats] = useState({ totalUsers: 0, totalAds: 0, pendingWithdrawals: 0 });
+  const [adminQueue, setAdminQueue] = useState([]);
+  const [adminSubTab, setAdminSubTab] = useState('stats');
 
   const [adminUsers, setAdminUsers] = useState([
     { id: 99887766, username: 'crypto_earner', first_name: 'Alex', balance: 81000, ads_watched_total: 10, referral_count: 5, verified_ref_count: 3, flagged: 0 }
