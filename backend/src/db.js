@@ -256,8 +256,9 @@ class DbWrapper {
           const u = memoryDb.users.find(x => x.id === Number(params[1]));
           if (u) {
             u.balance += amt;
-            u.ads_watched_today += 1;
-            u.ads_watched_total += 1;
+            u.ads_watched_today = (u.ads_watched_today || 0) + 1;
+            u.ads_watched_total = (u.ads_watched_total || 0) + 1;
+            u.last_ad_watched_at = new Date().toISOString();
             saveData(memoryDb);
           }
           return { changes: 1 };
@@ -305,11 +306,17 @@ class DbWrapper {
           return { changes: 1 };
         }
 
-        if (cleanSql.includes('UPDATE users SET balance = balance + ? WHERE id = ?')) {
+        if (cleanSql.includes('UPDATE users SET balance = balance + ?')) {
           const amt = Number(params[0]);
-          const u = memoryDb.users.find(x => x.id === Number(params[1]));
+          const userId = Number(params[params.length - 1]);
+          const u = memoryDb.users.find(x => x.id === userId);
           if (u) {
             u.balance += amt;
+            if (cleanSql.includes('ads_watched_today') || cleanSql.includes('ads_watched_total')) {
+              u.ads_watched_today = (u.ads_watched_today || 0) + 1;
+              u.ads_watched_total = (u.ads_watched_total || 0) + 1;
+              u.last_ad_watched_at = new Date().toISOString();
+            }
             saveData(memoryDb);
           }
           return { changes: 1 };
@@ -319,12 +326,13 @@ class DbWrapper {
           const session = {
             id: params[0],
             user_id: Number(params[1]),
-            step: 1,
-            ad_token: params[2],
+            step: params[2] === 2 ? 2 : 1,
+            ad_token: params[2] === 2 ? params[3] : params[2],
             reward_amount: 1200,
             created_at: new Date().toISOString(),
             claimed_at: null
           };
+          if (!memoryDb.ad_sessions) memoryDb.ad_sessions = [];
           memoryDb.ad_sessions.push(session);
           saveData(memoryDb);
           return { changes: 1 };

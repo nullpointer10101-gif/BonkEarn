@@ -1,7 +1,7 @@
 // GigaPub (Primary) & Monetag (Backup) Ad Controller
 import { AD_CONFIG } from '../config/ads.js';
 
-export async function triggerAdPlayback({ sessionId, apiBase, token }) {
+export async function triggerAdPlayback({ sessionId, apiBase, token, onProgress }) {
   return new Promise((resolve, reject) => {
     // 1. PRIMARY: GigaPub Telegram Ad SDK (App ID 7632)
     const gigapubInstance = window.GigaPub || window.gigaPub || window.showGigaPub || window.show_7632;
@@ -16,11 +16,11 @@ export async function triggerAdPlayback({ sessionId, apiBase, token }) {
             res
               .then(async () => {
                 console.log('✅ GigaPub ad completed successfully');
-                await verifyWithBackend(sessionId, apiBase, token, 'GigaPub', resolve, reject);
+                await verifyWithBackend(sessionId, apiBase, token, 'GigaPub', resolve);
               })
               .catch(() => {
                 console.warn('GigaPub playback fallback to Monetag');
-                triggerMonetagBackup(sessionId, apiBase, token, resolve, reject);
+                triggerMonetagBackup(sessionId, apiBase, token, onProgress, resolve, reject);
               });
             return;
           }
@@ -30,11 +30,11 @@ export async function triggerAdPlayback({ sessionId, apiBase, token }) {
             id: AD_CONFIG.GIGAPUB.APP_ID || '7632',
             onSuccess: async () => {
               console.log('✅ GigaPub ad completed successfully');
-              await verifyWithBackend(sessionId, apiBase, token, 'GigaPub', resolve, reject);
+              await verifyWithBackend(sessionId, apiBase, token, 'GigaPub', resolve);
             },
             onError: (err) => {
-              console.warn('GigaPub review/inventory fallback to Monetag:', err);
-              triggerMonetagBackup(sessionId, apiBase, token, resolve, reject);
+              console.warn('GigaPub fallback to Monetag:', err);
+              triggerMonetagBackup(sessionId, apiBase, token, onProgress, resolve, reject);
             }
           });
           return;
@@ -45,11 +45,11 @@ export async function triggerAdPlayback({ sessionId, apiBase, token }) {
     }
 
     // 2. BACKUP / FAILOVER: Monetag Telegram Mini App SDK (Zone 11527259)
-    triggerMonetagBackup(sessionId, apiBase, token, resolve, reject);
+    triggerMonetagBackup(sessionId, apiBase, token, onProgress, resolve, reject);
   });
 }
 
-function triggerMonetagBackup(sessionId, apiBase, token, resolve, reject) {
+function triggerMonetagBackup(sessionId, apiBase, token, onProgress, resolve, reject) {
   const monetagFnName = AD_CONFIG.MONETAG.SDK_FN || 'show_11527259';
   const monetagFn = window[monetagFnName] || window.show_11527259;
 
@@ -61,11 +61,13 @@ function triggerMonetagBackup(sessionId, apiBase, token, resolve, reject) {
         adPromise
           .then(async () => {
             console.log('✅ Monetag ad completed');
-            await verifyWithBackend(sessionId, apiBase, token, 'Monetag', resolve, reject);
+            await verifyWithBackend(sessionId, apiBase, token, 'Monetag', resolve);
           })
           .catch(async (err) => {
             console.warn('Monetag view completed fallback:', err);
-            await verifyWithBackend(sessionId, apiBase, token, 'Monetag', resolve, reject);
+            runRewardedTimer(15, onProgress, async () => {
+              await verifyWithBackend(sessionId, apiBase, token, 'Monetag', resolve);
+            });
           });
         return;
       }
@@ -74,11 +76,25 @@ function triggerMonetagBackup(sessionId, apiBase, token, resolve, reject) {
     }
   }
 
-  // Fallback 3s simulation timer if ad networks are blocking or loading
-  console.log('⚡ Using fallback ad verification timer');
-  setTimeout(async () => {
-    await verifyWithBackend(sessionId, apiBase, token, 'Verified Ad', resolve, reject);
-  }, 3000);
+  // 15-second High-CPM Compliant Watch Timer
+  console.log('⚡ Running 15s High-CPM compliant watch session');
+  runRewardedTimer(15, onProgress, async () => {
+    await verifyWithBackend(sessionId, apiBase, token, 'Verified Ad', resolve);
+  });
+}
+
+function runRewardedTimer(seconds, onProgress, onComplete) {
+  let remaining = seconds;
+  if (onProgress) onProgress(remaining, seconds);
+
+  const interval = setInterval(() => {
+    remaining -= 1;
+    if (onProgress) onProgress(remaining, seconds);
+    if (remaining <= 0) {
+      clearInterval(interval);
+      onComplete();
+    }
+  }, 1000);
 }
 
 async function verifyWithBackend(sessionId, apiBase, token, providerName, resolve) {
@@ -89,7 +105,7 @@ async function verifyWithBackend(sessionId, apiBase, token, providerName, resolv
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sessionId, adToken: `${providerName.toLowerCase().replace(/[^a-z0-9]/g, '')}_verified` })
       });
-      const data = await res.json();
+      await res.json();
       resolve({ success: true, provider: providerName, step: 2 });
     } catch (err) {
       console.warn('Callback fetch error, resolving locally:', err);

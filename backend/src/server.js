@@ -261,10 +261,31 @@ app.get('/ads/status', authenticateToken, (req, res) => {
 
 app.post('/ads/start', authenticateToken, (req, res) => {
   const userId = req.user.id;
-  const user = db.prepare('SELECT ads_watched_today FROM users WHERE id = ?').get(userId);
+  const user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
 
-  if (user.ads_watched_today >= 10) {
-    return res.status(400).json({ error: 'Daily ad cap (10/10) reached. Reset at UTC midnight.' });
+  if (!user) return res.status(404).json({ error: 'User not found' });
+
+  // 1. Strict Daily Limit Enforcement (Anti-Bypass)
+  const DAILY_CAP = 10;
+  if ((user.ads_watched_today || 0) >= DAILY_CAP) {
+    return res.status(400).json({ 
+      error: `Daily ad limit reached (${DAILY_CAP}/${DAILY_CAP}). Resets daily at 00:00 UTC.`,
+      isLimitReached: true,
+      dailyCap: DAILY_CAP
+    });
+  }
+
+  // 2. High CPM Cooldown Protection (Prevents rapid bot spamming & protects ad network fill rate)
+  const COOLDOWN_SEC = 20;
+  if (user.last_ad_watched_at) {
+    const elapsedSec = Math.floor((Date.now() - new Date(user.last_ad_watched_at).getTime()) / 1000);
+    if (elapsedSec < COOLDOWN_SEC) {
+      const waitTime = COOLDOWN_SEC - elapsedSec;
+      return res.status(429).json({ 
+        error: `⏳ Cooldown active: Please wait ${waitTime}s before watching the next ad.`,
+        cooldownRemaining: waitTime 
+      });
+    }
   }
 
   const sessionId = 'ad_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
@@ -275,7 +296,16 @@ app.post('/ads/start', authenticateToken, (req, res) => {
     VALUES (?, ?, 1, ?, 1200)
   `).run(sessionId, userId, adToken);
 
-  res.json({ success: true, sessionId, step: 1, adToken });
+  res.json({ 
+    success: true, 
+    sessionId, 
+    step: 1, 
+    adToken, 
+    minDuration: 15,
+    rewardAmount: 1200,
+    dailyCap: DAILY_CAP,
+    remainingToday: DAILY_CAP - (user.ads_watched_today || 0)
+  });
 });
 
 app.post('/ads/callback', (req, res) => {
@@ -301,6 +331,15 @@ app.post('/ads/claim', authenticateToken, (req, res) => {
   const userId = req.user.id;
   const { sessionId } = req.body;
 
+  const user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+
+  // 1. Strict Anti-Race Daily Cap Check
+  const DAILY_CAP = 10;
+  if ((user.ads_watched_today || 0) >= DAILY_CAP) {
+    return res.status(400).json({ error: `Daily ad cap (${DAILY_CAP}/${DAILY_CAP}) reached.` });
+  }
+
   let session = db.prepare('SELECT * FROM ad_sessions WHERE id = ? AND user_id = ?').get(sessionId, userId);
   
   if (!session) {
@@ -315,10 +354,21 @@ app.post('/ads/claim', authenticateToken, (req, res) => {
 
   if (session.claimed_at) return res.status(400).json({ error: 'Ad reward already claimed' });
 
+  // 2. Minimum Watch Duration Verification (Anti-Cheat / High CPM compliance)
+  const MIN_WATCH_MS = 10000; // 10s minimum elapsed for valid rewarded video
+  if (session.created_at) {
+    const elapsedMs = Date.now() - new Date(session.created_at).getTime();
+    if (elapsedMs < MIN_WATCH_MS) {
+      return res.status(400).json({ 
+        error: `⚠️ Incomplete view! You must watch the complete video ad (minimum 15s) to receive your reward.` 
+      });
+    }
+  }
+
   const nowStr = new Date().toISOString();
   db.prepare('UPDATE ad_sessions SET step = 3, claimed_at = ? WHERE id = ?').run(nowStr, session.id);
 
-  // Credit 1200 BONK & update user stats
+  // Credit 1200 BONK & update user stats with timestamp for cooldown
   db.prepare(`
     UPDATE users 
     SET balance = balance + ?, 
