@@ -104,10 +104,11 @@ class DbWrapper {
         }
 
         if (cleanSql.includes('SELECT * FROM ad_sessions WHERE id = ?')) {
+          if (!memoryDb.ad_sessions) memoryDb.ad_sessions = [];
           if (cleanSql.includes('AND user_id = ?')) {
-            return memoryDb.ad_sessions.find(s => s.id === params[0] && s.user_id === Number(params[1])) || null;
+            return memoryDb.ad_sessions.find(s => String(s.id) === String(params[0]) && Number(s.user_id) === Number(params[1])) || null;
           }
-          return memoryDb.ad_sessions.find(s => s.id === params[0]) || null;
+          return memoryDb.ad_sessions.find(s => String(s.id) === String(params[0])) || null;
         }
 
         if (cleanSql.includes('SELECT * FROM tasks WHERE id = ?')) {
@@ -330,7 +331,8 @@ class DbWrapper {
         }
 
         if (cleanSql.includes('UPDATE ad_sessions SET step = 2 WHERE id = ?')) {
-          const s = memoryDb.ad_sessions.find(x => x.id === params[0]);
+          if (!memoryDb.ad_sessions) memoryDb.ad_sessions = [];
+          const s = memoryDb.ad_sessions.find(x => String(x.id) === String(params[0]));
           if (s) {
             s.step = 2;
             saveData(memoryDb);
@@ -339,7 +341,8 @@ class DbWrapper {
         }
 
         if (cleanSql.includes('UPDATE ad_sessions SET step = 3, claimed_at = ? WHERE id = ?')) {
-          const s = memoryDb.ad_sessions.find(x => x.id === params[1]);
+          if (!memoryDb.ad_sessions) memoryDb.ad_sessions = [];
+          const s = memoryDb.ad_sessions.find(x => String(x.id) === String(params[1]));
           if (s) {
             s.step = 3;
             s.claimed_at = params[0];
