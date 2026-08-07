@@ -35,16 +35,10 @@ bot.start(async (ctx) => {
   const startPayload = ctx.startPayload || '';
   const firstName = ctx.from?.first_name || 'Earner';
 
-  const caption = 
-    `🐕 *Welcome to BONK Earn, ${firstName}!* 🚀\n\n` +
-    `The #1 Solana Meme Reward Bot! Earn free *$BONK* by watching verified sponsor ads, completing daily tasks & inviting friends.\n\n` +
-    `⚡ *REWARD SYSTEM:*\n` +
-    `🎁 *+10,000 BONK* Free Welcome Bonus\n` +
-    `🎬 *+1,200 BONK* per Video Ad (10 Daily)\n` +
-    `👥 *+10,000 BONK* per Valid Referral\n` +
-    `🏆 *Daily Solana Airdrops & Leaderboards*\n\n` +
-    `💳 *Direct Solana SPL Transfers* to Phantom, Solflare, OKX & Binance.\n\n` +
-    `👇 *Tap below to launch the Mini App and claim your 10,000 BONK:*`;
+      const caption = 
+        `🔥 *BONK Earn is LIVE, ${firstName}!* 🚀\n\n` +
+        `💰 *Your Status:* 10,000 BONK Ready to Claim!\n\n` +
+        `Tap the button below to claim your free $BONK, watch simple ads, and cash out instantly to your Solana wallet! 👇`;
 
   try {
     await ctx.replyWithPhoto(BONK_IMAGE_URL, {
