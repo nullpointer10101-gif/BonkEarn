@@ -42,9 +42,16 @@ function authenticateToken(req, res, next) {
   const token = authHeader && authHeader.split(' ')[1];
   if (!token) return res.status(401).json({ error: 'Access token required' });
 
-  jwt.verify(token, JWT_SECRET, (err, user) => {
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
     if (err) return res.status(403).json({ error: 'Invalid or expired token' });
-    req.user = user;
+    
+    // Check if user has been blocked by admin in real-time
+    const dbUser = db.prepare('SELECT id, flagged FROM users WHERE id = ?').get(decoded.id);
+    if (dbUser && dbUser.flagged === 1) {
+      return res.status(403).json({ error: '⛔ ACCESS FORBIDDEN: Your account has been blocked for policy review.' });
+    }
+
+    req.user = decoded;
     next();
   });
 }
@@ -84,9 +91,15 @@ app.post('/auth/login', (req, res) => {
     // 1. Strict Anti-Fraud Multi-Account HARD BLOCK on Device ID / Fingerprint
     const existingDeviceUser = db.prepare('SELECT * FROM users WHERE device_id = ?').get(deviceId, userId);
     if (existingDeviceUser && existingDeviceUser.id !== userId) {
+      // Save blocked account so it appears in Admin Panel
+      db.prepare(`
+        INSERT INTO users (id, username, first_name, ads_date, referrer_id, ip_address, device_id, persistent_token, flagged)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `).run(userId, username, firstName, todayStr, referrerId ? Number(referrerId) : null, clientIp, deviceId, persistentToken, 1);
+
       const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
       db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
-        .run(txId, userId, 'anti_fraud_alert', 0, `⛔ HARD BLOCKED REGISTRATION: Device ID matches existing User #${existingDeviceUser.id}`);
+        .run(txId, userId, 'anti_fraud_alert', 0, `⛔ FORBIDDEN REGISTRATION: Device HWID matches User #${existingDeviceUser.id} (@${existingDeviceUser.username || 'user'})`);
       
       return res.status(403).json({ 
         error: `⛔ FORBIDDEN: Duplicate account creation blocked. This physical device is already registered with User #${existingDeviceUser.id} (@${existingDeviceUser.username || 'user'}). Multi-accounting is strictly prohibited.` 
@@ -96,9 +109,15 @@ app.post('/auth/login', (req, res) => {
     // 2. Strict Anti-Fraud Multi-Account HARD BLOCK on Persistent Device Token
     const existingTokenUser = db.prepare('SELECT * FROM users WHERE persistent_token = ?').get(persistentToken, userId);
     if (existingTokenUser && existingTokenUser.id !== userId) {
+      // Save blocked account so it appears in Admin Panel
+      db.prepare(`
+        INSERT INTO users (id, username, first_name, ads_date, referrer_id, ip_address, device_id, persistent_token, flagged)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `).run(userId, username, firstName, todayStr, referrerId ? Number(referrerId) : null, clientIp, deviceId, persistentToken, 1);
+
       const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
       db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
-        .run(txId, userId, 'anti_fraud_alert', 0, `⛔ HARD BLOCKED REGISTRATION: Persistent device token matches User #${existingTokenUser.id}`);
+        .run(txId, userId, 'anti_fraud_alert', 0, `⛔ FORBIDDEN REGISTRATION: Persistent device token matches User #${existingTokenUser.id}`);
       
       return res.status(403).json({ 
         error: `⛔ FORBIDDEN: Duplicate account creation blocked. Device storage token is already linked to User #${existingTokenUser.id}. Only 1 account per device is allowed.` 

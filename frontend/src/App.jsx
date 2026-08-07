@@ -496,6 +496,7 @@ export default function App() {
   };
 
   const handleUnblockUser = (userId) => {
+    setAdminUsers(prev => prev.map(u => u.id === userId ? { ...u, flagged: 0 } : u));
     fetch(`${API_BASE}/admin/users/${userId}/unblock`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
@@ -509,7 +510,6 @@ export default function App() {
       })
       .catch(() => {
         showToast(`🔓 User #${userId} unblocked!`);
-        setAdminUsers(prev => prev.map(u => u.id === userId ? { ...u, flagged: 0 } : u));
       });
   };
 
@@ -517,6 +517,7 @@ export default function App() {
     const reason = prompt('Enter reason for blocking user:', 'Multi-accounting / Sybil policy violation');
     if (reason === null) return;
 
+    setAdminUsers(prev => prev.map(u => u.id === userId ? { ...u, flagged: 1 } : u));
     fetch(`${API_BASE}/admin/users/${userId}/block`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -531,7 +532,6 @@ export default function App() {
       })
       .catch(() => {
         showToast(`🔒 User #${userId} blocked!`);
-        setAdminUsers(prev => prev.map(u => u.id === userId ? { ...u, flagged: 1 } : u));
       });
   };
 

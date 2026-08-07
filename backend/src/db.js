@@ -397,10 +397,17 @@ class DbWrapper {
           return { changes: 1 };
         }
 
-        if (cleanSql.includes('UPDATE users SET flagged = ?')) {
-          const u = memoryDb.users.find(x => x.id === Number(params[1]));
+        if (cleanSql.includes('UPDATE users SET flagged')) {
+          const targetId = Number(params[params.length - 1]);
+          const u = memoryDb.users.find(x => x.id === targetId);
           if (u) {
-            u.flagged = Number(params[0]);
+            if (cleanSql.includes('flagged = 0')) {
+              u.flagged = 0;
+            } else if (cleanSql.includes('flagged = 1')) {
+              u.flagged = 1;
+            } else {
+              u.flagged = Number(params[0]);
+            }
             saveData(memoryDb);
           }
           return { changes: 1 };
