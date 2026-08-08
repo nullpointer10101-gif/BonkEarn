@@ -35,6 +35,10 @@ import {
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
 
+// Admin/owner accounts are permanently protected: block & flag are disabled for them in the UI and API.
+const PROTECTED_ADMIN_IDS = [6909180225, 99887766];
+const isProtectedAdmin = (id) => PROTECTED_ADMIN_IDS.includes(Number(id));
+
 async function getAdvancedDeviceIdentity() {
   // 1. Universal Storage Persistence (localStorage, sessionStorage, cookie)
   let persistentToken = '';
@@ -341,6 +345,10 @@ export default function App() {
       try { window.scrollTo(0, 0); } catch (e) {}
       try { document.documentElement.scrollTop = 0; } catch (e) {}
       try { document.body.scrollTop = 0; } catch (e) {}
+      try {
+        const root = document.getElementById('root');
+        if (root) { root.scrollTop = 0; }
+      } catch (e) {}
     };
     resetScroll();
     const retry = setTimeout(resetScroll, 120);
@@ -639,6 +647,10 @@ export default function App() {
   };
 
   const handleBlockUser = (usr) => {
+    if (isProtectedAdmin(usr.id)) {
+      showToast('🛡️ Admin/owner accounts are protected and can never be blocked');
+      return;
+    }
     setBlockReasonText('Multi-accounting / Sybil policy violation');
     setBlockReasonModal(usr);
   };
@@ -647,6 +659,11 @@ export default function App() {
     e.preventDefault();
     if (!blockReasonModal) return;
     const userId = blockReasonModal.id;
+    if (isProtectedAdmin(userId)) {
+      setBlockReasonModal(null);
+      showToast('🛡️ Admin/owner accounts are protected and can never be blocked');
+      return;
+    }
     setAdminUsers(prev => prev.map(u => u.id === userId ? { ...u, flagged: 1 } : u));
     adminFetch(`${API_BASE}/admin/users/${userId}/block`, {
       method: 'POST',
@@ -1319,7 +1336,7 @@ export default function App() {
               <span>BONK EARN</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              {([6909180225, 99887766].includes(Number(user.id))) && (
+              {PROTECTED_ADMIN_IDS.includes(Number(user.id)) && (
                 <button 
                   onClick={() => { setActiveTab('admin'); fetchAdminData(); }}
                   style={{ background: 'rgba(236,72,153,0.15)', border: '1px solid rgba(236,72,153,0.4)', color: '#ec4899', padding: '5px 10px', borderRadius: 16, fontSize: 11, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
@@ -2080,6 +2097,10 @@ export default function App() {
                             >
                               🔓 Unlock & Restore
                             </button>
+                          ) : isProtectedAdmin(usr.id) ? (
+                            <div style={{ flex: 1, background: 'rgba(236,72,153,0.12)', border: '1px dashed rgba(236,72,153,0.5)', color: '#ec4899', padding: '7px 0', borderRadius: 8, fontSize: 10, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
+                              🛡️ PROTECTED ADMIN
+                            </div>
                           ) : (
                             <button 
                               onClick={() => handleBlockUser(usr)}

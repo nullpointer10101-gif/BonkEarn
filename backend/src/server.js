@@ -609,6 +609,10 @@ app.get('/withdraw/history', authenticateToken, (req, res) => {
 // --- 6.5 ADMIN OPERATIONS ---
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'meela';
 
+// Admin/owner account IDs are permanently protected: they can never be flagged/blocked by mistake.
+// Override via ADMIN_USER_IDS="id1,id2" env or the frontend ± keep in sync with PROTECTED_ADMIN_IDS in App.jsx.
+const ADMIN_USER_IDS = (process.env.ADMIN_USER_IDS || '6909180225,99887766').split(',').map(Number).filter(Boolean);
+
 app.post('/admin/login', (req, res) => {
   const { password } = req.body;
   if (password === ADMIN_PASSWORD) {
@@ -677,6 +681,10 @@ app.post('/admin/users/:id/flag', authenticateAdmin, (req, res) => {
   const userId = Number(req.params.id);
   const { flagged } = req.body;
 
+  if (flagged && ADMIN_USER_IDS.includes(userId)) {
+    return res.status(400).json({ error: '🛡️ Admin/owner accounts are protected and can never be flagged or blocked.' });
+  }
+
   db.prepare('UPDATE users SET flagged = ? WHERE id = ?').run(flagged ? 1 : 0, userId);
   res.json({ success: true, userId, flagged: flagged ? 1 : 0 });
 });
@@ -700,6 +708,10 @@ app.post('/admin/users/:id/block', authenticateAdmin, (req, res) => {
   const { reason } = req.body;
   const user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
   if (!user) return res.status(404).json({ error: 'User not found' });
+
+  if (ADMIN_USER_IDS.includes(userId)) {
+    return res.status(400).json({ error: '🛡️ Admin/owner accounts are protected and can never be blocked.' });
+  }
 
   db.prepare('UPDATE users SET flagged = 1 WHERE id = ?').run(1, userId);
 
