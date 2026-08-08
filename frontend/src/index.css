@@ -416,6 +416,30 @@ body {
   }
 }
 
+/* Onboarding channel verify error (visible, shaking) */
+.onboarding-err {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #f87171;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.45;
+  border-radius: 10px;
+  padding: 9px 10px;
+  animation: shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
 /* Soft scrolling for inner containers (admin queue, histories) */
 ::-webkit-scrollbar {
   width: 4px;

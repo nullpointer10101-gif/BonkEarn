@@ -47,12 +47,6 @@ function authenticateToken(req, res, next) {
 
   jwt.verify(token, JWT_SECRET, (err, decoded) => {
     if (err) return res.status(403).json({ error: 'Invalid or expired token' });
-    
-    // Check if user has been blocked by admin in real-time
-    const dbUser = db.prepare('SELECT id, flagged FROM users WHERE id = ?').get(decoded.id);
-    if (dbUser && dbUser.flagged === 1) {
-      return res.status(403).json({ error: '⛔ ACCESS FORBIDDEN: Your account has been blocked for policy review.' });
-    }
 
     req.user = decoded;
     next();
@@ -173,12 +167,9 @@ app.post('/auth/login', (req, res) => {
     }
   }
 
-  // Check if existing user is locked/flagged by Admin
-  if (user && user.flagged === 1) {
-    return res.status(403).json({
-      error: `⛔ ACCESS FORBIDDEN: Account #${user.id} is blocked by administrator for policy review.`
-    });
-  }
+  // Note: flagged accounts are NOT blocked at login anymore.
+  // They still get the mandatory channel onboarding (boosts channel members),
+  // but the onboarding bonus claim is denied server-side with a clear FORBIDDEN message.
 
   const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, { expiresIn: '1h' });
   const refreshToken = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '7d' });
@@ -224,7 +215,11 @@ function verifyChannelMember(channelUsername, userId) {
       .then((member) => {
         const status = member && member.status;
         const ok = status === 'creator' || status === 'administrator' || status === 'member';
-        resolve(ok ? { verified: true, status } : { verified: false, status });
+        if (ok) {
+          resolve({ verified: true, status });
+        } else {
+          resolve({ verified: false, status, error: `You have not joined @${username} yet! Tap JOIN CHANNEL first, then VERIFY again.` });
+        }
       })
       .catch((err) => {
         resolve({ verified: false, error: (err && err.message) || 'Verification failed. Bot must be admin in this channel.' });
@@ -281,6 +276,16 @@ app.post('/onboarding/claim-bonus', authenticateToken, async (req, res) => {
   }
   if (failures.length) {
     return res.status(400).json({ error: `Please join all channels first: ${failures.join(', ')}`, unverifiedChannels: failures });
+  }
+
+  // Flagged accounts: channels completed, but bonus is DENIED with clear message
+  if (Number(user.flagged) === 1) {
+    const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+    db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
+      .run(txId, req.user.id, 'onboarding_denied', 0, `⛔ Onboarding bonus DENIED: Account #${req.user.id} flagged for policy review`);
+    return res.status(403).json({
+      error: `⛔ ACCESS FORBIDDEN: Account #${req.user.id} is under policy review. Channels joined, but the registration bonus cannot be credited. Contact support.`
+    });
   }
 
   const bonus = Number(systemSettings.onboardingBonus) || 1000;
