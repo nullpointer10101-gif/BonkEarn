@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import { 
@@ -168,6 +168,39 @@ export default function App() {
     }
     return () => clearInterval(timer);
   }, [adsStatus.cooldownRemaining]);
+
+  // Butter-smooth animated balance count-up
+  const [displayBalance, setDisplayBalance] = useState(0);
+  const prevBalanceRef = useRef(0);
+  useEffect(() => {
+    const target = Number(user.balance) || 0;
+    const from = Number(prevBalanceRef.current) || 0;
+    if (from === target) {
+      setDisplayBalance(target);
+      return;
+    }
+    prevBalanceRef.current = target;
+    const start = performance.now();
+    const duration = 700;
+    let raf;
+    const tick = (t) => {
+      const p = Math.min(1, (t - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setDisplayBalance(Math.round(from + (target - from) * eased));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [user.balance]);
+
+  // Smooth scroll to top whenever the screen changes
+  useEffect(() => {
+    try {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (e) {
+      window.scrollTo(0, 0);
+    }
+  }, [activeTab, adminSubTab]);
 
   // Withdraw Form State
   const [withdrawAmount, setWithdrawAmount] = useState('');
@@ -1031,7 +1064,7 @@ export default function App() {
     const verifiedCount = onboarding.channels.filter(c => c.verified).length;
     const allVerified = onboarding.channels.length > 0 && verifiedCount === onboarding.channels.length;
     return (
-      <div className="app-container" style={{ paddingBottom: 0 }}>
+      <div key="onboarding" className="screen-view app-container" style={{ paddingBottom: 0 }}>
         {/* Onboarding Hero */}
         <div style={{ textAlign: 'center', padding: '28px 20px 16px' }}>
           <img
@@ -1187,7 +1220,7 @@ export default function App() {
 
       {/* SCREEN 1: HOME */}
       {activeTab === 'home' && (
-        <div>
+        <div key="home" className="screen-view">
           <div className={`balance-card ${isPulsing ? 'reward-pulse' : ''}`} style={{ position: 'relative', overflow: 'hidden' }}>
             <img 
               src="/bonk_coin.png" 
@@ -1206,7 +1239,7 @@ export default function App() {
             />
             <div className="balance-label">Total Balance</div>
             <div className="balance-amount" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              {user.balance.toLocaleString()}
+              {displayBalance.toLocaleString()}
               <span className="token-symbol">BONK</span>
             </div>
             <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.75)', display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -1265,7 +1298,7 @@ export default function App() {
 
       {/* SCREEN 2: TASK CENTER */}
       {activeTab === 'tasks' && (
-        <div style={{ padding: '0 16px' }}>
+        <div key="tasks" className="screen-view" style={{ padding: '0 16px' }}>
           {/* Premium Ads Section */}
           <div className="glass-card">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
@@ -1421,7 +1454,7 @@ export default function App() {
 
       {/* SCREEN 3: WITHDRAW */}
       {activeTab === 'withdraw' && (
-        <div style={{ padding: '0 16px' }}>
+        <div key="withdraw" className="screen-view" style={{ padding: '0 16px' }}>
           <div className="glass-card">
             <div style={{ fontWeight: 800, fontSize: 18, marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
               <Wallet size={20} color="#a855f7" /> Withdraw BONK
@@ -1553,7 +1586,7 @@ export default function App() {
 
       {/* SCREEN 4: ADMIN DASHBOARD COMMAND CENTER */}
       {activeTab === 'admin' && (
-        <div style={{ padding: '0 16px' }}>
+        <div key="admin" className="screen-view" style={{ padding: '0 16px' }}>
           {!isAdminAuthenticated ? (
             /* ADMIN SECURITY PASSWORD GATE */
             <div className="glass-card" style={{ background: 'linear-gradient(135deg, rgba(236,72,153,0.15), rgba(139,92,246,0.15))', borderColor: 'rgba(236,72,153,0.4)', textAlign: 'center', padding: '32px 20px', marginTop: 20 }}>

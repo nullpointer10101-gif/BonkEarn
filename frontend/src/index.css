@@ -19,6 +19,22 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+button {
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+input,
+textarea,
+select {
+  touch-action: manipulation;
+}
+
 body {
   background-color: var(--bg-dark);
   color: var(--text-main);
@@ -26,6 +42,8 @@ body {
   display: flex;
   justify-content: center;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: none;
 }
 
 #root {
@@ -43,16 +61,17 @@ body {
 .glass-card {
   background: var(--card-bg);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--card-border);
   border-radius: 20px;
   padding: 20px;
   margin-bottom: 16px;
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .glass-card:active {
-  transform: scale(0.99);
+  transform: scale(0.985);
 }
 
 /* Buttons */
@@ -71,12 +90,18 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: all 0.2s ease;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease, box-shadow 0.3s ease, filter 0.3s ease;
+  will-change: transform;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 6px 26px var(--accent-glow);
+  filter: brightness(1.08);
 }
 
 .btn-primary:active {
-  transform: translateY(1px);
-  opacity: 0.9;
+  transform: translateY(1px) scale(0.97);
+  opacity: 0.92;
 }
 
 .btn-green {
@@ -186,6 +211,13 @@ body {
   border-radius: 16px;
   padding: 12px 10px;
   text-align: center;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, border-color 0.3s ease;
+}
+
+.stat-tile:active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(192, 132, 252, 0.35);
 }
 
 .stat-value {
@@ -210,6 +242,7 @@ body {
   max-width: 480px;
   background: rgba(13, 11, 24, 0.95);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -228,11 +261,16 @@ body {
   background: none;
   border: none;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: color 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nav-item:active {
+  transform: scale(0.88);
 }
 
 .nav-item.active {
   color: #c084fc;
+  transform: translateY(-1px);
 }
 
 /* Step Pipeline */
@@ -251,6 +289,12 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.06);
   padding: 12px 16px;
   border-radius: 14px;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, border-color 0.3s ease;
+}
+
+.step-row:active {
+  transform: scale(0.985);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .step-num {
@@ -264,6 +308,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .modal-overlay {
@@ -331,5 +376,72 @@ body {
   0% { transform: translate(-100%, -100%) rotate(30deg); }
   20% { transform: translate(100%, 100%) rotate(30deg); }
   100% { transform: translate(100%, 100%) rotate(30deg); }
+}
+
+/* BUTTERNUT-SMOOTH SCREEN TRANSITIONS */
+.screen-view {
+  animation: screenIn 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
+}
+
+@keyframes screenIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Springy toast entrance */
+.toast-anim {
+  animation: toastSlideDown 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Modal spring-in */
+.modal-overlay .glass-card {
+  animation: modalIn 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.88) translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Soft scrolling for inner containers (admin queue, histories) */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.35);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }
 
