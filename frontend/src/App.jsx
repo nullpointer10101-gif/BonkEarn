@@ -494,7 +494,8 @@ export default function App() {
     referralSignupBonus: 100,
     verifiedRefBonus: 10000,
     onboardingBonus: 1000,
-    onboardingChannels: ['BonkEarnNews', 'BonkEarnPayouts', 'BonkEarnChat']
+    onboardingChannels: ['BonkEarnNews', 'BonkEarnPayouts', 'BonkEarnChat'],
+    maintenanceMode: false
   });
   const [onboardingChannelsInput, setOnboardingChannelsInput] = useState(sysConfig.onboardingChannels.join(', '));
 
@@ -1232,6 +1233,23 @@ export default function App() {
     );
   }
 
+  // --- MAINTENANCE MODE (owner/admin accounts always bypass) ---
+  if (sysConfig.maintenanceMode && user && !isProtectedAdmin(user.id)) {
+    return (
+      <div className="app-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', textAlign: 'center', padding: '0 24px' }}>
+        <img 
+          src="/bonk_coin.png" 
+          alt="Official BONK Token" 
+          style={{ width: 80, height: 80, borderRadius: '50%', marginBottom: 16, boxShadow: '0 0 35px rgba(245, 158, 11, 0.5), 0 0 70px rgba(139, 92, 246, 0.3)', border: '2px solid rgba(251, 191, 36, 0.5)' }} 
+        />
+        <div style={{ fontWeight: 900, fontSize: 20, color: '#fff', letterSpacing: '0.5px' }}>🔧 Under Maintenance</div>
+        <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 8, lineHeight: 1.6 }}>
+          We are performing scheduled upgrades.<br />Please check back soon.
+        </div>
+      </div>
+    );
+  }
+
   // --- MANDATORY ONBOARDING GATE (cannot be skipped) ---
   if (showOnboarding) {
     const verifiedCount = onboarding.channels.filter(c => c.verified).length;
@@ -1552,7 +1570,7 @@ export default function App() {
                       {adsStatus.cooldownRemaining > 0 
                         ? `Cooldown: ${adsStatus.cooldownRemaining}s remaining` 
                         : (user.ads_watched_today || 0) >= adsStatus.dailyCap 
-                        ? 'Daily limit completed (10/10)' 
+                        ? `Daily limit completed (${adsStatus.dailyCap}/${adsStatus.dailyCap})` 
                         : 'Launch 15s verified video ad'}
                     </div>
                   </div>
@@ -2395,6 +2413,16 @@ export default function App() {
                     placeholder="BonkEarnNews, BonkEarnPayouts, BonkEarnChat"
                     style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 8, color: '#fff', fontSize: 13, resize: 'vertical' }}
                   />
+                </div>
+
+                <div style={{ marginBottom: 16, display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: sysConfig.maintenanceMode ? 'rgba(239,68,68,0.15)' : 'rgba(255,255,255,0.03)', border: `1px solid ${sysConfig.maintenanceMode ? 'rgba(239,68,68,0.4)' : 'rgba(255,255,255,0.08)'}`, padding: '10px 12px', borderRadius: 10 }}>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: 13, color: sysConfig.maintenanceMode ? '#f87171' : '#fff' }}>Maintenance Mode</div>
+                    <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Blocks all user features. Admin panel & your account stay fully online.</div>
+                  </div>
+                  <button type="button" onClick={() => setSysConfig({ ...sysConfig, maintenanceMode: !sysConfig.maintenanceMode })} style={{ minWidth: 52, height: 28, borderRadius: 20, border: 'none', cursor: 'pointer', background: sysConfig.maintenanceMode ? '#ef4444' : 'rgba(255,255,255,0.15)', color: '#fff', fontWeight: 800, fontSize: 12 }}>
+                    {sysConfig.maintenanceMode ? 'ON' : 'OFF'}
+                  </button>
                 </div>
 
                 <button type="submit" className="btn-primary btn-green">

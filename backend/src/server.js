@@ -16,6 +16,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Maintenance mode gate: blocks user-facing API while admin/owner and config stay live.
+// Admin/owner IDs always bypass maintenance so the admin panel NEVER goes offline.
+app.use((req, res, next) => {
+  if (!systemSettings.maintenanceMode) return next();
+  if (req.path.startsWith('/admin')) return next();
+  if (req.path === '/config' || req.path === '/auth/login' || req.path === '/') return next();
+  try {
+    const token = (req.headers.authorization || '').startsWith('Bearer ') ? req.headers.authorization.slice(7) : null;
+    const payload = token ? jwt.verify(token, JWT_SECRET) : null;
+    if (payload && ADMIN_USER_IDS.includes(Number(payload.id))) return next();
+  } catch (e) {}
+  return res.status(503).json({ error: '🔧 System is under maintenance. Please check back soon.', maintenance: true });
+});
+
 const JWT_SECRET = process.env.JWT_SECRET || 'earn_app_jwt_secret_key_2026';
 const BOT_TOKEN = process.env.BOT_TOKEN || 'MOCK_BOT_TOKEN';
 
@@ -379,7 +393,7 @@ app.get('/ads/status', authenticateToken, (req, res) => {
   res.json({
     adsWatchedToday: user.ads_watched_today,
     adsWatchedTotal: user.ads_watched_total,
-    dailyCap: 10,
+    dailyCap: Number(systemSettings.dailyAdCap) || 10,
     currentStep: currentSession ? currentSession.step : 1,
     activeSessionId: currentSession ? currentSession.id : null
   });
@@ -780,7 +794,8 @@ const DEFAULT_SETTINGS = {
   referralSignupBonus: 100,
   verifiedRefBonus: 10000,
   onboardingBonus: 1000,
-  onboardingChannels: ['BonkEarnNews', 'BonkEarnPayouts', 'BonkEarnChat']
+  onboardingChannels: ['BonkEarnNews', 'BonkEarnPayouts', 'BonkEarnChat'],
+  maintenanceMode: false
 };
 let systemSettings = { ...DEFAULT_SETTINGS };
 try {
