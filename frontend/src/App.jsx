@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import { 
@@ -255,7 +255,7 @@ export default function App() {
             res.json().then(data => {
               setIsHardBlocked(true);
               setIsLoadingAuth(false);
-              setHardBlockReason(data.error || 'â›” FORBIDDEN: Duplicate account creation blocked on this device.');
+              setHardBlockReason(data.error || '⛔ FORBIDDEN: Duplicate account creation blocked on this device.');
             });
             return null;
           }
@@ -376,7 +376,7 @@ export default function App() {
         if (data.success) {
           setIsAdminAuthenticated(true);
           setAdminPasswordInput('');
-          showToast('ðŸ”“ Admin Console Unlocked!');
+          showToast('🔓 Admin Console Unlocked!');
           fetchAdminData();
         } else {
           setAdminAuthError(data.error || 'Invalid admin password');
@@ -387,7 +387,7 @@ export default function App() {
         if (adminPasswordInput === 'meela') {
           setIsAdminAuthenticated(true);
           setAdminPasswordInput('');
-          showToast('ðŸ”“ Admin Console Unlocked!');
+          showToast('🔓 Admin Console Unlocked!');
           fetchAdminData();
         } else {
           setAdminAuthError('Invalid admin password.');
@@ -483,14 +483,14 @@ export default function App() {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          showToast(`âœ… User #${balanceModalUser.id} balance adjusted to ${data.newBalance.toLocaleString()} BONK`);
+          showToast(`✅ User #${balanceModalUser.id} balance adjusted to ${data.newBalance.toLocaleString()} BONK`);
           fetchAdminData();
           if (balanceModalUser.id === user.id) setUser(prev => ({ ...prev, balance: data.newBalance }));
           setBalanceModalUser(null);
         }
       })
       .catch(() => {
-        showToast('âœ… Balance adjusted successfully');
+        showToast('✅ Balance adjusted successfully');
         setBalanceModalUser(null);
       });
   };
@@ -507,14 +507,14 @@ export default function App() {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          showToast(`âŒ Withdrawal ${rejectWithdrawModal.id} Rejected & Refunded`);
+          showToast(`❌ Withdrawal ${rejectWithdrawModal.id} Rejected & Refunded`);
           fetchAdminData();
           setRejectWithdrawModal(null);
         }
       })
       .catch(() => {
         setAdminQueue(prev => prev.map(w => w.id === rejectWithdrawModal.id ? { ...w, status: 'failed', admin_note: rejectReasonText } : w));
-        showToast(`âŒ Withdrawal ${rejectWithdrawModal.id} Rejected & Refunded`);
+        showToast(`❌ Withdrawal ${rejectWithdrawModal.id} Rejected & Refunded`);
         setRejectWithdrawModal(null);
       });
   };
@@ -548,7 +548,7 @@ export default function App() {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          showToast('âš™ï¸ System configuration saved!');
+          showToast('⚙️ System configuration saved!');
         }
       });
   };
@@ -566,13 +566,13 @@ export default function App() {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          showToast(`âœ… User #${userId} balance adjusted to ${data.newBalance.toLocaleString()} BONK`);
+          showToast(`✅ User #${userId} balance adjusted to ${data.newBalance.toLocaleString()} BONK`);
           fetchAdminData();
           if (userId === user.id) setUser(prev => ({ ...prev, balance: data.newBalance }));
         }
       })
       .catch(() => {
-        showToast('âœ… Balance adjusted successfully');
+        showToast('✅ Balance adjusted successfully');
       });
   };
 
@@ -586,7 +586,7 @@ export default function App() {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          showToast(`User #${userId} ${newFlagged ? 'ðŸš¨ FLAGGED for review' : 'âœ… UNFLAGGED'}`);
+          showToast(`User #${userId} ${newFlagged ? '🚨 FLAGGED for review' : '✅ UNFLAGGED'}`);
           fetchAdminData();
         }
       });
@@ -601,12 +601,12 @@ export default function App() {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          showToast(`ðŸ”“ User #${userId} unblocked & access restored!`);
+          showToast(`🔓 User #${userId} unblocked & access restored!`);
           fetchAdminData();
         }
       })
       .catch(() => {
-        showToast(`ðŸ”“ User #${userId} unblocked!`);
+        showToast(`🔓 User #${userId} unblocked!`);
       });
   };
 
@@ -628,12 +628,12 @@ export default function App() {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          showToast(`ðŸ”’ User #${userId} blocked!`);
+          showToast(`🔒 User #${userId} blocked!`);
           fetchAdminData();
         }
       })
       .catch(() => {
-        showToast(`ðŸ”’ User #${userId} blocked!`);
+        showToast(`🔒 User #${userId} blocked!`);
       });
     setBlockReasonModal(null);
   };
@@ -655,7 +655,7 @@ export default function App() {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          showToast('â­ New task created!');
+          showToast('⭐ New task created!');
           setNewTaskTitle('');
           fetchAdminData();
         }
@@ -667,7 +667,7 @@ export default function App() {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          showToast('ðŸ—‘ï¸ Task removed');
+          showToast('🗑️ Task removed');
           setTasks(prev => prev.filter(t => t.id !== taskId));
           fetchAdminData();
         }
@@ -679,13 +679,13 @@ export default function App() {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          showToast(`âœ… Withdrawal ${withdrawId} Approved!`);
+          showToast(`✅ Withdrawal ${withdrawId} Approved!`);
           fetchAdminData();
         }
       })
       .catch(() => {
         setAdminQueue(prev => prev.map(w => w.id === withdrawId ? { ...w, status: 'completed', tx_hash: 'sol_mock_tx_sig_88' } : w));
-        showToast(`âœ… Withdrawal ${withdrawId} Approved!`);
+        showToast(`✅ Withdrawal ${withdrawId} Approved!`);
       });
   };
 
@@ -701,13 +701,13 @@ export default function App() {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          showToast(`âŒ Withdrawal ${withdrawId} Rejected & Refunded`);
+          showToast(`❌ Withdrawal ${withdrawId} Rejected & Refunded`);
           fetchAdminData();
         }
       })
       .catch(() => {
         setAdminQueue(prev => prev.map(w => w.id === withdrawId ? { ...w, status: 'failed', admin_note: reason } : w));
-        showToast(`âŒ Withdrawal ${withdrawId} Rejected & Refunded`);
+        showToast(`❌ Withdrawal ${withdrawId} Rejected & Refunded`);
       });
   };
 
@@ -763,7 +763,7 @@ export default function App() {
               ...prev,
               channels: prev.channels.map(c => c.username === username ? { ...c, verified: true } : c)
             }));
-            showToast(`âœ… Verified as member of @${username}!`);
+            showToast(`✅ Verified as member of @${username}!`);
           } else {
             setOnboardingErrors(prev => ({
               ...prev,
@@ -777,7 +777,7 @@ export default function App() {
             ...prev,
             [username]: 'Verification failed. Please try again in a moment.'
           }));
-          showToast('âš ï¸ Verification failed. Please try again.');
+          showToast('⚠️ Verification failed. Please try again.');
         });
     } else {
       // Demo mode (outside Telegram / no backend token)
@@ -791,14 +791,14 @@ export default function App() {
         ...prev,
         channels: prev.channels.map(c => c.username === username ? { ...c, verified: true } : c)
       }));
-      showToast(`âœ… @${username} verified (demo mode)`);
+      showToast(`✅ @${username} verified (demo mode)`);
     }
   };
 
   const handleClaimOnboardingBonus = () => {
     const allVerified = onboarding.channels.length > 0 && onboarding.channels.every(c => c.verified);
     if (!allVerified) {
-      showToast(`âš ï¸ Join & verify ALL ${onboarding.channels.length} channels first!`);
+      showToast(`⚠️ Join & verify ALL ${onboarding.channels.length} channels first!`);
       return;
     }
     setOnboardingClaiming(true);
@@ -814,24 +814,24 @@ export default function App() {
           if (data.success) {
             setUser(prev => ({ ...prev, balance: data.newBalance, onboarding_completed: 1 }));
             setShowOnboarding(false);
-            triggerCelebration(`ðŸŽ‰ Welcome bonus +${(data.bonus || onboarding.bonus).toLocaleString()} BONK claimed!`);
+            triggerCelebration(`🎉 Welcome bonus +${(data.bonus || onboarding.bonus).toLocaleString()} BONK claimed!`);
             if (token) fetchUserData(token);
           } else if (data.error && (data.error.includes('FORBIDDEN') || data.error.includes('policy review'))) {
             setOnboardingBlocked(data.error);
           } else {
-            showToast(`âŒ ${data.error || 'Unable to claim bonus. Please try again.'}`);
+            showToast(`❌ ${data.error || 'Unable to claim bonus. Please try again.'}`);
           }
         })
         .catch(() => {
           setOnboardingClaiming(false);
-          showToast('âŒ Network error claiming bonus. Please try again.');
+          showToast('❌ Network error claiming bonus. Please try again.');
         });
     } else {
       // Demo mode local claim
       setOnboardingClaiming(false);
       setUser(prev => ({ ...prev, balance: prev.balance + onboarding.bonus, onboarding_completed: 1 }));
       setShowOnboarding(false);
-      triggerCelebration(`ðŸŽ‰ Welcome bonus +${onboarding.bonus.toLocaleString()} BONK claimed!`);
+      triggerCelebration(`🎉 Welcome bonus +${onboarding.bonus.toLocaleString()} BONK claimed!`);
     }
   };
 
@@ -842,11 +842,11 @@ export default function App() {
       return;
     }
     if (adsStatus.cooldownRemaining > 0) {
-      showToast(`â³ Cooldown active: Please wait ${adsStatus.cooldownRemaining}s.`);
+      showToast(`⏳ Cooldown active: Please wait ${adsStatus.cooldownRemaining}s.`);
       return;
     }
     
-    showToast('â–¶ Launching Video Ad (15s required)...');
+    showToast('▶ Launching Video Ad (15s required)...');
     setAdsStatus(prev => ({ ...prev, isWatching: true, watchCountdown: 15, currentStep: 1 }));
 
     const startSession = (sessId) => {
@@ -861,12 +861,12 @@ export default function App() {
         })
           .then((res) => {
             setAdsStatus(prev => ({ ...prev, currentStep: 2, activeSessionId: sessId, isWatching: false }));
-            showToast(`âœ… Ad view completed (${res.provider})! Click VERIFY to proceed.`);
+            showToast(`✅ Ad view completed (${res.provider})! Click VERIFY to proceed.`);
           })
           .catch((err) => {
             // Early close / skip / ad block -> Cancel session and keep steps locked
             setAdsStatus(prev => ({ ...prev, isWatching: false, currentStep: 1, activeSessionId: null }));
-            showToast(`âš ï¸ ${err.message || 'Ad was closed early. No reward credited.'}`);
+            showToast(`⚠️ ${err.message || 'Ad was closed early. No reward credited.'}`);
           });
       });
     };
@@ -882,7 +882,7 @@ export default function App() {
             setAdsStatus(prev => ({ ...prev, activeSessionId: data.sessionId }));
             startSession(data.sessionId);
           } else {
-            showToast(`âŒ ${data.error}`);
+            showToast(`❌ ${data.error}`);
             setAdsStatus(prev => ({ 
               ...prev, 
               isWatching: false,
@@ -891,7 +891,7 @@ export default function App() {
           }
         })
         .catch(() => {
-          showToast('âŒ Server error starting ad session. Please try again.');
+          showToast('❌ Server error starting ad session. Please try again.');
           setAdsStatus(prev => ({ ...prev, isWatching: false, activeSessionId: null }));
         });
     } else {
@@ -910,23 +910,23 @@ export default function App() {
         .then(data => {
           if (data.success) {
             setAdsStatus(prev => ({ ...prev, currentStep: 3 }));
-            showToast('âœ… Ad verified by server! Click CLAIM to get +1,200 BONK.');
+            showToast('✅ Ad verified by server! Click CLAIM to get +1,200 BONK.');
           } else {
-            showToast(`âš ï¸ ${data.error || 'Playback too short. Please watch full 15s.'}`);
+            showToast(`⚠️ ${data.error || 'Playback too short. Please watch full 15s.'}`);
           }
         })
         .catch(() => {
-          showToast('âš ï¸ Verification failed. Please ensure full 15s view.');
+          showToast('⚠️ Verification failed. Please ensure full 15s view.');
         });
     } else {
-      showToast('âš ï¸ Active session expired. Please click START to watch an ad.');
+      showToast('⚠️ Active session expired. Please click START to watch an ad.');
       setAdsStatus(prev => ({ ...prev, currentStep: 1, activeSessionId: null }));
     }
   };
 
   const handleClaimAd = () => {
     if (adsStatus.currentStep < 3) {
-      showToast('âš ï¸ You must watch the complete 15s ad before claiming!');
+      showToast('⚠️ You must watch the complete 15s ad before claiming!');
       return;
     }
 
@@ -951,16 +951,16 @@ export default function App() {
               activeSessionId: null,
               cooldownRemaining: 20
             }));
-            triggerCelebration('ðŸŽ‰ +1,200 BONK credited!');
+            triggerCelebration('🎉 +1,200 BONK credited!');
           } else {
-            showToast(`âŒ ${data.error}`);
+            showToast(`❌ ${data.error}`);
           }
         })
         .catch((err) => {
-          showToast('âŒ Network error claiming ad reward. Please try again.');
+          showToast('❌ Network error claiming ad reward. Please try again.');
         });
     } else {
-      showToast('âš ï¸ Active session expired. Please click START to watch an ad.');
+      showToast('⚠️ Active session expired. Please click START to watch an ad.');
     }
   };
 
@@ -976,13 +976,13 @@ export default function App() {
           if (data.success) {
             setUser(prev => ({ ...prev, balance: data.newBalance }));
             setTasks(prev => prev.map(t => t.id === taskId ? { ...t, completed: true } : t));
-            triggerCelebration(`â­ Task completed! +${reward} BONK credited.`);
+            triggerCelebration(`⭐ Task completed! +${reward} BONK credited.`);
           }
         });
     } else {
       setUser(prev => ({ ...prev, balance: prev.balance + reward }));
       setTasks(prev => prev.map(t => t.id === taskId ? { ...t, completed: true } : t));
-      triggerCelebration(`â­ Task completed! +${reward} BONK credited.`);
+      triggerCelebration(`⭐ Task completed! +${reward} BONK credited.`);
     }
   };
 
@@ -992,19 +992,19 @@ export default function App() {
     const amt = Number(withdrawAmount);
 
     if (!amt || amt < 50000) {
-      setWithdrawMsg('âŒ Minimum withdrawal amount is 50,000 BONK');
+      setWithdrawMsg('❌ Minimum withdrawal amount is 50,000 BONK');
       return;
     }
     if (amt > user.balance) {
-      setWithdrawMsg('âŒ Insufficient BONK balance');
+      setWithdrawMsg('❌ Insufficient BONK balance');
       return;
     }
     if (!walletAddress || walletAddress.length < 32 || walletAddress.length > 44) {
-      setWithdrawMsg('âŒ Enter a valid Solana wallet address (32-44 chars base58)');
+      setWithdrawMsg('❌ Enter a valid Solana wallet address (32-44 chars base58)');
       return;
     }
     if (user.verified_ref_count < 3 && !user.withdrawal_unlocked) {
-      setWithdrawMsg('âŒ You need at least 3 verified referrals to unlock withdrawals');
+      setWithdrawMsg('❌ You need at least 3 verified referrals to unlock withdrawals');
       return;
     }
 
@@ -1024,9 +1024,9 @@ export default function App() {
             ]);
             setWithdrawAmount('');
             setWalletAddress('');
-            setWithdrawMsg('âœ… Withdrawal request submitted! Status: Pending.');
+            setWithdrawMsg('✅ Withdrawal request submitted! Status: Pending.');
           } else {
-            setWithdrawMsg(`âŒ ${data.error}`);
+            setWithdrawMsg(`❌ ${data.error}`);
           }
         });
     } else {
@@ -1037,7 +1037,7 @@ export default function App() {
       ]);
       setWithdrawAmount('');
       setWalletAddress('');
-      setWithdrawMsg('âœ… Withdrawal request submitted! Status: Pending.');
+      setWithdrawMsg('✅ Withdrawal request submitted! Status: Pending.');
     }
   };
 
@@ -1071,12 +1071,12 @@ export default function App() {
         </h2>
         <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: 16, padding: '16px 18px', maxWidth: 380, width: '100%', marginBottom: 18 }}>
           <p style={{ fontSize: 13, color: '#fca5a5', lineHeight: 1.5, margin: 0, fontWeight: 600 }}>
-            {hardBlockReason || 'â›” Duplicate account creation blocked. An account is already registered on this physical device.'}
+            {hardBlockReason || '⛔ Duplicate account creation blocked. An account is already registered on this physical device.'}
           </p>
         </div>
         <div style={{ background: 'rgba(0, 0, 0, 0.5)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: 14, padding: '14px 18px', maxWidth: 380, width: '100%', textAlign: 'left' }}>
           <div style={{ fontSize: 12, fontWeight: 800, color: '#fbbf24', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
-            ðŸ›¡ï¸ Anti-Fraud & Fair Play Policy:
+            🛡️ Anti-Fraud & Fair Play Policy:
           </div>
           <ul style={{ fontSize: 11, color: 'rgba(255, 255, 255, 0.7)', margin: 0, paddingLeft: 16, lineHeight: 1.6 }}>
             <li>Only <strong>1 account per physical device</strong> is permitted.</li>
@@ -1134,7 +1134,7 @@ export default function App() {
           />
           <div style={{ fontWeight: 900, fontSize: 22, color: '#fff', letterSpacing: '0.5px' }}>WELCOME TO BONK EARN!</div>
           <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 6, lineHeight: 1.5 }}>
-            ðŸŽ Claim your <strong style={{ color: '#fbbf24' }}>Registration Bonus: +{Number(onboarding.bonus || 1000).toLocaleString()} BONK</strong>
+            🎁 Claim your <strong style={{ color: '#fbbf24' }}>Registration Bonus: +{Number(onboarding.bonus || 1000).toLocaleString()} BONK</strong>
             <br />by joining all our official channels below. This step cannot be skipped.
           </div>
         </div>
@@ -1165,7 +1165,7 @@ export default function App() {
                 <div style={{ flex: 1 }}>
                   <div style={{ fontWeight: 800, fontSize: 15 }}>{channel.title}</div>
                   <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-                    {channel.verified ? 'âœ… Membership confirmed' : `Step ${idx + 1} of ${onboarding.channels.length} â€” join to verify`}
+                    {channel.verified ? '✅ Membership confirmed' : `Step ${idx + 1} of ${onboarding.channels.length} — join to verify`}
                   </div>
                 </div>
                 {channel.verified && <CheckCircle2 size={20} color="#34d399" />}
@@ -1193,7 +1193,7 @@ export default function App() {
                     opacity: channel.verified ? 1 : onboardingVerifying ? 0.5 : 1
                   }}
                 >
-                  {channel.verified ? 'VERIFIED âœ“' : onboardingVerifying === channel.username ? 'CHECKING...' : 'VERIFY'}
+                  {channel.verified ? 'VERIFIED ✓' : onboardingVerifying === channel.username ? 'CHECKING...' : 'VERIFY'}
                 </button>
               </div>
               {!channel.verified && onboardingErrors[channel.username] && (
@@ -1224,8 +1224,8 @@ export default function App() {
                 {onboardingClaiming
                   ? 'Claiming...'
                   : allVerified
-                  ? `ðŸŽ CLAIM ${Number(onboarding.bonus || 1000).toLocaleString()} BONK BONUS`
-                  : `ðŸ”’ CLAIM BONUS (${onboarding.channels.length - verifiedCount} channel${onboarding.channels.length - verifiedCount === 1 ? '' : 's'} left)`}
+                  ? `🎁 CLAIM ${Number(onboarding.bonus || 1000).toLocaleString()} BONK BONUS`
+                  : `🔒 CLAIM BONUS (${onboarding.channels.length - verifiedCount} channel${onboarding.channels.length - verifiedCount === 1 ? '' : 's'} left)`}
               </button>
               <div style={{ textAlign: 'center', fontSize: 11, color: 'var(--text-muted)', marginTop: 10 }}>
                 Bonus credited instantly to your balance once all channels are verified.
@@ -1259,7 +1259,7 @@ export default function App() {
               onClick={() => setActiveTab('home')} 
               style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '6px 14px', borderRadius: 20, fontSize: 12, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}
             >
-              â† Back to User Mode
+              ← Back to User Mode
             </button>
             <div style={{ fontSize: 13, fontWeight: 800, color: '#ec4899', display: 'flex', alignItems: 'center', gap: 4 }}>
               <ShieldCheck size={16} /> ADMIN CONSOLE
@@ -1339,7 +1339,7 @@ export default function App() {
 
           <div style={{ padding: '0 16px' }}>
             <button className="btn-primary" onClick={() => setActiveTab('tasks')} style={{ marginBottom: 16 }}>
-              âš¡ Go to Task Center â†’
+              ⚡ Go to Task Center →
             </button>
 
             <div className="glass-card" onClick={() => setShowRefModal(true)} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -1378,7 +1378,7 @@ export default function App() {
           <div className="glass-card">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
               <div style={{ fontWeight: 800, fontSize: 18, color: '#c084fc', display: 'flex', alignItems: 'center', gap: 6 }}>
-                <PlayCircle size={20} /> â–¶ Premium Ads
+                <PlayCircle size={20} /> ▶ Premium Ads
               </div>
               <span style={{ 
                 background: (user.ads_watched_today || 0) >= adsStatus.dailyCap ? 'rgba(239, 68, 68, 0.2)' : 'rgba(139, 92, 246, 0.2)', 
@@ -1399,7 +1399,7 @@ export default function App() {
             {/* High CPM & Ad Platform Rule Guidelines */}
             <div style={{ background: 'rgba(139, 92, 246, 0.08)', border: '1px solid rgba(139, 92, 246, 0.22)', borderRadius: 12, padding: '10px 12px', marginBottom: 14 }}>
               <div style={{ fontSize: 11, fontWeight: 800, color: '#c084fc', marginBottom: 4, display: 'flex', alignItems: 'center', gap: 5 }}>
-                ðŸ›¡ï¸ Ad Platform & CPM Rules:
+                🛡️ Ad Platform & CPM Rules:
               </div>
               <ul style={{ fontSize: 11, color: 'rgba(255, 255, 255, 0.75)', margin: 0, paddingLeft: 14, lineHeight: 1.5 }}>
                 <li><strong>Watch Full Video:</strong> Stay on screen for 15s until complete.</li>
@@ -1412,7 +1412,7 @@ export default function App() {
             {adsStatus.isWatching && (
               <div style={{ background: 'rgba(192, 132, 252, 0.12)', border: '1px solid rgba(192, 132, 252, 0.3)', borderRadius: 12, padding: '12px', marginBottom: 14, textAlign: 'center' }}>
                 <div style={{ fontSize: 13, fontWeight: 800, color: '#c084fc', marginBottom: 6 }}>
-                  â³ Playing Video Ad: {adsStatus.watchCountdown || 15}s remaining...
+                  ⏳ Playing Video Ad: {adsStatus.watchCountdown || 15}s remaining...
                 </div>
                 <div style={{ width: '100%', height: 6, background: 'rgba(255, 255, 255, 0.1)', borderRadius: 4, overflow: 'hidden' }}>
                   <div 
@@ -1453,7 +1453,7 @@ export default function App() {
                   {(user.ads_watched_today || 0) >= adsStatus.dailyCap 
                     ? 'COMPLETED' 
                     : adsStatus.cooldownRemaining > 0 
-                    ? `â³ ${adsStatus.cooldownRemaining}s` 
+                    ? `⏳ ${adsStatus.cooldownRemaining}s` 
                     : adsStatus.isWatching 
                     ? `${adsStatus.watchCountdown}s...` 
                     : 'START'}
@@ -1475,7 +1475,7 @@ export default function App() {
                   disabled={adsStatus.currentStep !== 2 || adsStatus.isWatching}
                   style={{ width: 'auto', padding: '8px 14px', fontSize: 12, minWidth: 90 }}
                 >
-                  {adsStatus.currentStep >= 3 ? 'VERIFIED âœ…' : adsStatus.currentStep === 2 ? 'VERIFY' : 'LOCKED'}
+                  {adsStatus.currentStep >= 3 ? 'VERIFIED ✅' : adsStatus.currentStep === 2 ? 'VERIFY' : 'LOCKED'}
                 </button>
               </div>
 
@@ -1503,7 +1503,7 @@ export default function App() {
           {/* Bonus Tasks Section */}
           <div className="glass-card">
             <div style={{ fontWeight: 800, fontSize: 18, color: '#fbbf24', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
-              <Award size={20} /> â­ Bonus Tasks
+              <Award size={20} /> ⭐ Bonus Tasks
             </div>
 
             {tasks.map(task => (
@@ -1540,13 +1540,13 @@ export default function App() {
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 4 }}>
                 <span style={{ fontSize: 13, fontWeight: 600 }}>Verified Referrals (Min 3):</span>
                 <span style={{ color: user.verified_ref_count >= 3 ? '#34d399' : '#f59e0b', fontWeight: 700 }}>
-                  {user.verified_ref_count}/3 {user.verified_ref_count >= 3 ? 'âœ… Unlocked' : 'ðŸ”’ Locked'}
+                  {user.verified_ref_count}/3 {user.verified_ref_count >= 3 ? '✅ Unlocked' : '🔒 Locked'}
                 </span>
               </div>
             </div>
 
             {withdrawMsg && (
-              <div style={{ fontSize: 13, marginBottom: 12, padding: 8, borderRadius: 8, background: withdrawMsg.startsWith('âœ…') ? 'rgba(52,211,153,0.15)' : 'rgba(239,68,68,0.15)', color: withdrawMsg.startsWith('âœ…') ? '#34d399' : '#f87171' }}>
+              <div style={{ fontSize: 13, marginBottom: 12, padding: 8, borderRadius: 8, background: withdrawMsg.startsWith('✅') ? 'rgba(52,211,153,0.15)' : 'rgba(239,68,68,0.15)', color: withdrawMsg.startsWith('✅') ? '#34d399' : '#f87171' }}>
                 {withdrawMsg}
               </div>
             )}
@@ -1629,8 +1629,8 @@ export default function App() {
             </div>
 
             <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 12 }}>
-              <div>â€¢ <strong>Instant Bonus:</strong> +100 BONK per referral signup</div>
-              <div>â€¢ <strong>Withdrawal Unlock:</strong> Requires 3 verified referrals</div>
+              <div>• <strong>Instant Bonus:</strong> +100 BONK per referral signup</div>
+              <div>• <strong>Withdrawal Unlock:</strong> Requires 3 verified referrals</div>
             </div>
 
             <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
@@ -1699,12 +1699,12 @@ export default function App() {
 
                 {adminAuthError && (
                   <div style={{ color: '#f87171', fontSize: 12, fontWeight: 600, marginBottom: 12 }}>
-                    âš ï¸ {adminAuthError}
+                    ⚠️ {adminAuthError}
                   </div>
                 )}
 
                 <button type="submit" className="btn-primary shimmer-btn" style={{ background: 'linear-gradient(135deg, #ec4899, #8b5cf6)', padding: '12px' }}>
-                  ðŸ”“ Unlock Admin Console
+                  🔓 Unlock Admin Console
                 </button>
               </form>
             </div>
@@ -1721,7 +1721,7 @@ export default function App() {
                     <button onClick={fetchAdminData} style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', padding: '6px 10px', borderRadius: 10, fontSize: 11, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
                       <RefreshCw size={12} /> Refresh
                     </button>
-                    <button onClick={() => { setIsAdminAuthenticated(false); showToast('ðŸ”’ Admin Console Locked'); }} style={{ background: 'rgba(239,68,68,0.2)', border: '1px solid rgba(239,68,68,0.4)', color: '#f87171', padding: '6px 10px', borderRadius: 10, fontSize: 11, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <button onClick={() => { setIsAdminAuthenticated(false); showToast('🔒 Admin Console Locked'); }} style={{ background: 'rgba(239,68,68,0.2)', border: '1px solid rgba(239,68,68,0.4)', color: '#f87171', padding: '6px 10px', borderRadius: 10, fontSize: 11, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
                       <LogOut size={12} /> Lock
                     </button>
                   </div>
@@ -1819,7 +1819,7 @@ export default function App() {
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                         <div>
                           <div style={{ fontWeight: 800, fontSize: 15, color: '#34d399' }}>{req.amount.toLocaleString()} BONK</div>
-                          <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>User ID: #{req.user_id} â€¢ {req.requested_at}</div>
+                          <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>User ID: #{req.user_id} • {req.requested_at}</div>
                         </div>
                         <span style={{ 
                           padding: '3px 8px', borderRadius: 10, fontSize: 11, fontWeight: 700, textTransform: 'capitalize',
@@ -1918,7 +1918,7 @@ export default function App() {
                     cursor: 'pointer'
                   }}
                 >
-                  ðŸš¨ Blocked ({adminUsers.filter(u => u.flagged === 1).length})
+                  🚨 Blocked ({adminUsers.filter(u => u.flagged === 1).length})
                 </button>
                 <button
                   onClick={() => { setUserFilterTab('active'); setUserListLimit(100); }}
@@ -1934,7 +1934,7 @@ export default function App() {
                     cursor: 'pointer'
                   }}
                 >
-                  âœ… Active ({adminUsers.filter(u => !u.flagged).length})
+                  ✅ Active ({adminUsers.filter(u => !u.flagged).length})
                 </button>
               </div>
 
@@ -1989,11 +1989,11 @@ export default function App() {
                           <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
                             {usr.flagged ? (
                               <span style={{ background: 'rgba(239,68,68,0.25)', color: '#f87171', border: '1px solid rgba(239,68,68,0.5)', padding: '3px 8px', borderRadius: 8, fontSize: 10, fontWeight: 800, display: 'flex', alignItems: 'center', gap: 4 }}>
-                                ðŸš¨ BLOCKED
+                                🚨 BLOCKED
                               </span>
                             ) : (
                               <span style={{ background: 'rgba(52,211,153,0.2)', color: '#34d399', border: '1px solid rgba(52,211,153,0.4)', padding: '3px 8px', borderRadius: 8, fontSize: 10, fontWeight: 700 }}>
-                                âœ… Active
+                                ✅ Active
                               </span>
                             )}
                             <button 
@@ -2009,11 +2009,11 @@ export default function App() {
                         {/* Device & Activity Hardware Metadata */}
                         <div style={{ background: 'rgba(0,0,0,0.35)', borderRadius: 8, padding: '6px 8px', marginBottom: 10, fontSize: 10, color: 'var(--text-muted)', fontFamily: 'monospace' }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
-                            <span>ðŸ“± HWID: {usr.device_id ? usr.device_id.substring(0, 24) + '...' : 'None'}</span>
-                            <span>ðŸŒ IP: {usr.ip_address || 'N/A'}</span>
+                            <span>📱 HWID: {usr.device_id ? usr.device_id.substring(0, 24) + '...' : 'None'}</span>
+                            <span>🌐 IP: {usr.ip_address || 'N/A'}</span>
                           </div>
                           <div>
-                            ðŸ“Š Ads: <strong style={{ color: '#fff' }}>{usr.ads_watched_total}</strong> â€¢ Referrals: <strong style={{ color: '#fff' }}>{usr.referral_count}</strong> ({usr.verified_ref_count} Verified)
+                            📊 Ads: <strong style={{ color: '#fff' }}>{usr.ads_watched_total}</strong> • Referrals: <strong style={{ color: '#fff' }}>{usr.referral_count}</strong> ({usr.verified_ref_count} Verified)
                           </div>
                         </div>
 
@@ -2027,7 +2027,7 @@ export default function App() {
                             }}
                             style={{ flex: 1, background: 'rgba(139, 92, 246, 0.2)', border: '1px solid rgba(139, 92, 246, 0.4)', color: '#c084fc', padding: '7px 0', borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: 'pointer' }}
                           >
-                            âœï¸ Edit Balance
+                            ✏️ Edit Balance
                           </button>
 
                           {usr.flagged ? (
@@ -2035,14 +2035,14 @@ export default function App() {
                               onClick={() => handleUnblockUser(usr.id)}
                               style={{ flex: 1.2, background: 'linear-gradient(135deg, #059669 0%, #34d399 100%)', border: 'none', color: '#000', padding: '7px 0', borderRadius: 8, fontSize: 11, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}
                             >
-                              ðŸ”“ Unlock & Restore
+                              🔓 Unlock & Restore
                             </button>
                           ) : (
                             <button 
                               onClick={() => handleBlockUser(usr)}
                               style={{ flex: 1, background: 'rgba(239,68,68,0.2)', border: '1px solid rgba(239,68,68,0.4)', color: '#f87171', padding: '7px 0', borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}
                             >
-                              ðŸ”’ Block Account
+                              🔒 Block Account
                             </button>
                           )}
                         </div>
@@ -2102,7 +2102,7 @@ export default function App() {
                     <div key={log.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: '1px solid rgba(255,255,255,0.04)', fontSize: 12 }}>
                       <div>
                         <div style={{ fontWeight: 700, color: '#fff' }}>{log.description}</div>
-                        <div style={{ fontSize: 10, color: 'var(--text-muted)' }}>User #{log.user_id} â€¢ Type: <span style={{ color: '#c084fc' }}>{log.type}</span> â€¢ {log.created_at}</div>
+                        <div style={{ fontSize: 10, color: 'var(--text-muted)' }}>User #{log.user_id} • Type: <span style={{ color: '#c084fc' }}>{log.type}</span> • {log.created_at}</div>
                       </div>
                       <div style={{ fontWeight: 800, fontSize: 13, color: log.amount >= 0 ? '#34d399' : '#f87171' }}>
                         {log.amount >= 0 ? `+${log.amount.toLocaleString()}` : log.amount.toLocaleString()} BONK
@@ -2351,16 +2351,16 @@ export default function App() {
           <div className="glass-card" onClick={e => e.stopPropagation()} style={{ width: '100%', maxWidth: 360, margin: 0 }}>
             <div style={{ fontWeight: 800, fontSize: 18, color: '#f87171', marginBottom: 4 }}>Reject Withdrawal</div>
             <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 12 }}>
-              Amount: {rejectWithdrawModal.amount.toLocaleString()} BONK â€¢ User #{rejectWithdrawModal.user_id}
+              Amount: {rejectWithdrawModal.amount.toLocaleString()} BONK • User #{rejectWithdrawModal.user_id}
             </div>
 
             <form onSubmit={handleConfirmRejectWithdrawal}>
               <div style={{ marginBottom: 12 }}>
                 <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 4 }}>SELECT REASON PRESET</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 8 }}>
-                  <button type="button" onClick={() => setRejectReasonText('Flagged for referral farming/self-referrals')} style={{ textAlign: 'left', background: 'rgba(255,255,255,0.06)', border: 'none', color: '#fff', padding: '6px 10px', borderRadius: 6, fontSize: 11, cursor: 'pointer' }}>â€¢ Referral farming detected</button>
-                  <button type="button" onClick={() => setRejectReasonText('Invalid or suspicious Solana wallet address')} style={{ textAlign: 'left', background: 'rgba(255,255,255,0.06)', border: 'none', color: '#fff', padding: '6px 10px', borderRadius: 6, fontSize: 11, cursor: 'pointer' }}>â€¢ Invalid Solana address</button>
-                  <button type="button" onClick={() => setRejectReasonText('Multiple accounts detected on same IP')} style={{ textAlign: 'left', background: 'rgba(255,255,255,0.06)', border: 'none', color: '#fff', padding: '6px 10px', borderRadius: 6, fontSize: 11, cursor: 'pointer' }}>â€¢ Multi-account violation</button>
+                  <button type="button" onClick={() => setRejectReasonText('Flagged for referral farming/self-referrals')} style={{ textAlign: 'left', background: 'rgba(255,255,255,0.06)', border: 'none', color: '#fff', padding: '6px 10px', borderRadius: 6, fontSize: 11, cursor: 'pointer' }}>• Referral farming detected</button>
+                  <button type="button" onClick={() => setRejectReasonText('Invalid or suspicious Solana wallet address')} style={{ textAlign: 'left', background: 'rgba(255,255,255,0.06)', border: 'none', color: '#fff', padding: '6px 10px', borderRadius: 6, fontSize: 11, cursor: 'pointer' }}>• Invalid Solana address</button>
+                  <button type="button" onClick={() => setRejectReasonText('Multiple accounts detected on same IP')} style={{ textAlign: 'left', background: 'rgba(255,255,255,0.06)', border: 'none', color: '#fff', padding: '6px 10px', borderRadius: 6, fontSize: 11, cursor: 'pointer' }}>• Multi-account violation</button>
                 </div>
 
                 <input 
