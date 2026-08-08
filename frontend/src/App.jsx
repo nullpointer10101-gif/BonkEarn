@@ -120,6 +120,8 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('home'); // 'home' | 'tasks' | 'withdraw' | 'admin'
   const [showRefModal, setShowRefModal] = useState(false);
   const [token, setToken] = useState(null);
+  const tokenRef = useRef(null);
+  useEffect(() => { tokenRef.current = token; }, [token]);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
   
   // Real clean initial state - 0 fake balance
@@ -339,6 +341,29 @@ export default function App() {
       .then(data => data && setSysConfig(prev => ({ ...prev, ...data })))
       .catch(() => {});
   };
+
+  // Keep system config (and daily-cap display) live: poll the public config + ad status
+  // so admin settings apply to already-open user sessions immediately.
+  const refreshLiveConfig = () => {
+    fetch(`${API_BASE}/config`)
+      .then(res => res.json())
+      .then(data => data && setSysConfig(prev => ({ ...prev, ...data })))
+      .catch(() => {});
+    const activeToken = tokenRef.current;
+    if (activeToken) {
+      fetch(`${API_BASE}/ads/status`, { headers: { Authorization: `Bearer ${activeToken}` } })
+        .then(res => res.json())
+        .then(data => data && data.dailyCap && setAdsStatus(data))
+        .catch(() => {});
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(refreshLiveConfig, 25000);
+    const onFocus = () => refreshLiveConfig();
+    window.addEventListener('focus', onFocus);
+    return () => { clearInterval(interval); window.removeEventListener('focus', onFocus); };
+  }, []);
 
   const [isPulsing, setIsPulsing] = useState(false);
   const [adminStats, setAdminStats] = useState({ totalUsers: 0, totalAds: 0, pendingWithdrawals: 0 });
