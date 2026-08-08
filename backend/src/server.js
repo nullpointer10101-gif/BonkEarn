@@ -669,6 +669,14 @@ app.post('/admin/tasks', (req, res) => {
   res.json({ success: true, taskId });
 });
 
+app.get('/admin/tasks', (req, res) => {
+  const tasks = db.prepare('SELECT * FROM tasks').all();
+  res.json(tasks.map(task => ({
+    ...task,
+    verification_data: JSON.parse(task.verification_data || '{}')
+  })));
+});
+
 app.delete('/admin/tasks/:id', (req, res) => {
   const taskId = req.params.id;
   db.prepare('DELETE FROM tasks WHERE id = ?').run(taskId);
