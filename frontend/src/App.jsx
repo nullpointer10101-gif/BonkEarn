@@ -193,15 +193,6 @@ export default function App() {
     return () => cancelAnimationFrame(raf);
   }, [user.balance]);
 
-  // Smooth scroll to top whenever the screen changes
-  useEffect(() => {
-    try {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } catch (e) {
-      window.scrollTo(0, 0);
-    }
-  }, [activeTab, adminSubTab]);
-
   // Withdraw Form State
   const [withdrawAmount, setWithdrawAmount] = useState('');
   const [walletAddress, setWalletAddress] = useState('');
@@ -344,6 +335,15 @@ export default function App() {
   const [adminStats, setAdminStats] = useState({ totalUsers: 0, totalAds: 0, pendingWithdrawals: 0 });
   const [adminQueue, setAdminQueue] = useState([]);
   const [adminSubTab, setAdminSubTab] = useState('stats');
+
+  // Smooth scroll to top whenever the screen changes
+  useEffect(() => {
+    try {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (e) {
+      window.scrollTo(0, 0);
+    }
+  }, [activeTab, adminSubTab]);
 
   const [adminUsers, setAdminUsers] = useState([
     { id: 99887766, username: 'crypto_earner', first_name: 'Alex', balance: 81000, ads_watched_total: 10, referral_count: 5, verified_ref_count: 3, flagged: 0 }
