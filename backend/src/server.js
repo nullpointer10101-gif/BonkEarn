@@ -886,7 +886,13 @@ const BONK_IMAGE_URL = 'https://raw.githubusercontent.com/nullpointer10101-gif/B
 
 let botInstance = null;
 
-if (BOT_TOKEN && BOT_TOKEN !== 'MOCK_BOT_TOKEN' && BOT_TOKEN.includes(':')) {
+// The web service runs the API; the dedicated "BonkEarn-Telegram-Bot" service
+// owns the bot. Running Telegraf here too with the same token causes Telegram
+// 409 conflicts / webhook-overwrite between the two instances => only run when
+// explicitly enabled with RUN_TELEGRAM_BOT=true.
+const RUN_TELEGRAM_BOT = process.env.RUN_TELEGRAM_BOT === 'true';
+
+if (BOT_TOKEN && RUN_TELEGRAM_BOT && BOT_TOKEN !== 'MOCK_BOT_TOKEN' && BOT_TOKEN.includes(':')) {
   try {
     botInstance = new Telegraf(BOT_TOKEN);
 
