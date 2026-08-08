@@ -422,6 +422,9 @@ app.post('/ads/start', authenticateToken, (req, res) => {
     VALUES (?, ?, 1, ?, 1200)
   `).run(sessionId, userId, adToken);
 
+  // Stamp the cooldown clock at session START so repeated start/abandon spam is also throttled
+  db.prepare('UPDATE users SET last_ad_watched_at = ? WHERE id = ?').run(new Date().toISOString(), userId);
+
   res.json({ 
     success: true, 
     sessionId, 

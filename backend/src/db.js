@@ -335,6 +335,15 @@ class DbWrapper {
           return { changes: 1 };
         }
 
+        if (cleanSql.includes('UPDATE users SET last_ad_watched_at = ? WHERE id = ?')) {
+          const u = memoryDb.users.find(x => x.id === Number(params[1]));
+          if (u) {
+            u.last_ad_watched_at = String(params[0]);
+            saveData(memoryDb);
+          }
+          return { changes: 1 };
+        }
+
         if (cleanSql.includes('UPDATE users SET balance = balance + ?')) {
           const amt = Number(params[0]);
           const userId = Number(params[params.length - 1]);
