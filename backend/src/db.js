@@ -61,11 +61,79 @@ function loadData() {
   }
 }
 
+// --- Git snapshot mirror ----------------------------------------------------
+// Render's filesystem is ephemeral (wiped on every redeploy), so a local
+// earn_data.json alone means user accounts/balances reset on deploy. To survive,
+// the app mirrors the db file back to the GitHub repo via the Contents API
+// (no git binary / .git folder required). Restore is automatic: the tracked
+// file comes down with the deploy and is loaded on boot.
+// Required env vars (set in Render dashboard):
+//   GIT_PERSIST_TOKEN = GitHub personal access token with "Contents: write" (repo) scope
+//   GIT_PERSIST_REPO  = "owner/repo" e.g. "nullpointer10101-gif/BonkEarn"
+const GIT_REPO_PATH = 'backend/earn_data.json';
+let lastPushedFingerprint = '';
+let gitPushTimer = null;
+
+function scheduleGitPush() {
+  if (gitPushTimer) clearTimeout(gitPushTimer);
+  gitPushTimer = setTimeout(() => { flushGitPush(); }, 45000);
+}
+
+async function flushGitPush() {
+  const token = process.env.GIT_PERSIST_TOKEN;
+  const repo = process.env.GIT_PERSIST_REPO;
+  if (!token || !repo) return;
+
+  let content;
+  try {
+    content = fs.readFileSync(dbFilePath, 'utf8');
+  } catch (e) {
+    return;
+  }
+  if (content === lastPushedFingerprint) return;
+
+  const apiUrl = `https://api.github.com/repos/${repo}/contents/${GIT_REPO_PATH}`;
+  const headers = { Authorization: `token ${token}`, Accept: 'application/vnd.github+json' };
+  try {
+    // Fetch current SHA so GitHub updates (not duplicates) the file.
+    let sha;
+    const getRes = await fetch(apiUrl, { headers });
+    if (getRes.ok) sha = (await getRes.json()).sha;
+
+    const putRes = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: { ...headers, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: 'db: persist earn_data snapshot',
+        content: Buffer.from(content, 'utf8').toString('base64'),
+        ...(sha ? { sha } : {})
+      })
+    });
+
+    if (putRes.ok) {
+      lastPushedFingerprint = content;
+    } else {
+      const body = (await putRes.text()).slice(0, 300);
+      console.log(`git-persist: push failed (${putRes.status}) ${body}`);
+    }
+  } catch (e) {
+    console.log(`git-persist: error ${e.message}`);
+  }
+}
+
+// Flush pending snapshot before shutdown (Render sends SIGTERM on redeploy).
+process.on('SIGTERM', () => { flushGitPush(); });
+process.on('SIGINT', () => { flushGitPush(); });
+
 function saveData(data) {
   fs.writeFileSync(dbFilePath, JSON.stringify(data, null, 2), 'utf8');
+  scheduleGitPush();
 }
 
 const memoryDb = loadData();
+
+// Seed fingerprint with what we just loaded so boot doesn't create a no-op push.
+try { lastPushedFingerprint = fs.readFileSync(dbFilePath, 'utf8'); } catch (e) {}
 
 // Clean SQLite query interface emulation for seamless backend operation
 class DbWrapper {
