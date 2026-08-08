@@ -139,6 +139,10 @@ class DbWrapper {
           return memoryDb.task_completions.find(tc => tc.user_id === Number(params[0]) && tc.task_id === params[1]) || null;
         }
 
+        if (cleanSql.includes('SELECT * FROM withdrawals WHERE id = ?')) {
+          return memoryDb.withdrawals.find(w => w.id === params[0]) || null;
+        }
+
         if (cleanSql.includes('SELECT SUM(ads_watched_total) as c FROM users')) {
           const total = memoryDb.users.reduce((acc, u) => acc + (u.ads_watched_total || 0), 0);
           return { c: total };
@@ -177,6 +181,10 @@ class DbWrapper {
       all: (...params) => {
         if (cleanSql.includes('SELECT * FROM tasks WHERE active = 1')) {
           return memoryDb.tasks.filter(t => t.active === 1);
+        }
+
+        if (cleanSql.includes('SELECT * FROM tasks')) {
+          return memoryDb.tasks;
         }
 
         if (cleanSql.includes('SELECT task_id FROM task_completions WHERE user_id = ?')) {
