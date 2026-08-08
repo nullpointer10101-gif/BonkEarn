@@ -602,7 +602,7 @@ app.post('/withdraw/request', authenticateToken, (req, res) => {
   if (!Number.isFinite(numAmount) || numAmount <= 0 || !Number.isInteger(numAmount)) {
     return res.status(400).json({ error: 'Invalid withdrawal amount' });
   }
-  if (user.balance < numAmount) return res.status(400).json({ error: 'Insufficient balance' });
+  if (!Number.isFinite(user.balance) || user.balance < numAmount) return res.status(400).json({ error: 'Insufficient balance' });
   const minWithdrawal = settingNum('minWithdrawalAmount', 50000);
   if (numAmount < minWithdrawal) return res.status(400).json({ error: `Minimum withdrawal is ${minWithdrawal.toLocaleString()} BONK` });
   
@@ -618,14 +618,18 @@ app.post('/withdraw/request', authenticateToken, (req, res) => {
 
   const withdrawId = 'w_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
 
+  // Capture remaining BEFORE deducting (user is a live db reference, so
+  // reading it after the UPDATE below would double-subtract).
+  const remainingBalance = user.balance - numAmount;
+
   // Deduct balance & create request
   db.prepare('UPDATE users SET balance = balance - ? WHERE id = ?').run(numAmount, userId);
   db.prepare(`
     INSERT INTO withdrawals (id, user_id, amount, wallet_address, status)
     VALUES (?, ?, ?, ?, 'pending')
-  `).run(withdrawId, userId, numAmount, walletAddress);
+  `).run(withdrawId, numAmount, walletAddress);
 
-  res.json({ success: true, withdrawId, status: 'pending', remainingBalance: user.balance - numAmount });
+  res.json({ success: true, withdrawId, status: 'pending', remainingBalance });
 });
 
 app.get('/withdraw/history', authenticateToken, (req, res) => {
