@@ -105,6 +105,18 @@ class DbWrapper {
           return u ? { verified_ref_count: u.verified_ref_count } : null;
         }
 
+        if (cleanSql.includes('SELECT balance FROM users WHERE id = ?')) {
+          const u = memoryDb.users.find(x => x.id === Number(params[0]));
+          return u ? { balance: u.balance } : null;
+        }
+
+        if (cleanSql.includes('FROM users WHERE referrer_id = ?')) {
+          const referrerId = Number(params[0]);
+          return memoryDb.users
+            .filter(x => x.referrer_id === referrerId)
+            .map(x => ({ id: x.id, username: x.username || '', first_name: x.first_name || '', ads_watched_total: x.ads_watched_total || 0 }));
+        }
+
         if (cleanSql.includes('SELECT * FROM ad_sessions WHERE user_id = ? AND claimed_at IS NULL')) {
           const userId = Number(params[0]);
           const sessions = memoryDb.ad_sessions.filter(s => s.user_id === userId && !s.claimed_at);

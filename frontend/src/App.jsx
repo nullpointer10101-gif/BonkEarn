@@ -996,7 +996,7 @@ export default function App() {
         .then(data => {
           if (data.success) {
             setAdsStatus(prev => ({ ...prev, currentStep: 3 }));
-            showToast('✅ Ad verified by server! Click CLAIM to get +1,200 BONK.');
+            showToast(`✅ Ad verified by server! Click CLAIM to get +${Number(adsStatus.rewardPerAd || sysConfig.adRewardAmount).toLocaleString()} BONK.`);
           } else {
             showToast(`⚠️ ${data.error || 'Playback too short. Please watch full 15s.'}`);
           }
@@ -1037,7 +1037,7 @@ export default function App() {
               activeSessionId: null,
               cooldownRemaining: 20
             }));
-            triggerCelebration('🎉 +1,200 BONK credited!');
+            triggerCelebration(`🎉 +${Number(adsStatus.rewardPerAd || sysConfig.adRewardAmount).toLocaleString()} BONK credited!`);
           } else {
             showToast(`❌ ${data.error}`);
           }
@@ -1441,7 +1441,7 @@ export default function App() {
               <div className="stat-label">Referrals</div>
             </div>
             <div className="stat-tile">
-              <div className="stat-value" style={{ color: '#34d399' }}>{user.verified_ref_count}/3</div>
+              <div className="stat-value" style={{ color: '#34d399' }}>{user.verified_ref_count}/{sysConfig.minVerifiedRefs}</div>
               <div className="stat-label">Verified Refs</div>
             </div>
             <div className="stat-tile">
@@ -1462,7 +1462,7 @@ export default function App() {
                 </div>
                 <div>
                   <div style={{ fontWeight: 700, fontSize: 15 }}>Referral Program</div>
-                  <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Invite & Earn 10,000 BONK</div>
+                  <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Invite & Earn {Number(sysConfig.referralSignupBonus).toLocaleString()} BONK</div>
                 </div>
               </div>
               <ChevronRight size={18} color="var(--text-muted)" />
