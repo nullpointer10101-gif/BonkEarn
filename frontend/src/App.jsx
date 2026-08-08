@@ -991,7 +991,7 @@ export default function App() {
         .then(res => res.json())
         .then(data => {
           if (data.success) {
-            setAdsStatus(prev => ({ ...prev, activeSessionId: data.sessionId }));
+            setAdsStatus(prev => ({ ...prev, activeSessionId: data.sessionId, rewardPerAd: data.rewardAmount || prev.rewardPerAd }));
             startSession(data.sessionId);
           } else {
             showToast(`❌ ${data.error}`);
@@ -1063,7 +1063,7 @@ export default function App() {
               activeSessionId: null,
               cooldownRemaining: 20
             }));
-            triggerCelebration(`🎉 +${Number(adsStatus.rewardPerAd || sysConfig.adRewardAmount).toLocaleString()} BONK credited!`);
+            triggerCelebration(`🎉 +${Number(data.reward !== undefined ? data.reward : sysConfig.adRewardAmount).toLocaleString()} BONK credited!`);
           } else {
             showToast(`❌ ${data.error}`);
           }

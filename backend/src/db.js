@@ -530,5 +530,16 @@ export function resetDatabase() {
   return true;
 }
 
+// Durability: admin settings are also snapshotted inside the db file so a fresh
+// settings.json (e.g. after a redeploy) still restores the admin's last-saved values.
+export function getStoredSettings() {
+  return memoryDb._settings || null;
+}
+
+export function storeSettingsSnapshot(settings) {
+  memoryDb._settings = { ...settings };
+  saveData(memoryDb);
+}
+
 const db = new DbWrapper();
 export default db;

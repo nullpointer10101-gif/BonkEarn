@@ -10,7 +10,7 @@ dotenv.config();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-import db, { resetDatabase } from './db.js';
+import db, { resetDatabase, getStoredSettings, storeSettingsSnapshot } from './db.js';
 
 const app = express();
 app.use(cors());
@@ -802,6 +802,10 @@ try {
   const settingsFile = path.join(__dirname, '../settings.json');
   if (fs.existsSync(settingsFile)) {
     Object.assign(systemSettings, JSON.parse(fs.readFileSync(settingsFile, 'utf8')));
+  } else {
+    // settings.json missing (fresh deploy) -> restore last-saved admin values from the db snapshot
+    const snap = getStoredSettings();
+    if (snap) Object.assign(systemSettings, snap);
   }
 } catch (e) {}
 
@@ -809,6 +813,9 @@ function persistSettings() {
   try {
     const settingsFile = path.join(__dirname, '../settings.json');
     fs.writeFileSync(settingsFile, JSON.stringify(systemSettings, null, 2), 'utf8');
+  } catch (e) {}
+  try {
+    storeSettingsSnapshot(systemSettings);
   } catch (e) {}
 }
 
