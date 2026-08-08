@@ -339,7 +339,7 @@ export default function App() {
   const [adminQueue, setAdminQueue] = useState([]);
   const [adminSubTab, setAdminSubTab] = useState('stats');
 
-  // Robust scroll to top whenever the screen changes
+    // Robust scroll to top whenever the screen changes
   useEffect(() => {
     const resetScroll = () => {
       try { window.scrollTo(0, 0); } catch (e) {}
@@ -355,6 +355,35 @@ export default function App() {
     return () => clearTimeout(retry);
   }, [activeTab, adminSubTab]);
 
+  // Bulletproof the #root scroll container: Telegram's SDK injects overflow:hidden +
+  // position:fixed on body after load, which freezes document scrolling. Keep the
+  // height chain and the inner scroll container enforced at runtime too.
+  useEffect(() => {
+    const enforceScroll = () => {
+      try {
+        const root = document.getElementById('root');
+        if (!root) return;
+        root.style.height = '100%';
+        root.style.overflowY = 'auto';
+        root.style.overflowX = 'hidden';
+        root.style.overscrollBehaviorY = 'contain';
+        root.style.WebkitOverflowScrolling = 'touch';
+        document.documentElement.style.height = '100%';
+        document.body.style.height = '100%';
+        document.body.style.overflow = 'hidden';
+      } catch (e) {}
+    };
+    enforceScroll();
+    const t1 = setTimeout(enforceScroll, 1200);
+    const t2 = setTimeout(enforceScroll, 4000);
+    window.addEventListener('resize', enforceScroll);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      window.removeEventListener('resize', enforceScroll);
+    };
+  }, []);
+
   const [adminUsers, setAdminUsers] = useState([
     { id: 99887766, username: 'crypto_earner', first_name: 'Alex', balance: 81000, ads_watched_total: 10, referral_count: 5, verified_ref_count: 3, flagged: 0 }
   ]);
@@ -365,19 +394,23 @@ export default function App() {
   ]);
   // Admin Security Auth State
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
-  const [adminToken, setAdminToken] = useState(null);
   const [adminPasswordInput, setAdminPasswordInput] = useState('');
   const [adminAuthError, setAdminAuthError] = useState('');
   const [showAdminPw, setShowAdminPw] = useState(false);
 
+  // Token ref keeps adminFetch reading the current token synchronously,
+  // so a login-then-fetchAdminData() sequence can never fire with a stale token (401 "session expired" false alarm).
+  const adminTokenRef = useRef(null);
+  const syncAdminToken = (t) => { adminTokenRef.current = t; };
+
   // Authenticated admin fetch: attaches admin JWT, auto-expires session on 401
   const adminFetch = (url, opts = {}) => {
     const headers = { ...(opts.headers || {}) };
-    if (adminToken) headers['Authorization'] = `Bearer ${adminToken}`;
+    if (adminTokenRef.current) headers['Authorization'] = `Bearer ${adminTokenRef.current}`;
     return fetch(url, { ...opts, headers }).then(res => {
       if (res.status === 401) {
         setIsAdminAuthenticated(false);
-        setAdminToken(null);
+        adminTokenRef.current = null;
         try { localStorage.removeItem('bonk_admin_token'); } catch (e) {}
         showToast('🔒 Admin session expired. Re-enter password to continue.');
         throw new Error('Admin session expired');
@@ -389,7 +422,7 @@ export default function App() {
   useEffect(() => {
     try {
       const saved = localStorage.getItem('bonk_admin_token');
-      if (saved) setAdminToken(saved);
+      if (saved) adminTokenRef.current = saved;
     } catch (e) {}
   }, []);
 
@@ -406,7 +439,7 @@ export default function App() {
       .then(data => {
         if (data.success) {
           setIsAdminAuthenticated(true);
-          setAdminToken(data.adminToken || null);
+          syncAdminToken(data.adminToken || null);
           try { localStorage.setItem('bonk_admin_token', data.adminToken); } catch (e) {}
           setAdminPasswordInput('');
           showToast('🔓 Admin Console Unlocked!');
