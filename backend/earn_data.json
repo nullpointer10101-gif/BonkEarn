@@ -17,7 +17,8 @@
       "verified_ref_count": 0,
       "withdrawal_unlocked": 0,
       "created_at": "2026-08-07T20:03:06.286Z",
-      "last_ad_watched_at": "2026-08-07T20:05:39.102Z"
+      "last_ad_watched_at": "2026-08-07T20:05:39.102Z",
+      "onboarding_completed": 0
     },
     {
       "id": 777000111,
@@ -36,7 +37,27 @@
       "verified_ref_count": 0,
       "withdrawal_unlocked": 0,
       "created_at": "2026-08-07T20:17:11.807Z",
-      "last_ad_watched_at": "2026-08-07T20:23:16.320Z"
+      "last_ad_watched_at": "2026-08-07T20:23:16.320Z",
+      "onboarding_completed": 0
+    },
+    {
+      "id": 99887766,
+      "username": "crypto_earner",
+      "first_name": "Alex",
+      "balance": 0,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-08",
+      "referrer_id": null,
+      "ip_address": "13.57.148.235",
+      "device_id": "hw_TW96aWxsYS81LjAgKFgxMTsgTGludXgg",
+      "persistent_token": "dev_uuid_v3aoieqwbn_mskia9pk",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 0,
+      "created_at": "2026-08-08T15:05:50.364Z"
     }
   ],
   "ad_sessions": [
