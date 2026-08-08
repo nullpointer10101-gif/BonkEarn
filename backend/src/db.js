@@ -273,11 +273,23 @@ class DbWrapper {
           return { changes: 1 };
         }
 
-        if (cleanSql.includes('UPDATE users SET verified_ref_count = verified_ref_count + 1, balance = balance + 10000 WHERE id = ?')) {
-          const u = memoryDb.users.find(x => x.id === Number(params[0]));
+        if (cleanSql.includes('UPDATE users SET verified_ref_count = verified_ref_count + 1, balance = balance + ?')) {
+          const bonus = Number(params[0]) || 0;
+          const u = memoryDb.users.find(x => x.id === Number(params[1]));
           if (u) {
             u.verified_ref_count += 1;
-            u.balance += 10000;
+            u.balance += bonus;
+            saveData(memoryDb);
+          }
+          return { changes: 1 };
+        }
+
+        if (cleanSql.includes('UPDATE users SET balance = balance + ?, referral_count = referral_count + 1 WHERE id = ?')) {
+          const bonus = Number(params[0]) || 0;
+          const u = memoryDb.users.find(x => x.id === Number(params[1]));
+          if (u) {
+            u.balance += bonus;
+            u.referral_count = (u.referral_count || 0) + 1;
             saveData(memoryDb);
           }
           return { changes: 1 };

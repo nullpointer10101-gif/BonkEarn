@@ -332,6 +332,12 @@ export default function App() {
       .then(res => res.json())
       .then(data => Array.isArray(data) && setWithdrawHistory(data))
       .catch(() => {});
+
+    // Live system config - mirrors exactly what the admin saved (bonuses, limits, unlock requirements)
+    fetch(`${API_BASE}/config`)
+      .then(res => res.json())
+      .then(data => data && setSysConfig(prev => ({ ...prev, ...data })))
+      .catch(() => {});
   };
 
   const [isPulsing, setIsPulsing] = useState(false);
@@ -1045,6 +1051,15 @@ export default function App() {
   };
 
   // --- BONUS TASK CLAIM ---
+  const handleTaskJoin = (task) => {
+    const url = task.verification_data?.url;
+    if (!url) {
+      showToast('This task has no link yet - click CLAIM to complete it');
+      return;
+    }
+    openExternalLink(url);
+  };
+
   const handleClaimTask = (taskId, reward) => {
     if (token) {
       fetch(`${API_BASE}/tasks/${taskId}/claim`, {
@@ -1056,13 +1071,18 @@ export default function App() {
           if (data.success) {
             setUser(prev => ({ ...prev, balance: data.newBalance }));
             setTasks(prev => prev.map(t => t.id === taskId ? { ...t, completed: true } : t));
-            triggerCelebration(`⭐ Task completed! +${reward} BONK credited.`);
+            triggerCelebration(`Task completed! +${reward} BONK credited.`);
+          } else {
+            showToast(data.error || 'Could not complete task. Try again.');
           }
+        })
+        .catch(() => {
+          showToast('Network error completing task. Try again.');
         });
     } else {
       setUser(prev => ({ ...prev, balance: prev.balance + reward }));
       setTasks(prev => prev.map(t => t.id === taskId ? { ...t, completed: true } : t));
-      triggerCelebration(`⭐ Task completed! +${reward} BONK credited.`);
+      triggerCelebration(`Task completed! +${reward} BONK credited.`);
     }
   };
 
@@ -1076,8 +1096,8 @@ export default function App() {
       setWithdrawMsg('❌ Enter a valid BONK amount');
       return;
     }
-    if (amt < 50000) {
-      setWithdrawMsg('❌ Minimum withdrawal amount is 50,000 BONK');
+    if (amt < sysConfig.minWithdrawalAmount) {
+      setWithdrawMsg(`Minimum withdrawal amount is ${Number(sysConfig.minWithdrawalAmount).toLocaleString()} BONK`);
       return;
     }
     if (amt > user.balance) {
@@ -1088,8 +1108,8 @@ export default function App() {
       setWithdrawMsg('❌ Enter a valid Solana wallet address (32-44 chars base58)');
       return;
     }
-    if (user.verified_ref_count < 3 && !user.withdrawal_unlocked) {
-      setWithdrawMsg('❌ You need at least 3 verified referrals to unlock withdrawals');
+    if (user.verified_ref_count < sysConfig.minVerifiedRefs && !user.withdrawal_unlocked) {
+      setWithdrawMsg(`You need at least ${sysConfig.minVerifiedRefs} verified referrals to unlock withdrawals`);
       return;
     }
 
@@ -1486,7 +1506,7 @@ export default function App() {
             </div>
             
             <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 12, lineHeight: 1.4 }}>
-              Watch verified video ads to earn <strong style={{ color: '#fbbf24' }}>1,200 BONK</strong> per view. Daily reset at 00:00 UTC.
+              Watch verified video ads to earn <strong style={{ color: '#fbbf24' }}>{Number(sysConfig.adRewardAmount).toLocaleString()} BONK</strong> per view. Daily reset at 00:00 UTC.
             </div>
 
             {/* High CPM & Ad Platform Rule Guidelines */}
@@ -1497,7 +1517,7 @@ export default function App() {
               <ul style={{ fontSize: 11, color: 'rgba(255, 255, 255, 0.75)', margin: 0, paddingLeft: 14, lineHeight: 1.5 }}>
                 <li><strong>Watch Full Video:</strong> Stay on screen for 15s until complete.</li>
                 <li><strong>Explore Sponsors:</strong> Click sponsor links/installs to boost engagement and maximize rewards!</li>
-                <li><strong>Fair Play Limit:</strong> 10 daily ads with 20s cooldown between views.</li>
+                <li><strong>Fair Play Limit:</strong> {sysConfig.dailyAdCap} daily ads with 20s cooldown between views.</li>
               </ul>
             </div>
 
@@ -1578,7 +1598,7 @@ export default function App() {
                   <div className="step-num" style={{ background: adsStatus.currentStep === 3 ? '#10b981' : '#374151' }}>3</div>
                   <div>
                     <div style={{ fontWeight: 700, fontSize: 14 }}>Claim Reward</div>
-                    <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>+1,200 BONK credited to balance</div>
+                    <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>+{Number(adsStatus.rewardPerAd || sysConfig.adRewardAmount).toLocaleString()} BONK credited to balance</div>
                   </div>
                 </div>
                 <button 
@@ -1601,18 +1621,33 @@ export default function App() {
 
             {tasks.map(task => (
               <div key={task.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                <div>
+                <div style={{ flex: 1, minWidth: 0, marginRight: 10 }}>
                   <div style={{ fontWeight: 600, fontSize: 14 }}>{task.title}</div>
-                  <div style={{ fontSize: 12, color: '#34d399', fontWeight: 700 }}>+{task.reward_amount.toLocaleString()} BONK</div>
+                  <div style={{ fontSize: 12, color: '#34d399', fontWeight: 700 }}>+{Number(task.reward_amount || 0).toLocaleString()} BONK</div>
+                  {!task.completed && task.verification_data?.url && (
+                    <div style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 2, wordBreak: 'break-all' }}>
+                      {task.verification_data.url}
+                    </div>
+                  )}
                 </div>
                 {task.completed ? (
                   <span style={{ color: '#34d399', fontSize: 12, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4 }}>
                     <CheckCircle2 size={16} /> Completed
                   </span>
                 ) : (
-                  <button className="btn-primary btn-green" onClick={() => handleClaimTask(task.id, task.reward_amount)} style={{ width: 'auto', padding: '6px 14px', fontSize: 12 }}>
-                    Complete
-                  </button>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    {task.verification_data?.url && (
+                      <button 
+                        onClick={() => handleTaskJoin(task)}
+                        style={{ background: 'rgba(239,68,68,0.18)', border: '1px solid rgba(239,68,68,0.5)', color: '#f87171', padding: '7px 12px', borderRadius: 10, fontSize: 12, fontWeight: 800, cursor: 'pointer' }}
+                      >
+                        🔗 JOIN
+                      </button>
+                    )}
+                    <button className="btn-primary btn-green" onClick={() => handleClaimTask(task.id, task.reward_amount)} style={{ width: 'auto', padding: '7px 14px', fontSize: 12 }}>
+                      CLAIM +{Number(task.reward_amount || 0).toLocaleString()}
+                    </button>
+                  </div>
                 )}
               </div>
             ))}
@@ -1631,15 +1666,15 @@ export default function App() {
             <div style={{ background: 'rgba(255,255,255,0.03)', padding: 12, borderRadius: 12, marginBottom: 16 }}>
               <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Withdrawal Requirement Status</div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 4 }}>
-                <span style={{ fontSize: 13, fontWeight: 600 }}>Verified Referrals (Min 3):</span>
-                <span style={{ color: user.verified_ref_count >= 3 ? '#34d399' : '#f59e0b', fontWeight: 700 }}>
-                  {user.verified_ref_count}/3 {user.verified_ref_count >= 3 ? '✅ Unlocked' : '🔒 Locked'}
-                </span>
+                <span style={{ fontSize: 13, fontWeight: 600 }}>Verified Referrals (Min {sysConfig.minVerifiedRefs}):</span>
+                <span style={{ color: user.verified_ref_count >= sysConfig.minVerifiedRefs ? '#34d399' : '#f59e0b', fontWeight: 700 }}>
+                  {user.verified_ref_count}/{sysConfig.minVerifiedRefs} {user.verified_ref_count >= sysConfig.minVerifiedRefs ? 'Unlocked' : 'Locked'}
+</span>
               </div>
             </div>
 
             {withdrawMsg && (
-              <div style={{ fontSize: 13, marginBottom: 12, padding: 8, borderRadius: 8, background: withdrawMsg.startsWith('✅') ? 'rgba(52,211,153,0.15)' : 'rgba(239,68,68,0.15)', color: withdrawMsg.startsWith('✅') ? '#34d399' : '#f87171' }}>
+              <div style={{ fontSize: 13, marginBottom: 12, padding: 8, borderRadius: 8, background: withdrawMsg.startsWith('\u2705') ? 'rgba(52,211,153,0.15)' : 'rgba(239,68,68,0.15)', color: withdrawMsg.startsWith('\u2705') ? '#34d399' : '#f87171' }}>
                 {withdrawMsg}
               </div>
             )}
@@ -1652,7 +1687,7 @@ export default function App() {
                     type="number"
                     value={withdrawAmount}
                     onChange={(e) => setWithdrawAmount(e.target.value)}
-                    placeholder="Min 50,000"
+                    placeholder={`Min ${Number(sysConfig.minWithdrawalAmount).toLocaleString()}`}
                     style={{ flex: 1, background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px 14px', borderRadius: 10, color: '#fff', fontSize: 14 }}
                   />
                   <button type="button" onClick={() => setWithdrawAmount(user.balance.toString())} style={{ background: 'rgba(139, 92, 246, 0.3)', border: 'none', color: '#c084fc', padding: '0 14px', borderRadius: 10, fontWeight: 700, fontSize: 12, cursor: 'pointer' }}>
@@ -1717,13 +1752,13 @@ export default function App() {
 
             <div style={{ background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.3)', padding: 12, borderRadius: 12, marginBottom: 12 }}>
               <div style={{ fontSize: 12, fontWeight: 700, color: '#34d399' }}>Verified Referral Bonus</div>
-              <div style={{ fontSize: 14, fontWeight: 800, color: '#fff' }}>+10,000 BONK</div>
-              <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>Credited when your referral watches 10 ads for the first time.</div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: '#fff' }}>+{Number(sysConfig.verifiedRefBonus).toLocaleString()} BONK</div>
+              <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>Credited when your referral completes their first ads.</div>
             </div>
 
             <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 12 }}>
-              <div>• <strong>Instant Bonus:</strong> +100 BONK per referral signup</div>
-              <div>• <strong>Withdrawal Unlock:</strong> Requires 3 verified referrals</div>
+              <div>• <strong>Instant Bonus:</strong> +{Number(sysConfig.referralSignupBonus).toLocaleString()} BONK per referral signup</div>
+              <div>• <strong>Withdrawal Unlock:</strong> Requires {sysConfig.minVerifiedRefs} verified referrals</div>
             </div>
 
             <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
@@ -2327,6 +2362,26 @@ export default function App() {
                     type="number" 
                     value={sysConfig.onboardingBonus}
                     onChange={e => setSysConfig({ ...sysConfig, onboardingBonus: Number(e.target.value) })}
+                    style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 8, color: '#fff', fontSize: 13 }}
+                  />
+                </div>
+
+                <div style={{ marginBottom: 10 }}>
+                  <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 4 }}>REFERRAL SIGNUP BONUS (BONK TO REFERRER)</div>
+                  <input 
+                    type="number" 
+                    value={sysConfig.referralSignupBonus}
+                    onChange={e => setSysConfig({ ...sysConfig, referralSignupBonus: Number(e.target.value) })}
+                    style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 8, color: '#fff', fontSize: 13 }}
+                  />
+                </div>
+
+                <div style={{ marginBottom: 10 }}>
+                  <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 4 }}>VERIFIED REFERRAL BONUS (BONK ON VERTIFICATION)</div>
+                  <input 
+                    type="number" 
+                    value={sysConfig.verifiedRefBonus}
+                    onChange={e => setSysConfig({ ...sysConfig, verifiedRefBonus: Number(e.target.value) })}
                     style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 8, color: '#fff', fontSize: 13 }}
                   />
                 </div>

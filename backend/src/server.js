@@ -2,8 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 dotenv.config();
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 import db, { resetDatabase } from './db.js';
 
@@ -169,11 +174,12 @@ app.post('/auth/login', (req, res) => {
     `).run(userId, username, firstName, todayStr, validReferrer, clientIp, deviceId, persistentToken, 0);
 
     if (validReferrer) {
-      // Award signup bonus (+100 BONK) to referrer
-      db.prepare('UPDATE users SET balance = balance + 100, referral_count = referral_count + 1 WHERE id = ?').run(validReferrer);
+      // Award signup bonus to referrer (parameterized per system settings)
+      const signupBonus = Number(systemSettings.referralSignupBonus) || 100;
+      db.prepare('UPDATE users SET balance = balance + ?, referral_count = referral_count + 1 WHERE id = ?').run(signupBonus, validReferrer);
       const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
       db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
-        .run(txId, validReferrer, 'referral_signup', 100, `Referral Signup Bonus from User #${userId}`);
+        .run(txId, validReferrer, 'referral_signup', signupBonus, `Referral Signup Bonus from User #${userId}`);
     } else if (refRejectReason) {
       // Log anti-fraud alert in audit ledger
       const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
@@ -392,7 +398,7 @@ app.post('/ads/start', authenticateToken, (req, res) => {
   }
 
   // 1. Strict Daily Limit Enforcement (Anti-Bypass)
-  const DAILY_CAP = 10;
+  const DAILY_CAP = Number(systemSettings.dailyAdCap) || 10;
   if ((user.ads_watched_today || 0) >= DAILY_CAP) {
     return res.status(400).json({ 
       error: `Daily ad limit reached (${DAILY_CAP}/${DAILY_CAP}). Resets daily at 00:00 UTC.`,
@@ -416,11 +422,12 @@ app.post('/ads/start', authenticateToken, (req, res) => {
 
   const sessionId = 'ad_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
   const adToken = 'token_' + Math.random().toString(36).substr(2, 9);
+  const adReward = Number(systemSettings.adRewardAmount) || 1200;
 
   db.prepare(`
     INSERT INTO ad_sessions (id, user_id, step, ad_token, reward_amount)
-    VALUES (?, ?, 1, ?, 1200)
-  `).run(sessionId, userId, adToken);
+    VALUES (?, ?, 1, ?, ?)
+  `).run(sessionId, userId, adToken, adReward);
 
   // Stamp the cooldown clock at session START so repeated start/abandon spam is also throttled
   db.prepare('UPDATE users SET last_ad_watched_at = ? WHERE id = ?').run(new Date().toISOString(), userId);
@@ -431,7 +438,7 @@ app.post('/ads/start', authenticateToken, (req, res) => {
     step: 1, 
     adToken, 
     minDuration: 15,
-    rewardAmount: 1200,
+    rewardAmount: adReward,
     dailyCap: DAILY_CAP,
     remainingToday: DAILY_CAP - (user.ads_watched_today || 0)
   });
@@ -477,7 +484,7 @@ app.post('/ads/claim', authenticateToken, (req, res) => {
   }
 
   // 1. Strict Anti-Race Daily Cap Check
-  const DAILY_CAP = 10;
+  const DAILY_CAP = Number(systemSettings.dailyAdCap) || 10;
   if ((user.ads_watched_today || 0) >= DAILY_CAP) {
     return res.status(400).json({ error: `Daily ad cap (${DAILY_CAP}/${DAILY_CAP}) reached.` });
   }
@@ -539,12 +546,14 @@ app.post('/ads/claim', authenticateToken, (req, res) => {
         db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
           .run(refTxId, referrer.id, 'anti_fraud_alert', 0, `🚨 REJECTED VERIFIED BONUS: Same IP Address (${referrer.ip_address}) with User #${userId}`);
       } else {
-        db.prepare('UPDATE users SET verified_ref_count = verified_ref_count + 1, balance = balance + 10000 WHERE id = ?').run(updatedUser.referrer_id);
+        const verifiedBonus = Number(systemSettings.verifiedRefBonus) || 10000;
+        db.prepare('UPDATE users SET verified_ref_count = verified_ref_count + 1, balance = balance + ? WHERE id = ?').run(verifiedBonus, updatedUser.referrer_id);
         const refTxId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
         db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
-          .run(refTxId, updatedUser.referrer_id, 'referral_verified', 10000, `Verified Referral Bonus (Ref #${userId} completed 10 ads)`);
+          .run(refTxId, updatedUser.referrer_id, 'referral_verified', verifiedBonus, `Verified Referral Bonus (Ref #${userId} completed ${updatedUser.ads_watched_total} ads)`);
 
-        if (referrer.verified_ref_count + 1 >= 3) {
+        const minVerifiedRefs = Number(systemSettings.minVerifiedRefs) || 3;
+        if (referrer.verified_ref_count + 1 >= minVerifiedRefs) {
           db.prepare('UPDATE users SET withdrawal_unlocked = 1 WHERE id = ?').run(updatedUser.referrer_id);
         }
       }
@@ -578,15 +587,17 @@ app.post('/withdraw/request', authenticateToken, (req, res) => {
     return res.status(400).json({ error: 'Invalid withdrawal amount' });
   }
   if (user.balance < numAmount) return res.status(400).json({ error: 'Insufficient balance' });
-  if (numAmount < 50000) return res.status(400).json({ error: 'Minimum withdrawal is 50,000 BONK' });
+  const minWithdrawal = Number(systemSettings.minWithdrawalAmount) || 50000;
+  if (numAmount < minWithdrawal) return res.status(400).json({ error: `Minimum withdrawal is ${minWithdrawal.toLocaleString()} BONK` });
   
   // Base58 check heuristic for Solana address
   if (!walletAddress || walletAddress.length < 32 || walletAddress.length > 44) {
     return res.status(400).json({ error: 'Invalid Solana wallet address format (32-44 base58 chars)' });
   }
 
-  if (user.verified_ref_count < 3 && !user.withdrawal_unlocked) {
-    return res.status(400).json({ error: 'Minimum 3 verified referrals required to unlock withdrawals' });
+  const minVerifiedRefs = Number(systemSettings.minVerifiedRefs) || 3;
+  if (user.verified_ref_count < minVerifiedRefs && !user.withdrawal_unlocked) {
+    return res.status(400).json({ error: `Minimum ${minVerifiedRefs} verified referrals required to unlock withdrawals` });
   }
 
   const withdrawId = 'w_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
@@ -758,8 +769,8 @@ app.get('/admin/users/:id/details', authenticateAdmin, (req, res) => {
   res.json({ user, referrals, withdrawals, transactions });
 });
 
-// Default settings memory store
-let systemSettings = {
+// Default settings memory store (persisted to settings.json so admin edits survive restarts)
+const DEFAULT_SETTINGS = {
   adRewardAmount: 1200,
   dailyAdCap: 10,
   minWithdrawalAmount: 50000,
@@ -769,6 +780,25 @@ let systemSettings = {
   onboardingBonus: 1000,
   onboardingChannels: ['BonkEarnNews', 'BonkEarnPayouts', 'BonkEarnChat']
 };
+let systemSettings = { ...DEFAULT_SETTINGS };
+try {
+  const settingsFile = path.join(__dirname, '../settings.json');
+  if (fs.existsSync(settingsFile)) {
+    Object.assign(systemSettings, JSON.parse(fs.readFileSync(settingsFile, 'utf8')));
+  }
+} catch (e) {}
+
+function persistSettings() {
+  try {
+    const settingsFile = path.join(__dirname, '../settings.json');
+    fs.writeFileSync(settingsFile, JSON.stringify(systemSettings, null, 2), 'utf8');
+  } catch (e) {}
+}
+
+// Public config so the user-facing UI always mirrors what the admin saved
+app.get('/config', (req, res) => {
+  res.json(systemSettings);
+});
 
 app.get('/admin/settings', authenticateAdmin, (req, res) => {
   res.json(systemSettings);
@@ -776,6 +806,7 @@ app.get('/admin/settings', authenticateAdmin, (req, res) => {
 
 app.post('/admin/settings', authenticateAdmin, (req, res) => {
   systemSettings = { ...systemSettings, ...req.body };
+  persistSettings();
   res.json({ success: true, settings: systemSettings });
 });
 
