@@ -22,6 +22,7 @@ const defaultData = {
       verified_ref_count: 3,
       withdrawal_unlocked: 1,
       flagged: 0,
+      onboarding_completed: 1,
       ip_address: '127.0.0.1',
       device_id: 'device_demo_alex_9988',
       created_at: new Date().toISOString()
@@ -75,6 +76,13 @@ class DbWrapper {
 
   prepare(sql) {
     const cleanSql = sql.trim().replace(/\s+/g, ' ');
+
+    // Fix schema updates if missing
+    memoryDb.users.forEach(u => {
+      if (u.onboarding_completed === undefined) {
+        u.onboarding_completed = 0;
+      }
+    });
 
     return {
       get: (...params) => {
@@ -224,6 +232,7 @@ class DbWrapper {
             referral_count: 0,
             verified_ref_count: 0,
             withdrawal_unlocked: 0,
+            onboarding_completed: 0,
             created_at: new Date().toISOString()
           };
           memoryDb.users.push(newUser);
@@ -269,6 +278,26 @@ class DbWrapper {
           if (u) {
             u.verified_ref_count += 1;
             u.balance += 10000;
+            saveData(memoryDb);
+          }
+          return { changes: 1 };
+        }
+
+        if (cleanSql.includes('UPDATE users SET onboarding_completed = 1, balance = balance + 1000 WHERE id = ?')) {
+          const u = memoryDb.users.find(x => x.id === Number(params[0]));
+          if (u) {
+            u.onboarding_completed = 1;
+            u.balance += 1000;
+            saveData(memoryDb);
+          }
+          return { changes: 1 };
+        }
+
+        if (cleanSql.includes('UPDATE users SET onboarding_completed = 1, balance = balance + ? WHERE id = ?')) {
+          const u = memoryDb.users.find(x => x.id === Number(params[1]));
+          if (u) {
+            u.onboarding_completed = 1;
+            u.balance += Number(params[0] || 1000);
             saveData(memoryDb);
           }
           return { changes: 1 };

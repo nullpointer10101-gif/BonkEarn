@@ -209,6 +209,91 @@ app.get('/user/referrals', authenticateToken, (req, res) => {
   res.json({ referrals, total: referrals.length });
 });
 
+// --- ONBOARDING GATE (MANDATORY CHANNEL JOIN + REG BONUS) ---
+function verifyChannelMember(channelUsername, userId) {
+  return new Promise((resolve) => {
+    if (!botInstance) {
+      return resolve({ verified: false, error: 'Bot not configured. No channel verification available.' });
+    }
+    const username = String(channelUsername || '').replace('@', '').trim();
+    if (!username) {
+      return resolve({ verified: false, error: 'Channel not configured by admin.' });
+    }
+    botInstance.telegram
+      .getChatMember('@' + username, userId)
+      .then((member) => {
+        const status = member && member.status;
+        const ok = status === 'creator' || status === 'administrator' || status === 'member';
+        resolve(ok ? { verified: true, status } : { verified: false, status });
+      })
+      .catch((err) => {
+        resolve({ verified: false, error: (err && err.message) || 'Verification failed. Bot must be admin in this channel.' });
+      });
+  });
+}
+
+app.get('/onboarding', authenticateToken, (req, res) => {
+  const user = db.prepare('SELECT * FROM users WHERE id = ?').get(req.user.id);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+
+  const channels = (systemSettings.onboardingChannels || []).map(u => ({
+    username: u,
+    title: '@' + u,
+    url: 'https://t.me/' + u
+  }));
+
+  res.json({
+    required: Number(user.onboarding_completed) !== 1,
+    completed: Number(user.onboarding_completed) === 1,
+    bonus: Number(systemSettings.onboardingBonus) || 1000,
+    channels
+  });
+});
+
+app.post('/onboarding/verify', authenticateToken, async (req, res) => {
+  const user = db.prepare('SELECT * FROM users WHERE id = ?').get(req.user.id);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+  if (Number(user.onboarding_completed) === 1) {
+    return res.json({ completed: true, verified: true });
+  }
+
+  const requested = String((req.body && (req.body.username || req.body.channel)) || '').replace('@', '').toLowerCase();
+  const channel = (systemSettings.onboardingChannels || []).find(u => String(u).replace('@', '').toLowerCase() === requested);
+  if (!channel) return res.status(400).json({ error: 'Unknown or unconfigured channel', verified: false });
+
+  const result = await verifyChannelMember(channel, user.id);
+  res.json({ verified: result.verified, error: result.error, username: channel });
+});
+
+app.post('/onboarding/claim-bonus', authenticateToken, async (req, res) => {
+  const user = db.prepare('SELECT * FROM users WHERE id = ?').get(req.user.id);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+  if (Number(user.onboarding_completed) === 1) {
+    const fresh = db.prepare('SELECT * FROM users WHERE id = ?').get(req.user.id);
+    return res.json({ success: true, alreadyClaimed: true, newBalance: fresh.balance });
+  }
+
+  const channels = systemSettings.onboardingChannels || [];
+  const failures = [];
+  for (const ch of channels) {
+    const result = await verifyChannelMember(ch, req.user.id);
+    if (!result.verified) failures.push('@' + String(ch).replace('@', ''));
+  }
+  if (failures.length) {
+    return res.status(400).json({ error: `Please join all channels first: ${failures.join(', ')}`, unverifiedChannels: failures });
+  }
+
+  const bonus = Number(systemSettings.onboardingBonus) || 1000;
+  db.prepare('UPDATE users SET onboarding_completed = 1, balance = balance + ? WHERE id = ?').run(bonus, req.user.id);
+
+  const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+  db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
+    .run(txId, req.user.id, 'onboarding_bonus', bonus, `Onboarding Registration Bonus (joined ${channels.length} channels)`);
+
+  const updated = db.prepare('SELECT * FROM users WHERE id = ?').get(req.user.id);
+  res.json({ success: true, bonus, newBalance: updated.balance });
+});
+
 // --- 6.3 TASKS & PREMIUM ADS ---
 app.get('/tasks', authenticateToken, (req, res) => {
   const userId = req.user.id;
@@ -604,7 +689,9 @@ let systemSettings = {
   minWithdrawalAmount: 50000,
   minVerifiedRefs: 3,
   referralSignupBonus: 100,
-  verifiedRefBonus: 10000
+  verifiedRefBonus: 10000,
+  onboardingBonus: 1000,
+  onboardingChannels: ['BonkEarnNews', 'BonkEarnPayouts', 'BonkEarnChat']
 };
 
 app.get('/admin/settings', (req, res) => {

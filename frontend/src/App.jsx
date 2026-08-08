@@ -175,6 +175,12 @@ export default function App() {
   const [withdrawMsg, setWithdrawMsg] = useState('');
   const [withdrawHistory, setWithdrawHistory] = useState([]);
 
+  // Onboarding Gate (mandatory channel join + reg bonus)
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [onboarding, setOnboarding] = useState({ completed: false, bonus: 1000, channels: [] });
+  const [onboardingClaiming, setOnboardingClaiming] = useState(false);
+  const [onboardingVerifying, setOnboardingVerifying] = useState('');
+
   // Toast System
   const [toastMsg, setToastMsg] = useState('');
 
@@ -248,6 +254,18 @@ export default function App() {
               } catch (e) {}
             }
             fetchUserData(data.token);
+
+            // Mandatory Onboarding Gate: fetch required channels + reg bonus
+            fetch(`${API_BASE}/onboarding`, { headers: { Authorization: `Bearer ${data.token}` } })
+              .then(res => res.json())
+              .then(o => {
+                setOnboarding({
+                  ...o,
+                  channels: (o.channels || []).map(c => ({ ...c, verified: false }))
+                });
+                setShowOnboarding(o.required === true);
+              })
+              .catch(() => {});
           }
         })
         .catch(() => {
@@ -355,8 +373,11 @@ export default function App() {
     minWithdrawalAmount: 50000,
     minVerifiedRefs: 3,
     referralSignupBonus: 100,
-    verifiedRefBonus: 10000
+    verifiedRefBonus: 10000,
+    onboardingBonus: 1000,
+    onboardingChannels: ['BonkEarnNews', 'BonkEarnPayouts', 'BonkEarnChat']
   });
+  const [onboardingChannelsInput, setOnboardingChannelsInput] = useState(sysConfig.onboardingChannels.join(', '));
 
   // Task creation form state
   const [newTaskTitle, setNewTaskTitle] = useState('');
@@ -387,7 +408,14 @@ export default function App() {
 
     fetch(`${API_BASE}/admin/settings`)
       .then(res => res.json())
-      .then(data => data.adRewardAmount && setSysConfig(data))
+      .then(data => {
+        if (data.adRewardAmount) {
+          setSysConfig(data);
+          if (Array.isArray(data.onboardingChannels)) {
+            setOnboardingChannelsInput(data.onboardingChannels.join(', '));
+          }
+        }
+      })
       .catch(() => {});
   };
 
@@ -456,10 +484,14 @@ export default function App() {
 
   const handleSaveSysConfig = (e) => {
     e.preventDefault();
+    const channelsArr = onboardingChannelsInput
+      .split(',')
+      .map(s => s.trim().replace('@', ''))
+      .filter(Boolean);
     fetch(`${API_BASE}/admin/settings`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(sysConfig)
+      body: JSON.stringify({ ...sysConfig, onboardingChannels: channelsArr })
     })
       .then(res => res.json())
       .then(data => {
@@ -636,6 +668,94 @@ export default function App() {
     setIsPulsing(true);
     setTimeout(() => setIsPulsing(false), 800);
     showToast(msg);
+  };
+
+  // --- ONBOARDING CHANNEL VERIFY + REG BONUS ---
+  const openExternalLink = (url) => {
+    try {
+      if (window.Telegram?.WebApp?.openTelegramLink) {
+        window.Telegram.WebApp.openTelegramLink(url);
+        return;
+      }
+    } catch (e) {}
+    window.open(url, '_blank');
+  };
+
+  const handleVerifyChannel = (channel) => {
+    if (onboardingVerifying) return;
+    const username = channel.username;
+    setOnboardingVerifying(username);
+
+    if (token) {
+      fetch(`${API_BASE}/onboarding/verify`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ username })
+      })
+        .then(res => res.json())
+        .then(data => {
+          setOnboardingVerifying('');
+          if (data.verified) {
+            setOnboarding(prev => ({
+              ...prev,
+              channels: prev.channels.map(c => c.username === username ? { ...c, verified: true } : c)
+            }));
+            showToast(`✅ Verified as member of @${username}!`);
+          } else {
+            showToast(`⚠️ ${data.error || `Not a member of @${username} yet. Tap JOIN first!`}`);
+          }
+        })
+        .catch(() => {
+          setOnboardingVerifying('');
+          showToast('⚠️ Verification failed. Please try again.');
+        });
+    } else {
+      // Demo mode (outside Telegram / no backend token)
+      setOnboardingVerifying('');
+      setOnboarding(prev => ({
+        ...prev,
+        channels: prev.channels.map(c => c.username === username ? { ...c, verified: true } : c)
+      }));
+      showToast(`✅ @${username} verified (demo mode)`);
+    }
+  };
+
+  const handleClaimOnboardingBonus = () => {
+    const allVerified = onboarding.channels.length > 0 && onboarding.channels.every(c => c.verified);
+    if (!allVerified) {
+      showToast(`⚠️ Join & verify ALL ${onboarding.channels.length} channels first!`);
+      return;
+    }
+    setOnboardingClaiming(true);
+
+    if (token) {
+      fetch(`${API_BASE}/onboarding/claim-bonus`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }
+      })
+        .then(res => res.json())
+        .then(data => {
+          setOnboardingClaiming(false);
+          if (data.success) {
+            setUser(prev => ({ ...prev, balance: data.newBalance, onboarding_completed: 1 }));
+            setShowOnboarding(false);
+            triggerCelebration(`🎉 Welcome bonus +${(data.bonus || onboarding.bonus).toLocaleString()} BONK claimed!`);
+            if (token) fetchUserData(token);
+          } else {
+            showToast(`❌ ${data.error || 'Unable to claim bonus. Please try again.'}`);
+          }
+        })
+        .catch(() => {
+          setOnboardingClaiming(false);
+          showToast('❌ Network error claiming bonus. Please try again.');
+        });
+    } else {
+      // Demo mode local claim
+      setOnboardingClaiming(false);
+      setUser(prev => ({ ...prev, balance: prev.balance + onboarding.bonus, onboarding_completed: 1 }));
+      setShowOnboarding(false);
+      triggerCelebration(`🎉 Welcome bonus +${onboarding.bonus.toLocaleString()} BONK claimed!`);
+    }
   };
 
   // --- ADS STEP HANDLERS ---
@@ -902,6 +1022,109 @@ export default function App() {
         <div className="loader-spinner" style={{ width: 28, height: 28, border: '2.5px solid rgba(139, 92, 246, 0.25)', borderTopColor: '#f59e0b', borderRadius: '50%', animation: 'spin 0.8s linear infinite', marginBottom: 12 }}></div>
         <div style={{ fontWeight: 800, fontSize: 19, color: '#fff', letterSpacing: '0.5px' }}>BONK EARN</div>
         <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 4 }}>Loading your account...</div>
+      </div>
+    );
+  }
+
+  // --- MANDATORY ONBOARDING GATE (cannot be skipped) ---
+  if (showOnboarding) {
+    const verifiedCount = onboarding.channels.filter(c => c.verified).length;
+    const allVerified = onboarding.channels.length > 0 && verifiedCount === onboarding.channels.length;
+    return (
+      <div className="app-container" style={{ paddingBottom: 0 }}>
+        {/* Onboarding Hero */}
+        <div style={{ textAlign: 'center', padding: '28px 20px 16px' }}>
+          <img
+            src="/bonk_coin.png"
+            alt="Official BONK Token"
+            style={{ width: 84, height: 84, borderRadius: '50%', marginBottom: 14, boxShadow: '0 0 35px rgba(245, 158, 11, 0.5), 0 0 70px rgba(139, 92, 246, 0.3)', border: '2px solid rgba(251, 191, 36, 0.5)' }}
+          />
+          <div style={{ fontWeight: 900, fontSize: 22, color: '#fff', letterSpacing: '0.5px' }}>WELCOME TO BONK EARN!</div>
+          <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 6, lineHeight: 1.5 }}>
+            🎁 Claim your <strong style={{ color: '#fbbf24' }}>Registration Bonus: +{Number(onboarding.bonus || 1000).toLocaleString()} BONK</strong>
+            <br />by joining all our official channels below. This step cannot be skipped.
+          </div>
+        </div>
+
+        {/* Verification Progress */}
+        <div style={{ margin: '0 16px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ flex: 1, height: 8, background: 'rgba(255,255,255,0.1)', borderRadius: 6, overflow: 'hidden' }}>
+            <div style={{ width: `${(verifiedCount / Math.max(1, onboarding.channels.length)) * 100}%`, height: '100%', background: 'linear-gradient(90deg, #8b5cf6, #34d399)', transition: 'width 0.4s ease', borderRadius: 6 }} />
+          </div>
+          <span style={{ fontSize: 12, fontWeight: 800, color: '#c084fc' }}>{verifiedCount}/{onboarding.channels.length} Verified</span>
+        </div>
+
+        {/* Channel List */}
+        <div style={{ padding: '0 16px' }}>
+          {onboarding.channels.map((channel, idx) => (
+            <div key={`${channel.username}-${idx}`} className="glass-card" style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div style={{
+                  width: 34, height: 34, borderRadius: 10, flexShrink: 0,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontWeight: 900, fontSize: 15,
+                  background: channel.verified ? 'rgba(52,211,153,0.25)' : 'rgba(139,92,246,0.25)',
+                  color: channel.verified ? '#34d399' : '#c084fc',
+                  border: channel.verified ? '1px solid rgba(52,211,153,0.5)' : '1px solid rgba(139,92,246,0.4)'
+                }}>
+                  {channel.verified ? <Check size={18} /> : idx + 1}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 800, fontSize: 15 }}>{channel.title}</div>
+                  <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+                    {channel.verified ? '✅ Membership confirmed' : `Step ${idx + 1} of ${onboarding.channels.length} — join to verify`}
+                  </div>
+                </div>
+                {channel.verified && <CheckCircle2 size={20} color="#34d399" />}
+              </div>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <button
+                  onClick={() => openExternalLink(channel.url)}
+                  style={{
+                    flex: 1, background: 'linear-gradient(135deg, #059669 0%, #34d399 100%)', border: 'none', color: '#000',
+                    padding: '10px 0', borderRadius: 12, fontWeight: 800, fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6
+                  }}
+                >
+                  <ExternalLink size={14} /> JOIN CHANNEL
+                </button>
+                <button
+                  onClick={() => handleVerifyChannel(channel)}
+                  disabled={!!onboardingVerifying || channel.verified}
+                  style={{
+                    flex: 1, border: 'none', borderRadius: 12, fontWeight: 800, fontSize: 13, cursor: channel.verified ? 'default' : 'pointer',
+                    padding: '10px 0', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                    background: channel.verified ? 'rgba(52,211,153,0.2)' : 'rgba(139,92,246,0.25)',
+                    color: channel.verified ? '#34d399' : '#c084fc',
+                    borderColor: channel.verified ? 'rgba(52,211,153,0.5)' : 'rgba(139,92,246,0.4)',
+                    borderWidth: 1, borderStyle: 'solid',
+                    opacity: channel.verified ? 1 : onboardingVerifying ? 0.5 : 1
+                  }}
+                >
+                  {channel.verified ? 'VERIFIED ✓' : onboardingVerifying === channel.username ? 'CHECKING...' : 'VERIFY'}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Claim Registration Bonus */}
+        <div style={{ padding: '4px 16px 20px' }}>
+          <button
+            className={`btn-primary ${!allVerified ? 'btn-disabled' : ''}`}
+            onClick={handleClaimOnboardingBonus}
+            disabled={!allVerified || onboardingClaiming}
+            style={{ padding: '14px 20px', fontSize: 16 }}
+          >
+            {onboardingClaiming
+              ? 'Claiming...'
+              : allVerified
+              ? `🎁 CLAIM ${Number(onboarding.bonus || 1000).toLocaleString()} BONK BONUS`
+              : `🔒 CLAIM BONUS (${onboarding.channels.length - verifiedCount} channel${onboarding.channels.length - verifiedCount === 1 ? '' : 's'} left)`}
+          </button>
+          <div style={{ textAlign: 'center', fontSize: 11, color: 'var(--text-muted)', marginTop: 10 }}>
+            Bonus credited instantly to your balance once all channels are verified.
+          </div>
+        </div>
       </div>
     );
   }
@@ -1884,6 +2107,27 @@ export default function App() {
                     value={sysConfig.minVerifiedRefs}
                     onChange={e => setSysConfig({ ...sysConfig, minVerifiedRefs: Number(e.target.value) })}
                     style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 8, color: '#fff', fontSize: 13 }}
+                  />
+                </div>
+
+                <div style={{ marginBottom: 10 }}>
+                  <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 4 }}>ONBOARDING REGISTRATION BONUS (BONK)</div>
+                  <input 
+                    type="number" 
+                    value={sysConfig.onboardingBonus}
+                    onChange={e => setSysConfig({ ...sysConfig, onboardingBonus: Number(e.target.value) })}
+                    style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 8, color: '#fff', fontSize: 13 }}
+                  />
+                </div>
+
+                <div style={{ marginBottom: 16 }}>
+                  <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 4 }}>ONBOARDING CHANNELS (COMMA SEPARATED, BOT MUST BE ADMIN)</div>
+                  <textarea 
+                    value={onboardingChannelsInput}
+                    onChange={e => setOnboardingChannelsInput(e.target.value)}
+                    rows={3}
+                    placeholder="BonkEarnNews, BonkEarnPayouts, BonkEarnChat"
+                    style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 8, color: '#fff', fontSize: 13, resize: 'vertical' }}
                   />
                 </div>
 
