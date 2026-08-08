@@ -15,28 +15,38 @@ const JWT_SECRET = process.env.JWT_SECRET || 'earn_app_jwt_secret_key_2026';
 const BOT_TOKEN = process.env.BOT_TOKEN || 'MOCK_BOT_TOKEN';
 
 // Helper: Verify Telegram initData and parse user object
+// Full HMAC-SHA256 signature check when a real bot token is configured
+// (prevents forging/stealing other users' identities); dev mode accepts raw data.
 function verifyTelegramInitData(initDataRaw) {
   if (!initDataRaw) return null;
 
   try {
     const urlParams = new URLSearchParams(initDataRaw);
     const userParam = urlParams.get('user');
-    if (userParam) {
-      const user = JSON.parse(decodeURIComponent(userParam));
-      if (user && user.id) return user;
+    if (!userParam) return null;
+
+    const isRealBot = BOT_TOKEN && BOT_TOKEN !== 'MOCK_BOT_TOKEN' && BOT_TOKEN.includes(':');
+    if (isRealBot) {
+      const hash = urlParams.get('hash');
+      if (!hash) return null;
+      const secretKey = crypto.createHmac('sha256', 'WebAppData').update(BOT_TOKEN).digest();
+      const checkParts = [];
+      for (const [key, value] of urlParams.entries()) {
+        if (key !== 'hash') checkParts.push(`${key}=${value}`);
+      }
+      const checkString = checkParts.sort().join('\n');
+      const computed = crypto.createHmac('sha256', secretKey).update(checkString).digest('hex');
+      if (computed !== hash) return null;
+    }
+
+    try {
+      return JSON.parse(decodeURIComponent(userParam));
+    } catch (e) {
+      try { return JSON.parse(userParam); } catch (err) { return null; }
     }
   } catch (e) {
-    // If double encoded or raw object
-    try {
-      const urlParams = new URLSearchParams(initDataRaw);
-      const userParam = urlParams.get('user');
-      if (userParam) {
-        const user = JSON.parse(userParam);
-        if (user && user.id) return user;
-      }
-    } catch (err) {}
+    return null;
   }
-  return null;
 }
 
 // Authentication Middleware
@@ -49,6 +59,21 @@ function authenticateToken(req, res, next) {
     if (err) return res.status(403).json({ error: 'Invalid or expired token' });
 
     req.user = decoded;
+    next();
+  });
+}
+
+// Admin Authentication Middleware: requires a valid admin JWT (issued by /admin/login)
+function authenticateAdmin(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (!token) return res.status(401).json({ error: 'Admin access required' });
+
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+    if (err || !decoded || decoded.role !== 'admin') {
+      return res.status(401).json({ error: 'Invalid or expired admin session' });
+    }
+    req.admin = decoded;
     next();
   });
 }
@@ -358,6 +383,14 @@ app.post('/ads/start', authenticateToken, (req, res) => {
 
   if (!user) return res.status(404).json({ error: 'User not found' });
 
+  // 0. UTC daily window reset (handles users logged in across midnight)
+  const todayStr = new Date().toISOString().split('T')[0];
+  if (user.ads_date !== todayStr) {
+    db.prepare('UPDATE users SET ads_watched_today = 0, ads_date = ? WHERE id = ?').run(todayStr, userId);
+    user.ads_watched_today = 0;
+    user.ads_date = todayStr;
+  }
+
   // 1. Strict Daily Limit Enforcement (Anti-Bypass)
   const DAILY_CAP = 10;
   if ((user.ads_watched_today || 0) >= DAILY_CAP) {
@@ -431,6 +464,14 @@ app.post('/ads/claim', authenticateToken, (req, res) => {
 
   const user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
   if (!user) return res.status(404).json({ error: 'User not found' });
+
+  // 0. Daily Reset Window Enforcement (cross-midnight sessions)
+  const todayStr = new Date().toISOString().split('T')[0];
+  if (user.ads_date !== todayStr) {
+    db.prepare('UPDATE users SET ads_watched_today = 0, ads_date = ? WHERE id = ?').run(todayStr, userId);
+    user.ads_watched_today = 0;
+    user.ads_date = todayStr;
+  }
 
   // 1. Strict Anti-Race Daily Cap Check
   const DAILY_CAP = 10;
@@ -511,7 +552,8 @@ app.post('/ads/claim', authenticateToken, (req, res) => {
     success: true,
     reward: session.reward_amount,
     newBalance: updatedUser.balance,
-    adsWatchedToday: updatedUser.ads_watched_today
+    adsWatchedToday: updatedUser.ads_watched_today,
+    adsWatchedTotal: updatedUser.ads_watched_total
   });
 });
 
@@ -526,8 +568,14 @@ app.post('/withdraw/request', authenticateToken, (req, res) => {
   if (user.flagged) {
     return res.status(403).json({ error: '🚨 Account suspended for Anti-Fraud / Multi-Account policy violation. Withdrawals disabled.' });
   }
-  if (user.balance < amount) return res.status(400).json({ error: 'Insufficient balance' });
-  if (amount < 50000) return res.status(400).json({ error: 'Minimum withdrawal is 50,000 BONK' });
+
+  // Strict amount validation (blocks NaN / negative / decimals / strings)
+  const numAmount = Number(amount);
+  if (!Number.isFinite(numAmount) || numAmount <= 0 || !Number.isInteger(numAmount)) {
+    return res.status(400).json({ error: 'Invalid withdrawal amount' });
+  }
+  if (user.balance < numAmount) return res.status(400).json({ error: 'Insufficient balance' });
+  if (numAmount < 50000) return res.status(400).json({ error: 'Minimum withdrawal is 50,000 BONK' });
   
   // Base58 check heuristic for Solana address
   if (!walletAddress || walletAddress.length < 32 || walletAddress.length > 44) {
@@ -541,13 +589,13 @@ app.post('/withdraw/request', authenticateToken, (req, res) => {
   const withdrawId = 'w_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
 
   // Deduct balance & create request
-  db.prepare('UPDATE users SET balance = balance - ? WHERE id = ?').run(amount, userId);
+  db.prepare('UPDATE users SET balance = balance - ? WHERE id = ?').run(numAmount, userId);
   db.prepare(`
     INSERT INTO withdrawals (id, user_id, amount, wallet_address, status)
     VALUES (?, ?, ?, ?, 'pending')
-  `).run(withdrawId, userId, amount, walletAddress);
+  `).run(withdrawId, userId, numAmount, walletAddress);
 
-  res.json({ success: true, withdrawId, status: 'pending', remainingBalance: user.balance - amount });
+  res.json({ success: true, withdrawId, status: 'pending', remainingBalance: user.balance - numAmount });
 });
 
 app.get('/withdraw/history', authenticateToken, (req, res) => {
@@ -578,7 +626,7 @@ app.all('/admin/wipe-db', (req, res) => {
 });
 
 // --- ADMIN ENDPOINTS ---
-app.get('/admin/analytics', (req, res) => {
+app.get('/admin/analytics', authenticateAdmin, (req, res) => {
   const totalUsers = db.prepare('SELECT COUNT(*) as c FROM users').get().c;
   const totalAds = db.prepare('SELECT SUM(ads_watched_total) as c FROM users').get().c || 0;
   const pendingWithdrawals = db.prepare('SELECT COUNT(*) as c FROM withdrawals WHERE status = "pending"').get().c;
@@ -586,22 +634,22 @@ app.get('/admin/analytics', (req, res) => {
   res.json({ totalUsers, totalAds, pendingWithdrawals });
 });
 
-app.get('/admin/withdrawals', (req, res) => {
+app.get('/admin/withdrawals', authenticateAdmin, (req, res) => {
   const list = db.prepare('SELECT * FROM withdrawals').all();
   res.json(list);
 });
 
-app.get('/admin/users', (req, res) => {
+app.get('/admin/users', authenticateAdmin, (req, res) => {
   const users = db.prepare('SELECT * FROM users').all();
   res.json(users);
 });
 
-app.get('/admin/transactions', (req, res) => {
+app.get('/admin/transactions', authenticateAdmin, (req, res) => {
   const logs = db.prepare('SELECT * FROM transactions').all();
   res.json(logs);
 });
 
-app.post('/admin/users/:id/balance', (req, res) => {
+app.post('/admin/users/:id/balance', authenticateAdmin, (req, res) => {
   const userId = Number(req.params.id);
   const { amount, reason } = req.body; // amount can be positive (+) or negative (-)
 
@@ -622,7 +670,7 @@ app.post('/admin/users/:id/balance', (req, res) => {
   res.json({ success: true, userId, newBalance: updated.balance });
 });
 
-app.post('/admin/users/:id/flag', (req, res) => {
+app.post('/admin/users/:id/flag', authenticateAdmin, (req, res) => {
   const userId = Number(req.params.id);
   const { flagged } = req.body;
 
@@ -630,7 +678,7 @@ app.post('/admin/users/:id/flag', (req, res) => {
   res.json({ success: true, userId, flagged: flagged ? 1 : 0 });
 });
 
-app.post('/admin/users/:id/unblock', (req, res) => {
+app.post('/admin/users/:id/unblock', authenticateAdmin, (req, res) => {
   const userId = Number(req.params.id);
   const user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
   if (!user) return res.status(404).json({ error: 'User not found' });
@@ -644,7 +692,7 @@ app.post('/admin/users/:id/unblock', (req, res) => {
   res.json({ success: true, userId, message: `Account #${userId} unblocked successfully.` });
 });
 
-app.post('/admin/users/:id/block', (req, res) => {
+app.post('/admin/users/:id/block', authenticateAdmin, (req, res) => {
   const userId = Number(req.params.id);
   const { reason } = req.body;
   const user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
@@ -659,7 +707,7 @@ app.post('/admin/users/:id/block', (req, res) => {
   res.json({ success: true, userId, message: `Account #${userId} blocked successfully.` });
 });
 
-app.post('/admin/tasks', (req, res) => {
+app.post('/admin/tasks', authenticateAdmin, (req, res) => {
   const { title, type, rewardAmount, verificationData } = req.body;
   const taskId = 't_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
 
@@ -669,7 +717,7 @@ app.post('/admin/tasks', (req, res) => {
   res.json({ success: true, taskId });
 });
 
-app.get('/admin/tasks', (req, res) => {
+app.get('/admin/tasks', authenticateAdmin, (req, res) => {
   const tasks = db.prepare('SELECT * FROM tasks').all();
   res.json(tasks.map(task => ({
     ...task,
@@ -677,13 +725,13 @@ app.get('/admin/tasks', (req, res) => {
   })));
 });
 
-app.delete('/admin/tasks/:id', (req, res) => {
+app.delete('/admin/tasks/:id', authenticateAdmin, (req, res) => {
   const taskId = req.params.id;
   db.prepare('DELETE FROM tasks WHERE id = ?').run(taskId);
   res.json({ success: true, taskId });
 });
 
-app.get('/admin/users/:id/details', (req, res) => {
+app.get('/admin/users/:id/details', authenticateAdmin, (req, res) => {
   const userId = Number(req.params.id);
   const user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
   if (!user) return res.status(404).json({ error: 'User not found' });
@@ -707,16 +755,16 @@ let systemSettings = {
   onboardingChannels: ['BonkEarnNews', 'BonkEarnPayouts', 'BonkEarnChat']
 };
 
-app.get('/admin/settings', (req, res) => {
+app.get('/admin/settings', authenticateAdmin, (req, res) => {
   res.json(systemSettings);
 });
 
-app.post('/admin/settings', (req, res) => {
+app.post('/admin/settings', authenticateAdmin, (req, res) => {
   systemSettings = { ...systemSettings, ...req.body };
   res.json({ success: true, settings: systemSettings });
 });
 
-app.post('/admin/withdraw/:id/approve', (req, res) => {
+app.post('/admin/withdraw/:id/approve', authenticateAdmin, (req, res) => {
   const withdrawId = req.params.id;
   const { txHash } = req.body;
   const nowStr = new Date().toISOString();
@@ -728,7 +776,7 @@ app.post('/admin/withdraw/:id/approve', (req, res) => {
   res.json({ success: true, withdrawId, status: 'completed', txHash: generatedTx });
 });
 
-app.post('/admin/withdraw/:id/reject', (req, res) => {
+app.post('/admin/withdraw/:id/reject', authenticateAdmin, (req, res) => {
   const withdrawId = req.params.id;
   const { reason } = req.body;
   const nowStr = new Date().toISOString();

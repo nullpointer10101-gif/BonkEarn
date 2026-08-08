@@ -6,6 +6,7 @@ export async function triggerAdPlayback({ sessionId, apiBase, token, onProgress 
     let watchStartTime = Date.now();
     let isFinished = false;
     let visibilityWatchSeconds = 0;
+    let hardTimeout = null;
 
     // Track active visibility & progress
     const visibilityTimer = setInterval(() => {
@@ -18,7 +19,17 @@ export async function triggerAdPlayback({ sessionId, apiBase, token, onProgress 
 
     const cleanup = () => {
       clearInterval(visibilityTimer);
+      if (hardTimeout) clearTimeout(hardTimeout);
     };
+
+    // Hard safety net: if no ad SDK ever responds, fail the session cleanly
+    hardTimeout = setTimeout(() => {
+      if (!isFinished) {
+        isFinished = true;
+        cleanup();
+        reject(new Error('⚠️ Ad network did not respond. Please try again.'));
+      }
+    }, 35000);
 
     const handleAdSuccess = async (providerName) => {
       if (isFinished) return;

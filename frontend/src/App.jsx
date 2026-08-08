@@ -198,6 +198,7 @@ export default function App() {
   const [walletAddress, setWalletAddress] = useState('');
   const [withdrawMsg, setWithdrawMsg] = useState('');
   const [withdrawHistory, setWithdrawHistory] = useState([]);
+  const [isWithdrawing, setIsWithdrawing] = useState(false);
 
   // Onboarding Gate (mandatory channel join + reg bonus)
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -327,8 +328,6 @@ export default function App() {
       .then(res => res.json())
       .then(data => Array.isArray(data) && setWithdrawHistory(data))
       .catch(() => {});
-
-    fetchAdminData();
   };
 
   const [isPulsing, setIsPulsing] = useState(false);
@@ -358,9 +357,33 @@ export default function App() {
   ]);
   // Admin Security Auth State
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+  const [adminToken, setAdminToken] = useState(null);
   const [adminPasswordInput, setAdminPasswordInput] = useState('');
   const [adminAuthError, setAdminAuthError] = useState('');
   const [showAdminPw, setShowAdminPw] = useState(false);
+
+  // Authenticated admin fetch: attaches admin JWT, auto-expires session on 401
+  const adminFetch = (url, opts = {}) => {
+    const headers = { ...(opts.headers || {}) };
+    if (adminToken) headers['Authorization'] = `Bearer ${adminToken}`;
+    return fetch(url, { ...opts, headers }).then(res => {
+      if (res.status === 401) {
+        setIsAdminAuthenticated(false);
+        setAdminToken(null);
+        try { localStorage.removeItem('bonk_admin_token'); } catch (e) {}
+        showToast('🔒 Admin session expired. Re-enter password to continue.');
+        throw new Error('Admin session expired');
+      }
+      return res;
+    });
+  };
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('bonk_admin_token');
+      if (saved) setAdminToken(saved);
+    } catch (e) {}
+  }, []);
 
   const handleAdminLogin = (e) => {
     e.preventDefault();
@@ -375,6 +398,8 @@ export default function App() {
       .then(data => {
         if (data.success) {
           setIsAdminAuthenticated(true);
+          setAdminToken(data.adminToken || null);
+          try { localStorage.setItem('bonk_admin_token', data.adminToken); } catch (e) {}
           setAdminPasswordInput('');
           showToast('🔓 Admin Console Unlocked!');
           fetchAdminData();
@@ -433,32 +458,32 @@ export default function App() {
   const [newTaskType, setNewTaskType] = useState('join_tg');
 
   const fetchAdminData = () => {
-    fetch(`${API_BASE}/admin/analytics`)
+    adminFetch(`${API_BASE}/admin/analytics`)
       .then(res => res.json())
       .then(data => data.totalUsers !== undefined && setAdminStats(data))
       .catch(() => {});
 
-    fetch(`${API_BASE}/admin/withdrawals`)
+    adminFetch(`${API_BASE}/admin/withdrawals`)
       .then(res => res.json())
       .then(data => Array.isArray(data) && setAdminQueue(data))
       .catch(() => {});
 
-    fetch(`${API_BASE}/admin/users`)
+    adminFetch(`${API_BASE}/admin/users`)
       .then(res => res.json())
       .then(data => Array.isArray(data) && setAdminUsers(data))
       .catch(() => {});
 
-    fetch(`${API_BASE}/admin/transactions`)
+    adminFetch(`${API_BASE}/admin/transactions`)
       .then(res => res.json())
       .then(data => Array.isArray(data) && setAdminTxLogs(data))
       .catch(() => {});
 
-    fetch(`${API_BASE}/admin/tasks`)
+    adminFetch(`${API_BASE}/admin/tasks`)
       .then(res => res.json())
       .then(data => Array.isArray(data) && setTasks(data))
       .catch(() => {});
 
-    fetch(`${API_BASE}/admin/settings`)
+    adminFetch(`${API_BASE}/admin/settings`)
       .then(res => res.json())
       .then(data => {
         if (data.adRewardAmount) {
@@ -475,7 +500,7 @@ export default function App() {
     e.preventDefault();
     if (!balanceModalUser || !adjAmount) return;
 
-    fetch(`${API_BASE}/admin/users/${balanceModalUser.id}/balance`, {
+    adminFetch(`${API_BASE}/admin/users/${balanceModalUser.id}/balance`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ amount: Number(adjAmount), reason: adjReason })
@@ -489,7 +514,8 @@ export default function App() {
           setBalanceModalUser(null);
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        if (err && err.message === 'Admin session expired') return;
         showToast('✅ Balance adjusted successfully');
         setBalanceModalUser(null);
       });
@@ -499,7 +525,7 @@ export default function App() {
     e.preventDefault();
     if (!rejectWithdrawModal) return;
 
-    fetch(`${API_BASE}/admin/withdraw/${rejectWithdrawModal.id}/reject`, {
+    adminFetch(`${API_BASE}/admin/withdraw/${rejectWithdrawModal.id}/reject`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ reason: rejectReasonText })
@@ -512,7 +538,8 @@ export default function App() {
           setRejectWithdrawModal(null);
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        if (err && err.message === 'Admin session expired') return;
         setAdminQueue(prev => prev.map(w => w.id === rejectWithdrawModal.id ? { ...w, status: 'failed', admin_note: rejectReasonText } : w));
         showToast(`❌ Withdrawal ${rejectWithdrawModal.id} Rejected & Refunded`);
         setRejectWithdrawModal(null);
@@ -521,7 +548,7 @@ export default function App() {
 
   const handleInspectUser = (usr) => {
     setInspectUser(usr);
-    fetch(`${API_BASE}/admin/users/${usr.id}/details`)
+    adminFetch(`${API_BASE}/admin/users/${usr.id}/details`)
       .then(res => res.json())
       .then(data => setInspectDetails(data))
       .catch(() => {
@@ -540,7 +567,7 @@ export default function App() {
       .split(',')
       .map(s => s.trim().replace('@', ''))
       .filter(Boolean);
-    fetch(`${API_BASE}/admin/settings`, {
+    adminFetch(`${API_BASE}/admin/settings`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...sysConfig, onboardingChannels: channelsArr })
@@ -558,7 +585,7 @@ export default function App() {
     if (!amountStr) return;
     const reason = prompt('Enter admin audit reason note:', 'Manual reward correction');
 
-    fetch(`${API_BASE}/admin/users/${userId}/balance`, {
+    adminFetch(`${API_BASE}/admin/users/${userId}/balance`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ amount: Number(amountStr), reason })
@@ -578,7 +605,7 @@ export default function App() {
 
   const handleToggleFlag = (userId, currentFlagged) => {
     const newFlagged = !currentFlagged;
-    fetch(`${API_BASE}/admin/users/${userId}/flag`, {
+    adminFetch(`${API_BASE}/admin/users/${userId}/flag`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ flagged: newFlagged })
@@ -594,7 +621,7 @@ export default function App() {
 
   const handleUnblockUser = (userId) => {
     setAdminUsers(prev => prev.map(u => u.id === userId ? { ...u, flagged: 0 } : u));
-    fetch(`${API_BASE}/admin/users/${userId}/unblock`, {
+    adminFetch(`${API_BASE}/admin/users/${userId}/unblock`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
     })
@@ -605,7 +632,8 @@ export default function App() {
           fetchAdminData();
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        if (err && err.message === 'Admin session expired') return;
         showToast(`🔓 User #${userId} unblocked!`);
       });
   };
@@ -620,7 +648,7 @@ export default function App() {
     if (!blockReasonModal) return;
     const userId = blockReasonModal.id;
     setAdminUsers(prev => prev.map(u => u.id === userId ? { ...u, flagged: 1 } : u));
-    fetch(`${API_BASE}/admin/users/${userId}/block`, {
+    adminFetch(`${API_BASE}/admin/users/${userId}/block`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ reason: blockReasonText })
@@ -632,7 +660,8 @@ export default function App() {
           fetchAdminData();
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        if (err && err.message === 'Admin session expired') return;
         showToast(`🔒 User #${userId} blocked!`);
       });
     setBlockReasonModal(null);
@@ -642,7 +671,7 @@ export default function App() {
     e.preventDefault();
     if (!newTaskTitle) return;
 
-    fetch(`${API_BASE}/admin/tasks`, {
+    adminFetch(`${API_BASE}/admin/tasks`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -663,7 +692,7 @@ export default function App() {
   };
 
   const handleDeleteTask = (taskId) => {
-    fetch(`${API_BASE}/admin/tasks/${taskId}`, { method: 'DELETE' })
+    adminFetch(`${API_BASE}/admin/tasks/${taskId}`, { method: 'DELETE' })
       .then(res => res.json())
       .then(data => {
         if (data.success) {
@@ -675,7 +704,7 @@ export default function App() {
   };
 
   const handleApproveWithdrawal = (withdrawId) => {
-    fetch(`${API_BASE}/admin/withdraw/${withdrawId}/approve`, { method: 'POST' })
+    adminFetch(`${API_BASE}/admin/withdraw/${withdrawId}/approve`, { method: 'POST' })
       .then(res => res.json())
       .then(data => {
         if (data.success) {
@@ -683,7 +712,8 @@ export default function App() {
           fetchAdminData();
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        if (err && err.message === 'Admin session expired') return;
         setAdminQueue(prev => prev.map(w => w.id === withdrawId ? { ...w, status: 'completed', tx_hash: 'sol_mock_tx_sig_88' } : w));
         showToast(`✅ Withdrawal ${withdrawId} Approved!`);
       });
@@ -693,7 +723,7 @@ export default function App() {
     const reason = prompt('Enter rejection reason for user:', 'Flagged for referral policy review');
     if (reason === null) return;
 
-    fetch(`${API_BASE}/admin/withdraw/${withdrawId}/reject`, {
+    adminFetch(`${API_BASE}/admin/withdraw/${withdrawId}/reject`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ reason })
@@ -943,7 +973,7 @@ export default function App() {
               ...prev,
               balance: data.newBalance,
               ads_watched_today: data.adsWatchedToday,
-              ads_watched_total: (prev.ads_watched_total || 0) + 1
+              ads_watched_total: data.adsWatchedTotal !== undefined ? data.adsWatchedTotal : (prev.ads_watched_total || 0) + 1
             }));
             setAdsStatus(prev => ({ 
               ...prev, 
@@ -989,9 +1019,14 @@ export default function App() {
   // --- WITHDRAWAL HANDLER ---
   const handleWithdraw = (e) => {
     e.preventDefault();
+    if (isWithdrawing) return;
     const amt = Number(withdrawAmount);
 
-    if (!amt || amt < 50000) {
+    if (!amt || !Number.isFinite(amt) || !Number.isInteger(amt) || amt <= 0) {
+      setWithdrawMsg('❌ Enter a valid BONK amount');
+      return;
+    }
+    if (amt < 50000) {
       setWithdrawMsg('❌ Minimum withdrawal amount is 50,000 BONK');
       return;
     }
@@ -1008,6 +1043,8 @@ export default function App() {
       return;
     }
 
+    setIsWithdrawing(true);
+
     if (token) {
       fetch(`${API_BASE}/withdraw/request`, {
         method: 'POST',
@@ -1016,6 +1053,7 @@ export default function App() {
       })
         .then(res => res.json())
         .then(data => {
+          setIsWithdrawing(false);
           if (data.success) {
             setUser(prev => ({ ...prev, balance: data.remainingBalance }));
             setWithdrawHistory(prev => [
@@ -1028,6 +1066,10 @@ export default function App() {
           } else {
             setWithdrawMsg(`❌ ${data.error}`);
           }
+        })
+        .catch(() => {
+          setIsWithdrawing(false);
+          setWithdrawMsg('❌ Network error submitting withdrawal. Please try again.');
         });
     } else {
       setUser(prev => ({ ...prev, balance: prev.balance - amt }));
@@ -1038,6 +1080,7 @@ export default function App() {
       setWithdrawAmount('');
       setWalletAddress('');
       setWithdrawMsg('✅ Withdrawal request submitted! Status: Pending.');
+      setIsWithdrawing(false);
     }
   };
 
@@ -1579,8 +1622,8 @@ export default function App() {
                 />
               </div>
 
-              <button type="submit" className="btn-primary">
-                SUBMIT REQUEST
+              <button type="submit" className="btn-primary" disabled={isWithdrawing} style={{ opacity: isWithdrawing ? 0.6 : 1 }}>
+                {isWithdrawing ? 'SUBMITTING...' : 'SUBMIT REQUEST'}
               </button>
             </form>
           </div>
