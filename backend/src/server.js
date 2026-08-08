@@ -1,4 +1,4 @@
-import express from 'express';
+﻿import express from 'express';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
     const payload = token ? jwt.verify(token, JWT_SECRET) : null;
     if (payload && ADMIN_USER_IDS.includes(Number(payload.id))) return next();
   } catch (e) {}
-  return res.status(503).json({ error: '🔧 System is under maintenance. Please check back soon.', maintenance: true });
+  return res.status(503).json({ error: 'ðŸ”§ System is under maintenance. Please check back soon.', maintenance: true });
 });
 
 const JWT_SECRET = process.env.JWT_SECRET || 'earn_app_jwt_secret_key_2026';
@@ -130,7 +130,7 @@ app.post('/auth/login', (req, res) => {
     let refRejectReason = null;
 
     // 1. Strict Anti-Fraud Multi-Account HARD BLOCK on Device ID / Fingerprint
-    //    (Admin/owner IDs bypass — they are developed-proof and can never be auto-banned.)
+    //    (Admin/owner IDs bypass â€” they are developed-proof and can never be auto-banned.)
     const existingDeviceUser = db.prepare('SELECT * FROM users WHERE device_id = ?').get(deviceId, userId);
     if (existingDeviceUser && existingDeviceUser.id !== userId && !ADMIN_USER_IDS.includes(Number(userId))) {
       // Save blocked account so it appears in Admin Panel
@@ -141,15 +141,15 @@ app.post('/auth/login', (req, res) => {
 
       const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
       db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
-        .run(txId, userId, 'anti_fraud_alert', 0, `⛔ FORBIDDEN REGISTRATION: Device HWID matches User #${existingDeviceUser.id} (@${existingDeviceUser.username || 'user'})`);
+        .run(txId, userId, 'anti_fraud_alert', 0, `â›” FORBIDDEN REGISTRATION: Device HWID matches User #${existingDeviceUser.id} (@${existingDeviceUser.username || 'user'})`);
       
       return res.status(403).json({ 
-        error: `⛔ FORBIDDEN: Duplicate account creation blocked. This physical device is already registered with User #${existingDeviceUser.id} (@${existingDeviceUser.username || 'user'}). Multi-accounting is strictly prohibited.` 
+        error: `â›” FORBIDDEN: Duplicate account creation blocked. This physical device is already registered with User #${existingDeviceUser.id} (@${existingDeviceUser.username || 'user'}). Multi-accounting is strictly prohibited.` 
       });
     }
 
     // 2. Strict Anti-Fraud Multi-Account HARD BLOCK on Persistent Device Token
-    //    (Admin/owner IDs bypass — they are developed-proof and can never be auto-banned.)
+    //    (Admin/owner IDs bypass â€” they are developed-proof and can never be auto-banned.)
     const existingTokenUser = db.prepare('SELECT * FROM users WHERE persistent_token = ?').get(persistentToken, userId);
     if (existingTokenUser && existingTokenUser.id !== userId && !ADMIN_USER_IDS.includes(Number(userId))) {
       // Save blocked account so it appears in Admin Panel
@@ -160,10 +160,10 @@ app.post('/auth/login', (req, res) => {
 
       const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
       db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
-        .run(txId, userId, 'anti_fraud_alert', 0, `⛔ FORBIDDEN REGISTRATION: Persistent device token matches User #${existingTokenUser.id}`);
+        .run(txId, userId, 'anti_fraud_alert', 0, `â›” FORBIDDEN REGISTRATION: Persistent device token matches User #${existingTokenUser.id}`);
       
       return res.status(403).json({ 
-        error: `⛔ FORBIDDEN: Duplicate account creation blocked. Device storage token is already linked to User #${existingTokenUser.id}. Only 1 account per device is allowed.` 
+        error: `â›” FORBIDDEN: Duplicate account creation blocked. Device storage token is already linked to User #${existingTokenUser.id}. Only 1 account per device is allowed.` 
       });
     }
 
@@ -191,7 +191,7 @@ app.post('/auth/login', (req, res) => {
 
     if (validReferrer) {
       // Award signup bonus to referrer (parameterized per system settings)
-      const signupBonus = Number(systemSettings.referralSignupBonus) || 100;
+      const signupBonus = settingNum('referralSignupBonus', 100);
       db.prepare('UPDATE users SET balance = balance + ?, referral_count = referral_count + 1 WHERE id = ?').run(signupBonus, validReferrer);
       const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
       db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
@@ -200,7 +200,7 @@ app.post('/auth/login', (req, res) => {
       // Log anti-fraud alert in audit ledger
       const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
       db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
-        .run(txId, userId, 'anti_fraud_alert', 0, `🚨 ${refRejectReason} (Attempted Referrer: #${referrerId})`);
+        .run(txId, userId, 'anti_fraud_alert', 0, `ðŸš¨ ${refRejectReason} (Attempted Referrer: #${referrerId})`);
     }
     user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
   } else {
@@ -287,7 +287,7 @@ app.get('/onboarding', authenticateToken, (req, res) => {
   res.json({
     required: Number(user.onboarding_completed) !== 1,
     completed: Number(user.onboarding_completed) === 1,
-    bonus: Number(systemSettings.onboardingBonus) || 1000,
+    bonus: settingNum('onboardingBonus', 1000),
     channels
   });
 });
@@ -329,13 +329,13 @@ app.post('/onboarding/claim-bonus', authenticateToken, async (req, res) => {
   if (Number(user.flagged) === 1) {
     const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
     db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
-      .run(txId, req.user.id, 'onboarding_denied', 0, `⛔ Onboarding bonus DENIED: Account #${req.user.id} flagged for policy review`);
+      .run(txId, req.user.id, 'onboarding_denied', 0, `â›” Onboarding bonus DENIED: Account #${req.user.id} flagged for policy review`);
     return res.status(403).json({
-      error: `⛔ ACCESS FORBIDDEN: Account #${req.user.id} is under policy review. Channels joined, but the registration bonus cannot be credited. Contact support.`
+      error: `â›” ACCESS FORBIDDEN: Account #${req.user.id} is under policy review. Channels joined, but the registration bonus cannot be credited. Contact support.`
     });
   }
 
-  const bonus = Number(systemSettings.onboardingBonus) || 1000;
+  const bonus = settingNum('onboardingBonus', 1000);
   db.prepare('UPDATE users SET onboarding_completed = 1, balance = balance + ? WHERE id = ?').run(bonus, req.user.id);
 
   const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
@@ -393,7 +393,7 @@ app.get('/ads/status', authenticateToken, (req, res) => {
   res.json({
     adsWatchedToday: user.ads_watched_today,
     adsWatchedTotal: user.ads_watched_total,
-    dailyCap: Number(systemSettings.dailyAdCap) || 10,
+    dailyCap: settingNum('dailyAdCap', 10),
     currentStep: currentSession ? currentSession.step : 1,
     activeSessionId: currentSession ? currentSession.id : null
   });
@@ -414,7 +414,7 @@ app.post('/ads/start', authenticateToken, (req, res) => {
   }
 
   // 1. Strict Daily Limit Enforcement (Anti-Bypass)
-  const DAILY_CAP = Number(systemSettings.dailyAdCap) || 10;
+  const DAILY_CAP = settingNum('dailyAdCap', 10);
   if ((user.ads_watched_today || 0) >= DAILY_CAP) {
     return res.status(400).json({ 
       error: `Daily ad limit reached (${DAILY_CAP}/${DAILY_CAP}). Resets daily at 00:00 UTC.`,
@@ -430,7 +430,7 @@ app.post('/ads/start', authenticateToken, (req, res) => {
     if (elapsedSec < COOLDOWN_SEC) {
       const waitTime = COOLDOWN_SEC - elapsedSec;
       return res.status(429).json({ 
-        error: `⏳ Cooldown active: Please wait ${waitTime}s before watching the next ad.`,
+        error: `â³ Cooldown active: Please wait ${waitTime}s before watching the next ad.`,
         cooldownRemaining: waitTime 
       });
     }
@@ -438,7 +438,7 @@ app.post('/ads/start', authenticateToken, (req, res) => {
 
   const sessionId = 'ad_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
   const adToken = 'token_' + Math.random().toString(36).substr(2, 9);
-  const adReward = Number(systemSettings.adRewardAmount) || 1200;
+  const adReward = settingNum('adRewardAmount', 1200);
 
   db.prepare(`
     INSERT INTO ad_sessions (id, user_id, step, ad_token, reward_amount)
@@ -465,7 +465,7 @@ app.post('/ads/callback', (req, res) => {
   let session = db.prepare('SELECT * FROM ad_sessions WHERE id = ?').get(sessionId);
 
   if (!session || !session.created_at) {
-    return res.status(404).json({ error: '⚠️ Ad session not found. Please click START to watch an ad.' });
+    return res.status(404).json({ error: 'âš ï¸ Ad session not found. Please click START to watch an ad.' });
   }
 
   // Strict 14s Minimum Duration Verification on Verification Step
@@ -474,7 +474,7 @@ app.post('/ads/callback', (req, res) => {
   if (elapsedMs < MIN_WATCH_MS) {
     const remainingSec = Math.ceil((MIN_WATCH_MS - elapsedMs) / 1000);
     return res.status(400).json({ 
-      error: `⚠️ Ad watch incomplete! Please watch the full 15 seconds before verifying (${remainingSec}s remaining).`,
+      error: `âš ï¸ Ad watch incomplete! Please watch the full 15 seconds before verifying (${remainingSec}s remaining).`,
       remainingSec
     });
   }
@@ -500,7 +500,7 @@ app.post('/ads/claim', authenticateToken, (req, res) => {
   }
 
   // 1. Strict Anti-Race Daily Cap Check
-  const DAILY_CAP = Number(systemSettings.dailyAdCap) || 10;
+  const DAILY_CAP = settingNum('dailyAdCap', 10);
   if ((user.ads_watched_today || 0) >= DAILY_CAP) {
     return res.status(400).json({ error: `Daily ad cap (${DAILY_CAP}/${DAILY_CAP}) reached.` });
   }
@@ -508,15 +508,15 @@ app.post('/ads/claim', authenticateToken, (req, res) => {
   const session = db.prepare('SELECT * FROM ad_sessions WHERE id = ? AND user_id = ?').get(sessionId, userId);
   
   if (!session || !session.created_at) {
-    return res.status(400).json({ error: '⚠️ Valid active ad session not found. Please click START to watch an ad.' });
+    return res.status(400).json({ error: 'âš ï¸ Valid active ad session not found. Please click START to watch an ad.' });
   }
 
   if (session.claimed_at) {
-    return res.status(400).json({ error: '⚠️ Ad reward has already been claimed.' });
+    return res.status(400).json({ error: 'âš ï¸ Ad reward has already been claimed.' });
   }
 
   if (session.step < 2) {
-    return res.status(400).json({ error: '⚠️ Please verify playback in Step 2 before claiming your reward.' });
+    return res.status(400).json({ error: 'âš ï¸ Please verify playback in Step 2 before claiming your reward.' });
   }
 
   // 2. Minimum Watch Duration Verification (Anti-Cheat / High CPM compliance)
@@ -525,7 +525,7 @@ app.post('/ads/claim', authenticateToken, (req, res) => {
   if (elapsedMs < MIN_WATCH_MS) {
     const remainingSec = Math.ceil((MIN_WATCH_MS - elapsedMs) / 1000);
     return res.status(400).json({ 
-      error: `⚠️ Incomplete view! You must watch the complete video ad (minimum 15s) to receive your reward (${remainingSec}s remaining).` 
+      error: `âš ï¸ Incomplete view! You must watch the complete video ad (minimum 15s) to receive your reward (${remainingSec}s remaining).` 
     });
   }
 
@@ -556,19 +556,19 @@ app.post('/ads/claim', authenticateToken, (req, res) => {
       if (referrer.device_id && referrer.device_id === updatedUser.device_id) {
         const refTxId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
         db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
-          .run(refTxId, referrer.id, 'anti_fraud_alert', 0, `🚨 REJECTED VERIFIED BONUS: Same Device Fingerprint with User #${userId}`);
+          .run(refTxId, referrer.id, 'anti_fraud_alert', 0, `ðŸš¨ REJECTED VERIFIED BONUS: Same Device Fingerprint with User #${userId}`);
       } else if (referrer.ip_address && referrer.ip_address === updatedUser.ip_address && referrer.ip_address !== '127.0.0.1') {
         const refTxId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
         db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
-          .run(refTxId, referrer.id, 'anti_fraud_alert', 0, `🚨 REJECTED VERIFIED BONUS: Same IP Address (${referrer.ip_address}) with User #${userId}`);
+          .run(refTxId, referrer.id, 'anti_fraud_alert', 0, `ðŸš¨ REJECTED VERIFIED BONUS: Same IP Address (${referrer.ip_address}) with User #${userId}`);
       } else {
-        const verifiedBonus = Number(systemSettings.verifiedRefBonus) || 10000;
+        const verifiedBonus = settingNum('verifiedRefBonus', 10000);
         db.prepare('UPDATE users SET verified_ref_count = verified_ref_count + 1, balance = balance + ? WHERE id = ?').run(verifiedBonus, updatedUser.referrer_id);
         const refTxId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
         db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
           .run(refTxId, updatedUser.referrer_id, 'referral_verified', verifiedBonus, `Verified Referral Bonus (Ref #${userId} completed ${updatedUser.ads_watched_total} ads)`);
 
-        const minVerifiedRefs = Number(systemSettings.minVerifiedRefs) || 3;
+        const minVerifiedRefs = settingNum('minVerifiedRefs', 3);
         if (referrer.verified_ref_count + 1 >= minVerifiedRefs) {
           db.prepare('UPDATE users SET withdrawal_unlocked = 1 WHERE id = ?').run(updatedUser.referrer_id);
         }
@@ -594,7 +594,7 @@ app.post('/withdraw/request', authenticateToken, (req, res) => {
   
   if (!user) return res.status(404).json({ error: 'User not found' });
   if (user.flagged) {
-    return res.status(403).json({ error: '🚨 Account suspended for Anti-Fraud / Multi-Account policy violation. Withdrawals disabled.' });
+    return res.status(403).json({ error: 'ðŸš¨ Account suspended for Anti-Fraud / Multi-Account policy violation. Withdrawals disabled.' });
   }
 
   // Strict amount validation (blocks NaN / negative / decimals / strings)
@@ -603,7 +603,7 @@ app.post('/withdraw/request', authenticateToken, (req, res) => {
     return res.status(400).json({ error: 'Invalid withdrawal amount' });
   }
   if (user.balance < numAmount) return res.status(400).json({ error: 'Insufficient balance' });
-  const minWithdrawal = Number(systemSettings.minWithdrawalAmount) || 50000;
+  const minWithdrawal = settingNum('minWithdrawalAmount', 50000);
   if (numAmount < minWithdrawal) return res.status(400).json({ error: `Minimum withdrawal is ${minWithdrawal.toLocaleString()} BONK` });
   
   // Base58 check heuristic for Solana address
@@ -611,7 +611,7 @@ app.post('/withdraw/request', authenticateToken, (req, res) => {
     return res.status(400).json({ error: 'Invalid Solana wallet address format (32-44 base58 chars)' });
   }
 
-  const minVerifiedRefs = Number(systemSettings.minVerifiedRefs) || 3;
+  const minVerifiedRefs = settingNum('minVerifiedRefs', 3);
   if (user.verified_ref_count < minVerifiedRefs && !user.withdrawal_unlocked) {
     return res.status(400).json({ error: `Minimum ${minVerifiedRefs} verified referrals required to unlock withdrawals` });
   }
@@ -637,7 +637,7 @@ app.get('/withdraw/history', authenticateToken, (req, res) => {
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'meela';
 
 // Admin/owner account IDs are permanently protected: they can never be flagged/blocked by mistake.
-// Override via ADMIN_USER_IDS="id1,id2" env or the frontend ± keep in sync with PROTECTED_ADMIN_IDS in App.jsx.
+// Override via ADMIN_USER_IDS="id1,id2" env or the frontend Â± keep in sync with PROTECTED_ADMIN_IDS in App.jsx.
 const ADMIN_USER_IDS = (process.env.ADMIN_USER_IDS || '6909180225,99887766').split(',').map(Number).filter(Boolean);
 
 app.post('/admin/login', (req, res) => {
@@ -709,7 +709,7 @@ app.post('/admin/users/:id/flag', authenticateAdmin, (req, res) => {
   const { flagged } = req.body;
 
   if (flagged && ADMIN_USER_IDS.includes(userId)) {
-    return res.status(400).json({ error: '🛡️ Admin/owner accounts are protected and can never be flagged or blocked.' });
+    return res.status(400).json({ error: 'ðŸ›¡ï¸ Admin/owner accounts are protected and can never be flagged or blocked.' });
   }
 
   db.prepare('UPDATE users SET flagged = ? WHERE id = ?').run(flagged ? 1 : 0, userId);
@@ -725,7 +725,7 @@ app.post('/admin/users/:id/unblock', authenticateAdmin, (req, res) => {
 
   const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
   db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
-    .run(txId, userId, 'admin_unblock', 0, `🔓 Admin Unlocked Account #${userId} (@${user.username || 'user'})`);
+    .run(txId, userId, 'admin_unblock', 0, `ðŸ”“ Admin Unlocked Account #${userId} (@${user.username || 'user'})`);
 
   res.json({ success: true, userId, message: `Account #${userId} unblocked successfully.` });
 });
@@ -737,14 +737,14 @@ app.post('/admin/users/:id/block', authenticateAdmin, (req, res) => {
   if (!user) return res.status(404).json({ error: 'User not found' });
 
   if (ADMIN_USER_IDS.includes(userId)) {
-    return res.status(400).json({ error: '🛡️ Admin/owner accounts are protected and can never be blocked.' });
+    return res.status(400).json({ error: 'ðŸ›¡ï¸ Admin/owner accounts are protected and can never be blocked.' });
   }
 
   db.prepare('UPDATE users SET flagged = 1 WHERE id = ?').run(1, userId);
 
   const txId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
   db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
-    .run(txId, userId, 'admin_block', 0, `🔒 Admin Flagged & Blocked Account #${userId}: ${reason || 'Sybil/Policy Review'}`);
+    .run(txId, userId, 'admin_block', 0, `ðŸ”’ Admin Flagged & Blocked Account #${userId}: ${reason || 'Sybil/Policy Review'}`);
 
   res.json({ success: true, userId, message: `Account #${userId} blocked successfully.` });
 });
@@ -808,6 +808,13 @@ try {
     if (snap) Object.assign(systemSettings, snap);
   }
 } catch (e) {}
+
+// Numeric settings must allow 0 (e.g. minVerifiedRefs=0 disables the gate).
+// `Number(x) || default` treats 0 as falsy -> use this helper instead.
+function settingNum(key, fallback) {
+  const n = Number(systemSettings[key]);
+  return Number.isFinite(n) && n >= 0 ? n : fallback;
+}
 
 function persistSettings() {
   try {
@@ -885,17 +892,17 @@ if (BOT_TOKEN && BOT_TOKEN !== 'MOCK_BOT_TOKEN' && BOT_TOKEN.includes(':')) {
         inline_keyboard: [
           [
             {
-              text: '🚀 Launch BONK Mini App',
+              text: 'ðŸš€ Launch BONK Mini App',
               web_app: { url: launchUrl }
             }
           ],
           [
-            { text: '📢 Official Channel', url: 'https://t.me/BonkEarnNews' },
-            { text: '💳 Payment Proofs', url: 'https://t.me/BonkEarnPayouts' }
+            { text: 'ðŸ“¢ Official Channel', url: 'https://t.me/BonkEarnNews' },
+            { text: 'ðŸ’³ Payment Proofs', url: 'https://t.me/BonkEarnPayouts' }
           ],
           [
-            { text: '💬 Community Chat', url: 'https://t.me/BonkEarnChat' },
-            { text: '👥 Invite Friends', url: `https://t.me/share/url?url=https://t.me/BonkEarnSol_bot/app?startapp=r_${startPayload || 'earn'}&text=🎁 Join BONK Earn and get 10,000 free BONK tokens instantly!` }
+            { text: 'ðŸ’¬ Community Chat', url: 'https://t.me/BonkEarnChat' },
+            { text: 'ðŸ‘¥ Invite Friends', url: `https://t.me/share/url?url=https://t.me/BonkEarnSol_bot/app?startapp=r_${startPayload || 'earn'}&text=ðŸŽ Join BONK Earn and get 10,000 free BONK tokens instantly!` }
           ]
         ]
       };
@@ -906,9 +913,9 @@ if (BOT_TOKEN && BOT_TOKEN !== 'MOCK_BOT_TOKEN' && BOT_TOKEN.includes(':')) {
       const firstName = ctx.from?.first_name || 'Earner';
 
       const caption = 
-        `🔥 *BONK Earn is LIVE, ${firstName}!* 🚀\n\n` +
-        `💰 *Your Status:* 10,000 BONK Ready to Claim!\n\n` +
-        `Tap the button below to claim your free $BONK, watch simple ads, and cash out instantly to your Solana wallet! 👇`;
+        `ðŸ”¥ *BONK Earn is LIVE, ${firstName}!* ðŸš€\n\n` +
+        `ðŸ’° *Your Status:* 10,000 BONK Ready to Claim!\n\n` +
+        `Tap the button below to claim your free $BONK, watch simple ads, and cash out instantly to your Solana wallet! ðŸ‘‡`;
 
       try {
         await ctx.replyWithPhoto(BONK_IMAGE_URL, {
@@ -926,13 +933,13 @@ if (BOT_TOKEN && BOT_TOKEN !== 'MOCK_BOT_TOKEN' && BOT_TOKEN.includes(':')) {
 
     botInstance.help((ctx) => {
       ctx.reply(
-        `🐕 *BonkEarn Quick Guide:*\n\n` +
+        `ðŸ• *BonkEarn Quick Guide:*\n\n` +
         `1. Tap the button below to launch the Mini App.\n` +
         `2. Complete tasks & watch sponsor ads.\n` +
         `3. Share your referral link for 10,000 BONK per friend.\n` +
         `4. Instant Solana withdrawals (min 100k BONK).\n\n` +
-        `📢 Updates: @BonkEarnNews\n` +
-        `💳 Proofs: @BonkEarnPayouts`,
+        `ðŸ“¢ Updates: @BonkEarnNews\n` +
+        `ðŸ’³ Proofs: @BonkEarnPayouts`,
         {
           parse_mode: 'Markdown',
           reply_markup: getBotWelcomeKeyboard('')
@@ -950,14 +957,14 @@ if (BOT_TOKEN && BOT_TOKEN !== 'MOCK_BOT_TOKEN' && BOT_TOKEN.includes(':')) {
     if (RENDER_EXTERNAL_URL) {
       const webhookUrl = `${RENDER_EXTERNAL_URL}/api/bot-webhook`;
       botInstance.telegram.setWebhook(webhookUrl).then(() => {
-        console.log(`⚡ Telegram Webhook successfully active at ${webhookUrl}`);
+        console.log(`âš¡ Telegram Webhook successfully active at ${webhookUrl}`);
       }).catch(err => {
         console.warn('Webhook setup notice, starting polling fallback:', err.message);
         botInstance.launch({ dropPendingUpdates: true });
       });
     } else {
       botInstance.launch({ dropPendingUpdates: true }).then(() => {
-        console.log('⚡ Telegram Bot polling active with 0ms delay!');
+        console.log('âš¡ Telegram Bot polling active with 0ms delay!');
       }).catch(err => {
         console.warn('Bot launch notice:', err.message);
       });
@@ -982,6 +989,6 @@ if (RENDER_URL) {
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-  console.log(`⚡ BonkEarn Backend API & Bot running on port ${PORT}`);
+  console.log(`âš¡ BonkEarn Backend API & Bot running on port ${PORT}`);
 });
 
