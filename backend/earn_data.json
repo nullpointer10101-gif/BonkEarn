@@ -66,9 +66,9 @@
       "balance": 1000,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
-      "ads_date": "2026-08-08",
+      "ads_date": "2026-08-09",
       "referrer_id": null,
-      "ip_address": "157.48.9.158",
+      "ip_address": "157.48.6.25",
       "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
       "persistent_token": "dev_uuid_w2czwo9nat_msjbpoep",
       "flagged": 0,
@@ -77,6 +77,25 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-08T16:09:40.842Z"
+    },
+    {
+      "id": 6446145632,
+      "username": "kiopajje",
+      "first_name": "Kanzx",
+      "balance": 0,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-09",
+      "referrer_id": null,
+      "ip_address": "157.48.6.25",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_w2czwo9nat_msjbpoep",
+      "flagged": 1,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 0,
+      "created_at": "2026-08-09T14:38:43.704Z"
     }
   ],
   "ad_sessions": [
@@ -249,6 +268,14 @@
       "amount": 1000,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-08T16:09:49.792Z"
+    },
+    {
+      "id": "tx_1786286323716_88o5",
+      "user_id": 6446145632,
+      "type": "anti_fraud_alert",
+      "amount": 0,
+      "description": "â›” FORBIDDEN REGISTRATION: Device HWID matches User #6909180225 (@Foxypi99)",
+      "created_at": "2026-08-09T14:38:43.716Z"
     }
   ]
 }
