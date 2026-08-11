@@ -63,12 +63,12 @@
       "id": 6909180225,
       "username": "Foxypi99",
       "first_name": "Baeyyo",
-      "balance": 1000,
+      "balance": 13500,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
-      "ads_date": "2026-08-09",
+      "ads_date": "2026-08-11",
       "referrer_id": null,
-      "ip_address": "157.48.6.25",
+      "ip_address": "157.48.4.31",
       "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
       "persistent_token": "dev_uuid_w2czwo9nat_msjbpoep",
       "flagged": 0,
@@ -76,7 +76,8 @@
       "verified_ref_count": 0,
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
-      "created_at": "2026-08-08T16:09:40.842Z"
+      "created_at": "2026-08-08T16:09:40.842Z",
+      "last_ad_watched_at": "2026-08-11T15:29:12.695Z"
     },
     {
       "id": 6446145632,
@@ -179,6 +180,15 @@
       "reward_amount": 1200,
       "created_at": "2026-08-07T20:23:01.773Z",
       "claimed_at": "2026-08-07T20:23:16.317Z"
+    },
+    {
+      "id": "ad_1786462152695_na9j1",
+      "user_id": 6909180225,
+      "step": 1,
+      "ad_token": "token_4p2yh4nw1",
+      "reward_amount": 1200,
+      "created_at": "2026-08-11T15:29:12.695Z",
+      "claimed_at": null
     }
   ],
   "tasks": [
@@ -210,7 +220,23 @@
       "created_at": "2026-08-07T15:18:13.875Z"
     }
   ],
-  "task_completions": [],
+  "task_completions": [
+    {
+      "user_id": 6909180225,
+      "task_id": "t1",
+      "completed_at": "2026-08-11T15:29:09.554Z"
+    },
+    {
+      "user_id": 6909180225,
+      "task_id": "t2",
+      "completed_at": "2026-08-11T15:29:10.106Z"
+    },
+    {
+      "user_id": 6909180225,
+      "task_id": "t3",
+      "completed_at": "2026-08-11T15:29:10.573Z"
+    }
+  ],
   "withdrawals": [],
   "transactions": [
     {
@@ -276,6 +302,30 @@
       "amount": 0,
       "description": "â›” FORBIDDEN REGISTRATION: Device HWID matches User #6909180225 (@Foxypi99)",
       "created_at": "2026-08-09T14:38:43.716Z"
+    },
+    {
+      "id": "tx_1786462149555_75re",
+      "user_id": 6909180225,
+      "type": "task_reward",
+      "amount": 5000,
+      "description": "Completed Bonus Task: Join Official Telegram Channel",
+      "created_at": "2026-08-11T15:29:09.555Z"
+    },
+    {
+      "id": "tx_1786462150107_5dmr",
+      "user_id": 6909180225,
+      "type": "task_reward",
+      "amount": 5000,
+      "description": "Completed Bonus Task: Follow Official X (Twitter)",
+      "created_at": "2026-08-11T15:29:10.107Z"
+    },
+    {
+      "id": "tx_1786462150575_3rns",
+      "user_id": 6909180225,
+      "type": "task_reward",
+      "amount": 2500,
+      "description": "Completed Bonus Task: Visit Sponsor Website",
+      "created_at": "2026-08-11T15:29:10.575Z"
     }
   ]
 }
