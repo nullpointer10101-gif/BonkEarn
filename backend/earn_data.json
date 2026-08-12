@@ -546,6 +546,44 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-12T16:38:34.036Z"
+    },
+    {
+      "id": 8279844929,
+      "username": "Deakekk",
+      "first_name": "Drake",
+      "balance": 500,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-12",
+      "referrer_id": null,
+      "ip_address": "136.228.175.239",
+      "device_id": "ba483916812c2e49f67dc9a135ccadac",
+      "persistent_token": "dev_uuid_y8ral4vvwf_msqc27gs",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 1,
+      "created_at": "2026-08-12T17:01:45.618Z"
+    },
+    {
+      "id": 8897548227,
+      "username": "noobqueen7",
+      "first_name": "𝙿𝚑𝚢𝚘ᵕ̈🥑",
+      "balance": 500,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-12",
+      "referrer_id": null,
+      "ip_address": "136.228.175.239",
+      "device_id": "ba483916812c2e49f67dc9a135ccadac",
+      "persistent_token": "dev_uuid_y8ral4vvwf_msqc27gs",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 1,
+      "created_at": "2026-08-12T17:02:22.415Z"
     }
   ],
   "ad_sessions": [
@@ -2426,6 +2464,22 @@
       "amount": 500,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-12T16:39:23.208Z"
+    },
+    {
+      "id": "tx_1786554128328_481r",
+      "user_id": 8279844929,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-12T17:02:08.328Z"
+    },
+    {
+      "id": "tx_1786554167809_2inn",
+      "user_id": 8897548227,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-12T17:02:47.809Z"
     }
   ],
   "_settings": {
