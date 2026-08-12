@@ -237,36 +237,7 @@
       "completed_at": "2026-08-11T15:29:10.573Z"
     }
   ],
-  "withdrawals": [
-    {
-      "id": "w_1786517377628_sd1e9",
-      "user_id": 1000,
-      "amount": null,
-      "status": "pending",
-      "requested_at": "2026-08-12T06:49:37.629Z"
-    },
-    {
-      "id": "w_1786517711172_s9jc1",
-      "user_id": 1500,
-      "amount": null,
-      "status": "pending",
-      "requested_at": "2026-08-12T06:55:11.172Z"
-    },
-    {
-      "id": "w_1786517751794_h4zy1",
-      "user_id": 1000,
-      "amount": null,
-      "status": "pending",
-      "requested_at": "2026-08-12T06:55:51.794Z"
-    },
-    {
-      "id": "w_1786518466087_rxijk",
-      "user_id": 1000,
-      "amount": null,
-      "status": "pending",
-      "requested_at": "2026-08-12T07:07:46.087Z"
-    }
-  ],
+  "withdrawals": [],
   "transactions": [
     {
       "id": "tx_1786132996848_qeoa",

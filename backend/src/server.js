@@ -627,7 +627,7 @@ app.post('/withdraw/request', authenticateToken, (req, res) => {
   db.prepare(`
     INSERT INTO withdrawals (id, user_id, amount, wallet_address, status)
     VALUES (?, ?, ?, ?, 'pending')
-  `).run(withdrawId, numAmount, walletAddress);
+  `).run(withdrawId, userId, numAmount, walletAddress);
 
   res.json({ success: true, withdrawId, status: 'pending', remainingBalance });
 });
