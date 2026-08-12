@@ -547,7 +547,7 @@
       "id": 5027497967,
       "username": "RomaC71",
       "first_name": "Роман",
-      "balance": 0,
+      "balance": 500,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-12",
@@ -559,8 +559,9 @@
       "referral_count": 0,
       "verified_ref_count": 0,
       "withdrawal_unlocked": 0,
-      "onboarding_completed": 0,
-      "created_at": "2026-08-12T14:38:30.889Z"
+      "onboarding_completed": 1,
+      "created_at": "2026-08-12T14:38:30.889Z",
+      "last_ad_watched_at": "2026-08-12T14:40:15.663Z"
     }
   ],
   "ad_sessions": [
@@ -1111,6 +1112,24 @@
       "ad_token": "token_l2zunsxek",
       "reward_amount": 200,
       "created_at": "2026-08-12T14:26:13.596Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786545594864_f1tk9",
+      "user_id": 5027497967,
+      "step": 1,
+      "ad_token": "token_953aqs3t6",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T14:39:54.864Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786545615662_5qcun",
+      "user_id": 5027497967,
+      "step": 1,
+      "ad_token": "token_dxewjf71r",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T14:40:15.662Z",
       "claimed_at": null
     }
   ],
@@ -1962,6 +1981,14 @@
       "amount": 500,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-12T14:20:00.330Z"
+    },
+    {
+      "id": "tx_1786545583644_o56z",
+      "user_id": 5027497967,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-12T14:39:43.645Z"
     }
   ],
   "_settings": {
