@@ -1029,16 +1029,19 @@ if (process.env.ENABLE_FAKE_PAYOUTS === 'true') {
     
     setTimeout(() => {
       try {
-        // Generate fake username like AB***CD
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const generateLetters = (len) => Array.from({length: len}, () => chars.charAt(Math.floor(Math.random() * chars.length))).join('');
-        const fakeUsername = generateLetters(2) + '***' + generateLetters(2);
+        // Generate fake username like AB***CD or 4X***9T
+        const alphaNumChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        const generateAlphaNum = (len) => Array.from({length: len}, () => alphaNumChars.charAt(Math.floor(Math.random() * alphaNumChars.length))).join('');
+        const fakeUsername = generateAlphaNum(2) + '***' + generateAlphaNum(2);
         
-        // Generate fake amount between 50,000 and 2,000,000 BONK
-        const fakeAmount = Math.floor(Math.random() * 1950000) + 50000;
+        // Generate fake amount between 10,000 and 300,000 BONK
+        const fakeAmount = Math.floor(Math.random() * 290000) + 10000;
         
-        // Generate fake wallet
-        const fakeWallet = generateLetters(4).toLowerCase() + '**********' + generateLetters(4).toLowerCase();
+        // Generate fake Solana wallet (Solana addresses are base58, 32-44 chars, usually starting with 1-9, A-H, J-N, P-Z, a-k, m-z)
+        // Let's generate a realistic prefix and suffix
+        const b58Chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+        const generateB58 = (len) => Array.from({length: len}, () => b58Chars.charAt(Math.floor(Math.random() * b58Chars.length))).join('');
+        const fakeWallet = generateB58(4) + '**********' + generateB58(4);
         
         // Pick random gateway
         const fakeGateway = gateways[Math.floor(Math.random() * gateways.length)];
