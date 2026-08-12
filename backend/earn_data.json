@@ -83,12 +83,12 @@
       "id": 6446145632,
       "username": "kiopajje",
       "first_name": "Kanzx",
-      "balance": 1700,
-      "ads_watched_total": 1,
-      "ads_watched_today": 1,
+      "balance": 1900,
+      "ads_watched_total": 2,
+      "ads_watched_today": 2,
       "ads_date": "2026-08-12",
       "referrer_id": null,
-      "ip_address": "157.48.11.39",
+      "ip_address": "157.48.11.209",
       "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
       "persistent_token": "dev_uuid_w2czwo9nat_msjbpoep",
       "flagged": 0,
@@ -97,7 +97,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-12T08:46:27.879Z",
-      "last_ad_watched_at": "2026-08-12T08:47:06.730Z"
+      "last_ad_watched_at": "2026-08-12T09:41:24.246Z"
     }
   ],
   "ad_sessions": [
@@ -226,6 +226,24 @@
       "reward_amount": 1200,
       "created_at": "2026-08-12T08:46:40.720Z",
       "claimed_at": "2026-08-12T08:47:06.729Z"
+    },
+    {
+      "id": "ad_1786527625768_6smeq",
+      "user_id": 6446145632,
+      "step": 1,
+      "ad_token": "token_u7ua5l7ie",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T09:40:25.768Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786527660804_ktw51",
+      "user_id": 6446145632,
+      "step": 3,
+      "ad_token": "token_v8vs71tem",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T09:41:00.804Z",
+      "claimed_at": "2026-08-12T09:41:24.246Z"
     }
   ],
   "tasks": [],
@@ -388,6 +406,14 @@
       "amount": 1200,
       "description": "Watched Premium Video Ad (Session: ad_1786524400720_jwdc2)",
       "created_at": "2026-08-12T08:47:06.730Z"
+    },
+    {
+      "id": "tx_1786527684247_929e",
+      "user_id": 6446145632,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786527660804_ktw51)",
+      "created_at": "2026-08-12T09:41:24.247Z"
     }
   ],
   "_settings": {
