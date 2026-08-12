@@ -63,14 +63,14 @@
       "id": 6909180225,
       "username": "Foxypi99",
       "first_name": "Baeyyo",
-      "balance": 8500,
+      "balance": 8000,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-12",
       "referrer_id": null,
-      "ip_address": "157.48.11.144",
-      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
-      "persistent_token": "dev_uuid_w2czwo9nat_msjbpoep",
+      "ip_address": "157.48.0.190",
+      "device_id": "4ceebeccdb8ec61618cb40e6c7bf9f3a",
+      "persistent_token": "dev_uuid_cqlbcchss7_msjexln0",
       "flagged": 0,
       "referral_count": 0,
       "verified_ref_count": 0,
@@ -248,6 +248,17 @@
       "tx_hash": "sol_vbzamvt5ntp_sig",
       "processed_at": "2026-08-12T07:16:29.965Z",
       "admin_note": "w_1786518974041_v8zb4"
+    },
+    {
+      "id": "w_1786519815383_qv25i",
+      "user_id": 6909180225,
+      "amount": 500,
+      "wallet_address": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
+      "status": "completed",
+      "requested_at": "2026-08-12T07:30:15.383Z",
+      "tx_hash": "sol_ffixwhb60xr_sig",
+      "processed_at": "2026-08-12T07:30:21.108Z",
+      "admin_note": "w_1786519815383_qv25i"
     }
   ],
   "transactions": [
