@@ -467,19 +467,19 @@
       "id": 1004195512,
       "username": "a7medma21",
       "first_name": "Ahmed",
-      "balance": 0,
+      "balance": 500,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-12",
       "referrer_id": null,
       "ip_address": "197.38.152.254",
-      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "device_id": "616a84bff06a034d3a0c76bba778bb28",
       "persistent_token": "dev_uuid_xdsdgewv4s_msq4h91w",
       "flagged": 0,
       "referral_count": 0,
       "verified_ref_count": 0,
       "withdrawal_unlocked": 0,
-      "onboarding_completed": 0,
+      "onboarding_completed": 1,
       "created_at": "2026-08-12T13:26:01.211Z"
     }
   ],
@@ -1303,6 +1303,14 @@
       "amount": 0,
       "description": "ðŸ”“ Admin Unlocked Account #7592257199 (@Saim2020)",
       "created_at": "2026-08-12T13:17:02.023Z"
+    },
+    {
+      "id": "tx_1786541282786_2xd7",
+      "user_id": 1004195512,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-12T13:28:02.786Z"
     }
   ],
   "_settings": {
