@@ -233,8 +233,13 @@ export default function App() {
     }
 
     const tgInitData = tg?.initData || '';
-    const urlParams = new URLSearchParams(window.location.search);
-    const refParam = tg?.initDataUnsafe?.start_param || urlParams.get('start') || urlParams.get('tgWebAppStartParam');
+    const searchParams = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    const refParam = tg?.initDataUnsafe?.start_param || 
+                     searchParams.get('start') || 
+                     searchParams.get('tgWebAppStartParam') || 
+                     hashParams.get('start') || 
+                     hashParams.get('tgWebAppStartParam');
 
     getAdvancedDeviceIdentity().then(({ deviceId, persistentToken, fpVisitorId, webglRenderer }) => {
       const authPayload = {
