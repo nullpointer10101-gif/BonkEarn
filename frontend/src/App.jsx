@@ -1801,10 +1801,6 @@ export default function App() {
 
             {/* Guidelines Section */}
             <div style={{ marginTop: 24, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 16 }}>
-              <div style={{ fontWeight: 800, fontSize: 15, marginBottom: 12, color: '#fbbf24' }}>What is BONK?</div>
-              <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: '1.5', marginBottom: 16 }}>
-                BONK is a popular cryptocurrency token on the Solana blockchain. It was created as a community coin and has gained widespread adoption. You can trade BONK on major exchanges like Binance, Coinbase, and decentralized exchanges on Solana.
-              </div>
               <div style={{ fontWeight: 800, fontSize: 15, marginBottom: 12, color: '#a855f7' }}>How to Withdraw?</div>
               <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: '1.5' }}>
                 <ol style={{ paddingLeft: 16, margin: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -1813,7 +1809,7 @@ export default function App() {
                   <li>Select the <strong>Solana (SOL) Network</strong>. (⚠️ <em>Do not select BSC or ETH, or your funds will be lost!</em>)</li>
                   <li>Copy the deposit address provided (it will be a long string of letters and numbers).</li>
                   <li>Paste the wallet address in the field above and enter the amount of BONK you wish to withdraw.</li>
-                  <li>Click Submit. Your withdrawal will be processed by our admin team!</li>
+                  <li>Click Submit. Your withdrawal will be processed automatically!</li>
                 </ol>
                 <div style={{ marginTop: 12, padding: '8px', background: 'rgba(239,68,68,0.1)', color: '#f87171', borderRadius: 6, fontWeight: 600 }}>
                   ⚠️ Strict Rule: You can only request 1 withdrawal per day, and your wallet address cannot be shared with any other account.
