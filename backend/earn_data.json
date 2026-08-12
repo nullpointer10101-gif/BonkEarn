@@ -63,14 +63,14 @@
       "id": 6909180225,
       "username": "Foxypi99",
       "first_name": "Baeyyo",
-      "balance": 9000,
+      "balance": 8500,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-12",
       "referrer_id": null,
-      "ip_address": "157.48.0.96",
-      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
-      "persistent_token": "dev_uuid_w2czwo9nat_msjbpoep",
+      "ip_address": "157.48.0.190",
+      "device_id": "4ceebeccdb8ec61618cb40e6c7bf9f3a",
+      "persistent_token": "dev_uuid_cqlbcchss7_msjexln0",
       "flagged": 0,
       "referral_count": 0,
       "verified_ref_count": 0,
@@ -237,7 +237,19 @@
       "completed_at": "2026-08-11T15:29:10.573Z"
     }
   ],
-  "withdrawals": [],
+  "withdrawals": [
+    {
+      "id": "w_1786518974041_v8zb4",
+      "user_id": 6909180225,
+      "amount": 500,
+      "wallet_address": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
+      "status": "completed",
+      "requested_at": "2026-08-12T07:16:14.042Z",
+      "tx_hash": "sol_vbzamvt5ntp_sig",
+      "processed_at": "2026-08-12T07:16:29.965Z",
+      "admin_note": "w_1786518974041_v8zb4"
+    }
+  ],
   "transactions": [
     {
       "id": "tx_1786132996848_qeoa",
@@ -331,7 +343,7 @@
   "_settings": {
     "adRewardAmount": 1200,
     "dailyAdCap": 10,
-    "minWithdrawalAmount": 1000,
+    "minWithdrawalAmount": 500,
     "minVerifiedRefs": 0,
     "referralSignupBonus": 100,
     "verifiedRefBonus": 10000,
