@@ -12,6 +12,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 import db, { resetDatabase, getStoredSettings, storeSettingsSnapshot } from './db.js';
 import { sendPaymentProof } from './telegramNotifier.js';
+import { Telegraf } from 'telegraf';
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -32,6 +34,16 @@ app.use((req, res, next) => {
 
 const JWT_SECRET = process.env.JWT_SECRET || 'earn_app_jwt_secret_key_2026';
 const BOT_TOKEN = process.env.BOT_TOKEN || 'MOCK_BOT_TOKEN';
+
+let botInstance = null;
+if (BOT_TOKEN && BOT_TOKEN !== 'MOCK_BOT_TOKEN') {
+  try {
+    botInstance = new Telegraf(BOT_TOKEN);
+    console.log('✅ Telegram bot instance created for channel verification.');
+  } catch (e) {
+    console.error('Failed to initialize Telegraf bot:', e.message);
+  }
+}
 
 // Helper: Verify Telegram initData and parse user object
 // Full HMAC-SHA256 signature check when a real bot token is configured
