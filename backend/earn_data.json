@@ -49,9 +49,9 @@
       "ads_watched_today": 0,
       "ads_date": "2026-08-12",
       "referrer_id": null,
-      "ip_address": "205.169.39.49",
-      "device_id": "a985dd0fd169b592d4eebd0cd6575448",
-      "persistent_token": "dev_uuid_36nzo9jaa6_msq5ylsj",
+      "ip_address": "157.48.2.238",
+      "device_id": "hw_TW96aWxsYS81LjAgKFdpbmRvd3MgTlQg",
+      "persistent_token": "dev_uuid_2j7saugiph_msq9rko1",
       "flagged": 0,
       "referral_count": 0,
       "verified_ref_count": 0,
@@ -68,8 +68,8 @@
       "ads_watched_today": 0,
       "ads_date": "2026-08-12",
       "referrer_id": null,
-      "ip_address": "157.48.2.118",
-      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "ip_address": "157.48.5.79",
+      "device_id": "426fd12c10c83bf1d7228791be9fe83d",
       "persistent_token": "dev_uuid_w2czwo9nat_msjbpoep",
       "flagged": 0,
       "referral_count": 0,
@@ -120,25 +120,6 @@
       "last_ad_watched_at": "2026-08-12T09:59:27.635Z"
     },
     {
-      "id": 7723814899,
-      "username": "",
-      "first_name": "Thạnh",
-      "balance": 0,
-      "ads_watched_total": 0,
-      "ads_watched_today": 0,
-      "ads_date": "2026-08-12",
-      "referrer_id": null,
-      "ip_address": "171.225.248.181",
-      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
-      "persistent_token": "dev_uuid_81yoqzfswt_mspxl7j7",
-      "flagged": 0,
-      "referral_count": 0,
-      "verified_ref_count": 0,
-      "withdrawal_unlocked": 0,
-      "onboarding_completed": 0,
-      "created_at": "2026-08-12T10:13:09.902Z"
-    },
-    {
       "id": 5977993618,
       "username": "Kingalien001",
       "first_name": "WIZZY",
@@ -159,25 +140,6 @@
       "last_ad_watched_at": "2026-08-12T10:23:35.856Z"
     },
     {
-      "id": 8079225018,
-      "username": "",
-      "first_name": "Bhrat Singh",
-      "balance": 500,
-      "ads_watched_total": 0,
-      "ads_watched_today": 0,
-      "ads_date": "2026-08-12",
-      "referrer_id": null,
-      "ip_address": "1.187.164.43",
-      "device_id": "c4f4b64a4244f4b11706afe2a01d7e44",
-      "persistent_token": "dev_uuid_e25j3844fp_mspxtnao",
-      "flagged": 0,
-      "referral_count": 0,
-      "verified_ref_count": 0,
-      "withdrawal_unlocked": 0,
-      "onboarding_completed": 1,
-      "created_at": "2026-08-12T10:19:45.657Z"
-    },
-    {
       "id": 8175590512,
       "username": "Sallem246",
       "first_name": "SK sallam",
@@ -195,63 +157,6 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 0,
       "created_at": "2026-08-12T10:26:04.255Z"
-    },
-    {
-      "id": 7983938173,
-      "username": "ZXONSO",
-      "first_name": "@monsterland_bot TECH",
-      "balance": 0,
-      "ads_watched_total": 0,
-      "ads_watched_today": 0,
-      "ads_date": "2026-08-12",
-      "referrer_id": null,
-      "ip_address": "182.48.65.97",
-      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
-      "persistent_token": "dev_uuid_18pv6s42w6_mspyannf",
-      "flagged": 0,
-      "referral_count": 0,
-      "verified_ref_count": 0,
-      "withdrawal_unlocked": 0,
-      "onboarding_completed": 0,
-      "created_at": "2026-08-12T10:33:08.459Z"
-    },
-    {
-      "id": 8903306058,
-      "username": "",
-      "first_name": "Yasar",
-      "balance": 0,
-      "ads_watched_total": 0,
-      "ads_watched_today": 0,
-      "ads_date": "2026-08-12",
-      "referrer_id": null,
-      "ip_address": "106.76.201.156",
-      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
-      "persistent_token": "dev_uuid_6rgaspky6z_mspyk9yz",
-      "flagged": 0,
-      "referral_count": 0,
-      "verified_ref_count": 0,
-      "withdrawal_unlocked": 0,
-      "onboarding_completed": 0,
-      "created_at": "2026-08-12T10:40:25.068Z"
-    },
-    {
-      "id": 8952130956,
-      "username": "",
-      "first_name": "H Hvvu",
-      "balance": 0,
-      "ads_watched_total": 0,
-      "ads_watched_today": 0,
-      "ads_date": "2026-08-12",
-      "referrer_id": null,
-      "ip_address": "106.76.201.156",
-      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
-      "persistent_token": "dev_uuid_6rgaspky6z_mspyk9yz",
-      "flagged": 0,
-      "referral_count": 0,
-      "verified_ref_count": 0,
-      "withdrawal_unlocked": 0,
-      "onboarding_completed": 0,
-      "created_at": "2026-08-12T10:46:13.019Z"
     },
     {
       "id": 8280795098,
@@ -389,26 +294,6 @@
       "last_ad_watched_at": "2026-08-12T13:36:09.840Z"
     },
     {
-      "id": 8301509558,
-      "username": "",
-      "first_name": "T I G E R",
-      "balance": 700,
-      "ads_watched_total": 1,
-      "ads_watched_today": 1,
-      "ads_date": "2026-08-12",
-      "referrer_id": null,
-      "ip_address": "65.18.127.32",
-      "device_id": "08e5e270e530552648bc30701dcfa29a",
-      "persistent_token": "dev_uuid_4t9eqtf0vz_msq09tck",
-      "flagged": 0,
-      "referral_count": 0,
-      "verified_ref_count": 0,
-      "withdrawal_unlocked": 0,
-      "onboarding_completed": 1,
-      "created_at": "2026-08-12T11:28:15.613Z",
-      "last_ad_watched_at": "2026-08-12T11:30:40.515Z"
-    },
-    {
       "id": 8249527205,
       "username": "tiger672",
       "first_name": "K",
@@ -416,7 +301,7 @@
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-12",
-      "referrer_id": 8301509558,
+      "referrer_id": null,
       "ip_address": "65.18.127.32",
       "device_id": "08e5e270e530552648bc30701dcfa29a",
       "persistent_token": "dev_uuid_vtyf7pw7m5_msq0bwdb",
@@ -428,29 +313,10 @@
       "created_at": "2026-08-12T11:29:52.790Z"
     },
     {
-      "id": 8538407139,
-      "username": "",
-      "first_name": "Hi",
-      "balance": 0,
-      "ads_watched_total": 0,
-      "ads_watched_today": 0,
-      "ads_date": "2026-08-12",
-      "referrer_id": null,
-      "ip_address": "87.213.172.232",
-      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
-      "persistent_token": "dev_uuid_lgsi8kp0z5_msq1ne34",
-      "flagged": 0,
-      "referral_count": 0,
-      "verified_ref_count": 0,
-      "withdrawal_unlocked": 0,
-      "onboarding_completed": 0,
-      "created_at": "2026-08-12T12:06:50.324Z"
-    },
-    {
       "id": 7592257199,
       "username": "Saim2020",
       "first_name": "Saim",
-      "balance": 0,
+      "balance": 3000,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-12",
@@ -524,26 +390,6 @@
       "created_at": "2026-08-12T13:51:23.849Z"
     },
     {
-      "id": 7709587401,
-      "username": "",
-      "first_name": "Rukayat",
-      "balance": 1500,
-      "ads_watched_total": 5,
-      "ads_watched_today": 5,
-      "ads_date": "2026-08-12",
-      "referrer_id": null,
-      "ip_address": "62.146.227.110",
-      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
-      "persistent_token": "dev_uuid_6355bmpxqo_msq51jfz",
-      "flagged": 0,
-      "referral_count": 0,
-      "verified_ref_count": 0,
-      "withdrawal_unlocked": 0,
-      "onboarding_completed": 1,
-      "created_at": "2026-08-12T14:00:23.456Z",
-      "last_ad_watched_at": "2026-08-12T14:08:34.869Z"
-    },
-    {
       "id": 5027497967,
       "username": "RomaC71",
       "first_name": "Роман",
@@ -582,6 +428,45 @@
       "onboarding_completed": 1,
       "created_at": "2026-08-12T14:46:36.568Z",
       "last_ad_watched_at": "2026-08-12T15:00:30.003Z"
+    },
+    {
+      "id": 2047351114,
+      "username": "toelynnn",
+      "first_name": "TOE LIN",
+      "balance": 2100,
+      "ads_watched_total": 8,
+      "ads_watched_today": 8,
+      "ads_date": "2026-08-12",
+      "referrer_id": null,
+      "ip_address": "103.95.4.2",
+      "device_id": "b32a9a1974c09c2cce1e7dff6b41fcea",
+      "persistent_token": "dev_uuid_g61q44iop3_msq9pd71",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 1,
+      "created_at": "2026-08-12T15:52:32.932Z",
+      "last_ad_watched_at": "2026-08-12T16:00:41.030Z"
+    },
+    {
+      "id": 7106933910,
+      "username": "hein2007104",
+      "first_name": "Liam",
+      "balance": 0,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-12",
+      "referrer_id": null,
+      "ip_address": "45.125.4.197",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_yt73uih9il_msq9s5wm",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 0,
+      "created_at": "2026-08-12T15:54:39.980Z"
     }
   ],
   "ad_sessions": [
@@ -800,24 +685,6 @@
       "reward_amount": 200,
       "created_at": "2026-08-12T10:23:35.855Z",
       "claimed_at": null
-    },
-    {
-      "id": "ad_1786534148794_c51il",
-      "user_id": 8301509558,
-      "step": 1,
-      "ad_token": "token_5smn8qrtt",
-      "reward_amount": 200,
-      "created_at": "2026-08-12T11:29:08.794Z",
-      "claimed_at": null
-    },
-    {
-      "id": "ad_1786534208413_5xgx0",
-      "user_id": 8301509558,
-      "step": 3,
-      "ad_token": "token_qwk8v88yr",
-      "reward_amount": 200,
-      "created_at": "2026-08-12T11:30:08.413Z",
-      "claimed_at": "2026-08-12T11:30:40.514Z"
     },
     {
       "id": "ad_1786541480979_e5fs5",
@@ -1045,69 +912,6 @@
       "claimed_at": "2026-08-12T13:58:48.928Z"
     },
     {
-      "id": "ad_1786543271635_0p0nk",
-      "user_id": 7709587401,
-      "step": 3,
-      "ad_token": "token_frfv9f11e",
-      "reward_amount": 200,
-      "created_at": "2026-08-12T14:01:11.635Z",
-      "claimed_at": "2026-08-12T14:01:35.842Z"
-    },
-    {
-      "id": "ad_1786543391551_oz9kl",
-      "user_id": 7709587401,
-      "step": 3,
-      "ad_token": "token_u7b8djhpb",
-      "reward_amount": 200,
-      "created_at": "2026-08-12T14:03:11.552Z",
-      "claimed_at": "2026-08-12T14:03:35.423Z"
-    },
-    {
-      "id": "ad_1786543519987_otmvs",
-      "user_id": 7709587401,
-      "step": 3,
-      "ad_token": "token_evb6zd9ww",
-      "reward_amount": 200,
-      "created_at": "2026-08-12T14:05:19.987Z",
-      "claimed_at": "2026-08-12T14:05:46.823Z"
-    },
-    {
-      "id": "ad_1786543570524_w7g4g",
-      "user_id": 7709587401,
-      "step": 3,
-      "ad_token": "token_ywqvdha3t",
-      "reward_amount": 200,
-      "created_at": "2026-08-12T14:06:10.524Z",
-      "claimed_at": "2026-08-12T14:06:38.014Z"
-    },
-    {
-      "id": "ad_1786543618336_6u430",
-      "user_id": 7709587401,
-      "step": 3,
-      "ad_token": "token_csqel8b5g",
-      "reward_amount": 200,
-      "created_at": "2026-08-12T14:06:58.336Z",
-      "claimed_at": "2026-08-12T14:07:29.995Z"
-    },
-    {
-      "id": "ad_1786543673194_pxu7n",
-      "user_id": 7709587401,
-      "step": 1,
-      "ad_token": "token_7hytm9k6u",
-      "reward_amount": 200,
-      "created_at": "2026-08-12T14:07:53.194Z",
-      "claimed_at": null
-    },
-    {
-      "id": "ad_1786543714868_ntwin",
-      "user_id": 7709587401,
-      "step": 1,
-      "ad_token": "token_s2lbolf23",
-      "reward_amount": 200,
-      "created_at": "2026-08-12T14:08:34.868Z",
-      "claimed_at": null
-    },
-    {
       "id": "ad_1786544413290_mxior",
       "user_id": 8533040659,
       "step": 1,
@@ -1295,6 +1099,87 @@
       "reward_amount": 200,
       "created_at": "2026-08-12T15:00:30.002Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786550041252_cpr9c",
+      "user_id": 2047351114,
+      "step": 1,
+      "ad_token": "token_8175cly23",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T15:54:01.252Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786550104268_fr0vn",
+      "user_id": 2047351114,
+      "step": 3,
+      "ad_token": "token_6nitzx65n",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T15:55:04.268Z",
+      "claimed_at": "2026-08-12T15:55:29.206Z"
+    },
+    {
+      "id": "ad_1786550164556_ujcw7",
+      "user_id": 2047351114,
+      "step": 3,
+      "ad_token": "token_lwbrfw9ll",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T15:56:04.556Z",
+      "claimed_at": "2026-08-12T15:56:28.487Z"
+    },
+    {
+      "id": "ad_1786550210362_6avrd",
+      "user_id": 2047351114,
+      "step": 3,
+      "ad_token": "token_f4kg35caw",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T15:56:50.362Z",
+      "claimed_at": "2026-08-12T15:57:12.062Z"
+    },
+    {
+      "id": "ad_1786550253657_sf0j1",
+      "user_id": 2047351114,
+      "step": 3,
+      "ad_token": "token_stvcq11bv",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T15:57:33.657Z",
+      "claimed_at": "2026-08-12T15:58:35.171Z"
+    },
+    {
+      "id": "ad_1786550276675_v49sa",
+      "user_id": 2047351114,
+      "step": 3,
+      "ad_token": "token_xqo8x7m2d",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T15:57:56.675Z",
+      "claimed_at": "2026-08-12T15:58:20.633Z"
+    },
+    {
+      "id": "ad_1786550338684_ov1m5",
+      "user_id": 2047351114,
+      "step": 3,
+      "ad_token": "token_cuenm0axd",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T15:58:58.684Z",
+      "claimed_at": "2026-08-12T15:59:23.376Z"
+    },
+    {
+      "id": "ad_1786550384760_99dvh",
+      "user_id": 2047351114,
+      "step": 3,
+      "ad_token": "token_pdropxi3r",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T15:59:44.760Z",
+      "claimed_at": "2026-08-12T16:00:41.028Z"
+    },
+    {
+      "id": "ad_1786550407133_js0a9",
+      "user_id": 2047351114,
+      "step": 3,
+      "ad_token": "token_4gyhi9hzc",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T16:00:07.133Z",
+      "claimed_at": "2026-08-12T16:00:30.392Z"
     }
   ],
   "tasks": [],
@@ -1507,60 +1392,12 @@
       "created_at": "2026-08-12T10:19:59.881Z"
     },
     {
-      "id": "tx_1786530024910_t7sf",
-      "user_id": 8079225018,
-      "type": "onboarding_bonus",
-      "amount": 500,
-      "description": "Onboarding Registration Bonus (joined 3 channels)",
-      "created_at": "2026-08-12T10:20:24.910Z"
-    },
-    {
       "id": "tx_1786530364265_f5zc",
       "user_id": 8175590512,
       "type": "anti_fraud_alert",
       "amount": 0,
       "description": "â›” FORBIDDEN REGISTRATION: Device HWID matches User #7723814899 (@user)",
       "created_at": "2026-08-12T10:26:04.265Z"
-    },
-    {
-      "id": "tx_1786530788469_ffea",
-      "user_id": 7983938173,
-      "type": "anti_fraud_alert",
-      "amount": 0,
-      "description": "â›” FORBIDDEN REGISTRATION: Device HWID matches User #7723814899 (@user)",
-      "created_at": "2026-08-12T10:33:08.469Z"
-    },
-    {
-      "id": "tx_1786530846356_5ehm",
-      "user_id": 7983938173,
-      "type": "onboarding_denied",
-      "amount": 0,
-      "description": "â›” Onboarding bonus DENIED: Account #7983938173 flagged for policy review",
-      "created_at": "2026-08-12T10:34:06.356Z"
-    },
-    {
-      "id": "tx_1786530923742_4f67",
-      "user_id": 7983938173,
-      "type": "onboarding_denied",
-      "amount": 0,
-      "description": "â›” Onboarding bonus DENIED: Account #7983938173 flagged for policy review",
-      "created_at": "2026-08-12T10:35:23.742Z"
-    },
-    {
-      "id": "tx_1786531225082_gyzk",
-      "user_id": 8903306058,
-      "type": "anti_fraud_alert",
-      "amount": 0,
-      "description": "â›” FORBIDDEN REGISTRATION: Device HWID matches User #7723814899 (@user)",
-      "created_at": "2026-08-12T10:40:25.082Z"
-    },
-    {
-      "id": "tx_1786531573029_bjim",
-      "user_id": 8952130956,
-      "type": "anti_fraud_alert",
-      "amount": 0,
-      "description": "â›” FORBIDDEN REGISTRATION: Device HWID matches User #7723814899 (@user)",
-      "created_at": "2026-08-12T10:46:13.029Z"
     },
     {
       "id": "tx_1786532303544_rdwi",
@@ -1683,68 +1520,12 @@
       "created_at": "2026-08-12T11:18:33.418Z"
     },
     {
-      "id": "tx_1786534122948_i9su",
-      "user_id": 8301509558,
-      "type": "onboarding_bonus",
-      "amount": 500,
-      "description": "Onboarding Registration Bonus (joined 3 channels)",
-      "created_at": "2026-08-12T11:28:42.948Z"
-    },
-    {
       "id": "tx_1786534192790_vytk",
       "user_id": 8249527205,
       "type": "anti_fraud_alert",
       "amount": 0,
       "description": "â›” FORBIDDEN REGISTRATION: Device HWID matches User #8301509558 (@user)",
       "created_at": "2026-08-12T11:29:52.790Z"
-    },
-    {
-      "id": "tx_1786534240516_sbug",
-      "user_id": 8301509558,
-      "type": "ad_reward",
-      "amount": 200,
-      "description": "Watched Premium Video Ad (Session: ad_1786534208413_5xgx0)",
-      "created_at": "2026-08-12T11:30:40.516Z"
-    },
-    {
-      "id": "tx_1786536410336_uixk",
-      "user_id": 8538407139,
-      "type": "anti_fraud_alert",
-      "amount": 0,
-      "description": "â›” FORBIDDEN REGISTRATION: Device HWID matches User #6909180225 (@Foxypi99)",
-      "created_at": "2026-08-12T12:06:50.336Z"
-    },
-    {
-      "id": "tx_1786536500876_9dqd",
-      "user_id": 8538407139,
-      "type": "onboarding_denied",
-      "amount": 0,
-      "description": "â›” Onboarding bonus DENIED: Account #8538407139 flagged for policy review",
-      "created_at": "2026-08-12T12:08:20.876Z"
-    },
-    {
-      "id": "tx_1786536575923_shgg",
-      "user_id": 8538407139,
-      "type": "onboarding_denied",
-      "amount": 0,
-      "description": "â›” Onboarding bonus DENIED: Account #8538407139 flagged for policy review",
-      "created_at": "2026-08-12T12:09:35.924Z"
-    },
-    {
-      "id": "tx_1786536675323_y533",
-      "user_id": 8538407139,
-      "type": "onboarding_denied",
-      "amount": 0,
-      "description": "â›” Onboarding bonus DENIED: Account #8538407139 flagged for policy review",
-      "created_at": "2026-08-12T12:11:15.323Z"
-    },
-    {
-      "id": "tx_1786536774488_c4hf",
-      "user_id": 8538407139,
-      "type": "onboarding_denied",
-      "amount": 0,
-      "description": "â›” Onboarding bonus DENIED: Account #8538407139 flagged for policy review",
-      "created_at": "2026-08-12T12:12:54.489Z"
     },
     {
       "id": "tx_1786539917876_6tum",
@@ -1785,30 +1566,6 @@
       "amount": 0,
       "description": "ðŸ”“ Admin Unlocked Account #8175590512 (@Sallem246)",
       "created_at": "2026-08-12T13:16:48.148Z"
-    },
-    {
-      "id": "tx_1786540608636_ym66",
-      "user_id": 7983938173,
-      "type": "admin_unblock",
-      "amount": 0,
-      "description": "ðŸ”“ Admin Unlocked Account #7983938173 (@ZXONSO)",
-      "created_at": "2026-08-12T13:16:48.636Z"
-    },
-    {
-      "id": "tx_1786540609406_qb63",
-      "user_id": 8903306058,
-      "type": "admin_unblock",
-      "amount": 0,
-      "description": "ðŸ”“ Admin Unlocked Account #8903306058 (@user)",
-      "created_at": "2026-08-12T13:16:49.406Z"
-    },
-    {
-      "id": "tx_1786540611848_px2w",
-      "user_id": 8952130956,
-      "type": "admin_unblock",
-      "amount": 0,
-      "description": "ðŸ”“ Admin Unlocked Account #8952130956 (@user)",
-      "created_at": "2026-08-12T13:16:51.848Z"
     },
     {
       "id": "tx_1786540613810_w1ws",
@@ -1865,14 +1622,6 @@
       "amount": 0,
       "description": "ðŸ”“ Admin Unlocked Account #8249527205 (@tiger672)",
       "created_at": "2026-08-12T13:17:00.905Z"
-    },
-    {
-      "id": "tx_1786540621318_mqcp",
-      "user_id": 8538407139,
-      "type": "admin_unblock",
-      "amount": 0,
-      "description": "ðŸ”“ Admin Unlocked Account #8538407139 (@user)",
-      "created_at": "2026-08-12T13:17:01.318Z"
     },
     {
       "id": "tx_1786540622023_sy75",
@@ -2091,54 +1840,6 @@
       "created_at": "2026-08-12T13:58:48.929Z"
     },
     {
-      "id": "tx_1786543264023_dx14",
-      "user_id": 7709587401,
-      "type": "onboarding_bonus",
-      "amount": 500,
-      "description": "Onboarding Registration Bonus (joined 3 channels)",
-      "created_at": "2026-08-12T14:01:04.023Z"
-    },
-    {
-      "id": "tx_1786543295844_tbpx",
-      "user_id": 7709587401,
-      "type": "ad_reward",
-      "amount": 200,
-      "description": "Watched Premium Video Ad (Session: ad_1786543271635_0p0nk)",
-      "created_at": "2026-08-12T14:01:35.844Z"
-    },
-    {
-      "id": "tx_1786543415425_3oh6",
-      "user_id": 7709587401,
-      "type": "ad_reward",
-      "amount": 200,
-      "description": "Watched Premium Video Ad (Session: ad_1786543391551_oz9kl)",
-      "created_at": "2026-08-12T14:03:35.425Z"
-    },
-    {
-      "id": "tx_1786543546826_v82x",
-      "user_id": 7709587401,
-      "type": "ad_reward",
-      "amount": 200,
-      "description": "Watched Premium Video Ad (Session: ad_1786543519987_otmvs)",
-      "created_at": "2026-08-12T14:05:46.826Z"
-    },
-    {
-      "id": "tx_1786543598018_yrud",
-      "user_id": 7709587401,
-      "type": "ad_reward",
-      "amount": 200,
-      "description": "Watched Premium Video Ad (Session: ad_1786543570524_w7g4g)",
-      "created_at": "2026-08-12T14:06:38.018Z"
-    },
-    {
-      "id": "tx_1786543649998_m94x",
-      "user_id": 7709587401,
-      "type": "ad_reward",
-      "amount": 200,
-      "description": "Watched Premium Video Ad (Session: ad_1786543618336_6u430)",
-      "created_at": "2026-08-12T14:07:29.998Z"
-    },
-    {
       "id": "tx_1786544400330_dme2",
       "user_id": 8533040659,
       "type": "onboarding_bonus",
@@ -2241,6 +1942,86 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786546571885_71rc9)",
       "created_at": "2026-08-12T14:56:33.502Z"
+    },
+    {
+      "id": "tx_1786549990825_h86t",
+      "user_id": 2047351114,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-12T15:53:10.825Z"
+    },
+    {
+      "id": "tx_1786550129208_vbio",
+      "user_id": 2047351114,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786550104268_fr0vn)",
+      "created_at": "2026-08-12T15:55:29.208Z"
+    },
+    {
+      "id": "tx_1786550169315_osfz",
+      "user_id": 7592257199,
+      "type": "admin_credit",
+      "amount": 3000,
+      "description": "Manual reward adjustment",
+      "created_at": "2026-08-12T15:56:09.315Z"
+    },
+    {
+      "id": "tx_1786550188489_5bdl",
+      "user_id": 2047351114,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786550164556_ujcw7)",
+      "created_at": "2026-08-12T15:56:28.489Z"
+    },
+    {
+      "id": "tx_1786550232064_s2s6",
+      "user_id": 2047351114,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786550210362_6avrd)",
+      "created_at": "2026-08-12T15:57:12.064Z"
+    },
+    {
+      "id": "tx_1786550300635_ea22",
+      "user_id": 2047351114,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786550276675_v49sa)",
+      "created_at": "2026-08-12T15:58:20.635Z"
+    },
+    {
+      "id": "tx_1786550315173_l61o",
+      "user_id": 2047351114,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786550253657_sf0j1)",
+      "created_at": "2026-08-12T15:58:35.173Z"
+    },
+    {
+      "id": "tx_1786550363378_rrd8",
+      "user_id": 2047351114,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786550338684_ov1m5)",
+      "created_at": "2026-08-12T15:59:23.378Z"
+    },
+    {
+      "id": "tx_1786550430394_taun",
+      "user_id": 2047351114,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786550407133_js0a9)",
+      "created_at": "2026-08-12T16:00:30.394Z"
+    },
+    {
+      "id": "tx_1786550441032_2j7a",
+      "user_id": 2047351114,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786550384760_99dvh)",
+      "created_at": "2026-08-12T16:00:41.032Z"
     }
   ],
   "_settings": {
