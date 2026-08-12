@@ -1871,14 +1871,14 @@ export default function App() {
               <input 
                 type="text" 
                 readOnly 
-                value={`https://t.me/BonkEarnSol_bot?start=${user.id}`}
+                value={`https://t.me/BonkEarnSol_bot/app?startapp=r_${user.id}`}
                 style={{ flex: 1, background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 10, color: '#fff', fontSize: 12 }}
               />
               <button 
                 className="btn-primary btn-gold" 
                 onClick={() => {
                   try {
-                    navigator.clipboard.writeText(`https://t.me/BonkEarnSol_bot?start=${user.id}`).catch(() => {});
+                    navigator.clipboard.writeText(`https://t.me/BonkEarnSol_bot/app?startapp=r_${user.id}`).catch(() => {});
                   } catch (e) {}
                   showToast('Referral link copied to clipboard!');
                 }}
