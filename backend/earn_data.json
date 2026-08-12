@@ -1050,6 +1050,26 @@
       "onboarding_completed": 1,
       "created_at": "2026-08-12T19:36:33.324Z",
       "last_ad_watched_at": "2026-08-12T19:39:43.207Z"
+    },
+    {
+      "id": 6713846086,
+      "username": "Raffay_pro",
+      "first_name": "HOOD Raffay",
+      "balance": 700,
+      "ads_watched_total": 1,
+      "ads_watched_today": 1,
+      "ads_date": "2026-08-12",
+      "referrer_id": null,
+      "ip_address": "51.159.119.230",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_ozp53p36dz_msqk3pje",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 1,
+      "created_at": "2026-08-12T20:43:24.310Z",
+      "last_ad_watched_at": "2026-08-12T20:45:00.977Z"
     }
   ],
   "ad_sessions": [
@@ -2258,6 +2278,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-12T20:08:55.867Z",
       "claimed_at": "2026-08-12T20:09:23.434Z"
+    },
+    {
+      "id": "ad_1786567456038_3tobu",
+      "user_id": 6713846086,
+      "step": 3,
+      "ad_token": "token_dlae73nn1",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T20:44:16.038Z",
+      "claimed_at": "2026-08-12T20:45:00.975Z"
     }
   ],
   "tasks": [],
@@ -3591,6 +3620,22 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786565335867_myd9f)",
       "created_at": "2026-08-12T20:09:23.436Z"
+    },
+    {
+      "id": "tx_1786567446947_j7v6",
+      "user_id": 6713846086,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-12T20:44:06.947Z"
+    },
+    {
+      "id": "tx_1786567500979_snj0",
+      "user_id": 6713846086,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786567456038_3tobu)",
+      "created_at": "2026-08-12T20:45:00.979Z"
     }
   ],
   "_settings": {
