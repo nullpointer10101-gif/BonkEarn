@@ -46,8 +46,8 @@ export async function sendPaymentProof(username, amount, wallet, gateway) {
   const timeString = now.toISOString().replace('T', ' ').substring(0, 19) + ' +0000';
 
   const messageText = 
-    `💸 *PAYMENT PROOF*\n\n` +
-    `✅ *Withdrawal Successful!*\n\n` +
+    `💸 <b>PAYMENT PROOF</b>\n\n` +
+    `✅ <b>Withdrawal Successful!</b>\n\n` +
     `👤 User: ${username}\n` +
     `💰 Amount: ${formattedAmount} BONK\n` +
     `💼 Wallet: ${wallet}\n` +
@@ -76,7 +76,7 @@ export async function sendPaymentProof(username, amount, wallet, gateway) {
       body: JSON.stringify({
         chat_id: chatId,
         text: messageText,
-        parse_mode: 'Markdown',
+        parse_mode: 'HTML',
         reply_markup: inlineKeyboard
       })
     });
