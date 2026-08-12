@@ -1173,8 +1173,8 @@ export default function App() {
       setWithdrawMsg('❌ Insufficient BONK balance');
       return;
     }
-    if (!walletAddress || walletAddress.length < 32 || walletAddress.length > 44) {
-      setWithdrawMsg('❌ Enter a valid Solana wallet address (32-44 chars base58)');
+    if (!walletAddress || walletAddress.length < 5 || walletAddress.length > 60) {
+      setWithdrawMsg('❌ Enter a valid CWallet ID or Solana address');
       return;
     }
     if (user.verified_ref_count < sysConfig.minVerifiedRefs && !user.withdrawal_unlocked) {
@@ -1767,7 +1767,7 @@ export default function App() {
 
             <form onSubmit={handleWithdraw}>
               <div style={{ marginBottom: 12 }}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 4 }}>AMOUNT (BONK)</div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 4 }}>AMOUNT (BONK) - MIN {Number(sysConfig.minWithdrawalAmount).toLocaleString()}</div>
                 <div style={{ display: 'flex', gap: 8 }}>
                   <input 
                     type="number"

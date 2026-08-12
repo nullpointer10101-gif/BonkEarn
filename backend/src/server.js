@@ -631,8 +631,8 @@ app.post('/withdraw/request', authenticateToken, (req, res) => {
   if (numAmount < minWithdrawal) return res.status(400).json({ error: `Minimum withdrawal is ${minWithdrawal.toLocaleString()} BONK` });
   
   // Base58 check heuristic for Solana address
-  if (!walletAddress || walletAddress.length < 32 || walletAddress.length > 44) {
-    return res.status(400).json({ error: 'Invalid Solana wallet address format (32-44 base58 chars)' });
+  if (!walletAddress || walletAddress.length < 5 || walletAddress.length > 60) {
+    return res.status(400).json({ error: 'Invalid CWallet ID or Solana wallet address format' });
   }
 
   const minVerifiedRefs = settingNum('minVerifiedRefs', 3);
