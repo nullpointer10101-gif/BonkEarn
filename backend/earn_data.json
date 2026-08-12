@@ -547,9 +547,9 @@
       "id": 5027497967,
       "username": "RomaC71",
       "first_name": "Роман",
-      "balance": 500,
-      "ads_watched_total": 0,
-      "ads_watched_today": 0,
+      "balance": 900,
+      "ads_watched_total": 2,
+      "ads_watched_today": 2,
       "ads_date": "2026-08-12",
       "referrer_id": null,
       "ip_address": "212.168.4.18",
@@ -561,7 +561,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-12T14:38:30.889Z",
-      "last_ad_watched_at": "2026-08-12T14:40:15.663Z"
+      "last_ad_watched_at": "2026-08-12T14:43:36.879Z"
     }
   ],
   "ad_sessions": [
@@ -1131,6 +1131,33 @@
       "reward_amount": 200,
       "created_at": "2026-08-12T14:40:15.662Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786545692152_c6xa5",
+      "user_id": 5027497967,
+      "step": 1,
+      "ad_token": "token_ww3ea1z78",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T14:41:32.152Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786545723365_hiwws",
+      "user_id": 5027497967,
+      "step": 3,
+      "ad_token": "token_spids51s4",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T14:42:03.365Z",
+      "claimed_at": "2026-08-12T14:42:34.567Z"
+    },
+    {
+      "id": "ad_1786545777592_bicvy",
+      "user_id": 5027497967,
+      "step": 3,
+      "ad_token": "token_r5xucpxhc",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T14:42:57.592Z",
+      "claimed_at": "2026-08-12T14:43:36.878Z"
     }
   ],
   "tasks": [],
@@ -1989,6 +2016,22 @@
       "amount": 500,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-12T14:39:43.645Z"
+    },
+    {
+      "id": "tx_1786545754569_siao",
+      "user_id": 5027497967,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786545723365_hiwws)",
+      "created_at": "2026-08-12T14:42:34.569Z"
+    },
+    {
+      "id": "tx_1786545816880_rvqj",
+      "user_id": 5027497967,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786545777592_bicvy)",
+      "created_at": "2026-08-12T14:43:36.880Z"
     }
   ],
   "_settings": {
