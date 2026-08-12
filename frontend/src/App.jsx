@@ -1767,7 +1767,12 @@ export default function App() {
 
             <form onSubmit={handleWithdraw}>
               <div style={{ marginBottom: 12 }}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 4 }}>AMOUNT (BONK) - MIN {Number(sysConfig.minWithdrawalAmount).toLocaleString()}</div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)' }}>AMOUNT (BONK)</div>
+                  <div style={{ fontSize: 10, fontWeight: 800, background: 'rgba(245, 158, 11, 0.2)', color: '#f59e0b', padding: '2px 6px', borderRadius: 6, border: '1px solid rgba(245, 158, 11, 0.4)' }}>
+                    MIN: {Number(sysConfig.minWithdrawalAmount).toLocaleString()} BONK
+                  </div>
+                </div>
                 <div style={{ display: 'flex', gap: 8 }}>
                   <input 
                     type="number"
