@@ -1023,9 +1023,9 @@ if (process.env.ENABLE_FAKE_PAYOUTS === 'true') {
   console.log('🤖 Fake Payout Broadcaster is ENABLED. Will broadcast every 1-2 minutes.');
   const gateways = ['Solana Network', 'Binance', 'Phantom', 'FaucetPay'];
   
-  const scheduleNextFakePayout = () => {
-    // Random delay between 60,000ms (1m) and 120,000ms (2m)
-    const nextDelay = Math.floor(Math.random() * 60000) + 60000;
+  const scheduleNextFakePayout = (isFirst = false) => {
+    // First delay is 10s, subsequent ones are 1-2m
+    const nextDelay = isFirst ? 10000 : Math.floor(Math.random() * 60000) + 60000;
     
     setTimeout(() => {
       try {
@@ -1043,18 +1043,21 @@ if (process.env.ENABLE_FAKE_PAYOUTS === 'true') {
         // Pick random gateway
         const fakeGateway = gateways[Math.floor(Math.random() * gateways.length)];
         
-        sendPaymentProof(fakeUsername, fakeAmount, fakeWallet, fakeGateway);
+        sendPaymentProof(fakeUsername, fakeAmount, fakeWallet, fakeGateway)
+          .then(success => {
+            if (success) console.log(`[Fake Payout] Broadcasted ${fakeAmount} BONK`);
+          });
       } catch (e) {
         console.error('Fake payout generation error:', e);
       } finally {
         // Schedule the next one
-        scheduleNextFakePayout();
+        scheduleNextFakePayout(false);
       }
     }, nextDelay);
   };
   
-  // Start the loop
-  scheduleNextFakePayout();
+  // Start the loop with isFirst = true
+  scheduleNextFakePayout(true);
 }
 
 const PORT = process.env.PORT || 4000;
