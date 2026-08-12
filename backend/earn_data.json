@@ -97,7 +97,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-12T08:46:27.879Z",
-      "last_ad_watched_at": "2026-08-12T09:41:24.246Z"
+      "last_ad_watched_at": "2026-08-12T09:44:40.932Z"
     }
   ],
   "ad_sessions": [
@@ -244,6 +244,24 @@
       "reward_amount": 200,
       "created_at": "2026-08-12T09:41:00.804Z",
       "claimed_at": "2026-08-12T09:41:24.246Z"
+    },
+    {
+      "id": "ad_1786527852794_6r6jp",
+      "user_id": 6446145632,
+      "step": 1,
+      "ad_token": "token_vilrsz68l",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T09:44:12.795Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786527880931_ypztz",
+      "user_id": 6446145632,
+      "step": 1,
+      "ad_token": "token_d9ocou9hh",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T09:44:40.931Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
