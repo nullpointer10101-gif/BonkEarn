@@ -385,6 +385,45 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 0,
       "created_at": "2026-08-12T11:20:52.771Z"
+    },
+    {
+      "id": 8301509558,
+      "username": "",
+      "first_name": "T I G E R",
+      "balance": 700,
+      "ads_watched_total": 1,
+      "ads_watched_today": 1,
+      "ads_date": "2026-08-12",
+      "referrer_id": null,
+      "ip_address": "65.18.127.32",
+      "device_id": "08e5e270e530552648bc30701dcfa29a",
+      "persistent_token": "dev_uuid_4t9eqtf0vz_msq09tck",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 1,
+      "created_at": "2026-08-12T11:28:15.613Z",
+      "last_ad_watched_at": "2026-08-12T11:30:40.515Z"
+    },
+    {
+      "id": 8249527205,
+      "username": "tiger672",
+      "first_name": "K",
+      "balance": 0,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-12",
+      "referrer_id": 8301509558,
+      "ip_address": "65.18.127.32",
+      "device_id": "08e5e270e530552648bc30701dcfa29a",
+      "persistent_token": "dev_uuid_vtyf7pw7m5_msq0bwdb",
+      "flagged": 1,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 0,
+      "created_at": "2026-08-12T11:29:52.790Z"
     }
   ],
   "ad_sessions": [
@@ -603,6 +642,24 @@
       "reward_amount": 200,
       "created_at": "2026-08-12T10:23:35.855Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786534148794_c51il",
+      "user_id": 8301509558,
+      "step": 1,
+      "ad_token": "token_5smn8qrtt",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T11:29:08.794Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786534208413_5xgx0",
+      "user_id": 8301509558,
+      "step": 3,
+      "ad_token": "token_qwk8v88yr",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T11:30:08.413Z",
+      "claimed_at": "2026-08-12T11:30:40.514Z"
     }
   ],
   "tasks": [],
@@ -989,6 +1046,30 @@
       "amount": 0,
       "description": "â›” Onboarding bonus DENIED: Account #8406100533 flagged for policy review",
       "created_at": "2026-08-12T11:18:33.418Z"
+    },
+    {
+      "id": "tx_1786534122948_i9su",
+      "user_id": 8301509558,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-12T11:28:42.948Z"
+    },
+    {
+      "id": "tx_1786534192790_vytk",
+      "user_id": 8249527205,
+      "type": "anti_fraud_alert",
+      "amount": 0,
+      "description": "â›” FORBIDDEN REGISTRATION: Device HWID matches User #8301509558 (@user)",
+      "created_at": "2026-08-12T11:29:52.790Z"
+    },
+    {
+      "id": "tx_1786534240516_sbug",
+      "user_id": 8301509558,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786534208413_5xgx0)",
+      "created_at": "2026-08-12T11:30:40.516Z"
     }
   ],
   "_settings": {
