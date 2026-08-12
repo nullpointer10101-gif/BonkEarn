@@ -1788,7 +1788,7 @@ export default function App() {
                   type="text"
                   value={walletAddress}
                   onChange={(e) => setWalletAddress(e.target.value)}
-                  placeholder="Base58 Solana Address"
+                  placeholder="CWallet or Binance Solana Address"
                   style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px 14px', borderRadius: 10, color: '#fff', fontSize: 14 }}
                 />
               </div>
@@ -1803,11 +1803,11 @@ export default function App() {
               <div style={{ fontWeight: 800, fontSize: 15, marginBottom: 12, color: '#a855f7' }}>How to Withdraw?</div>
               <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: '1.5' }}>
                 <ol style={{ paddingLeft: 16, margin: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  <li>Open your crypto wallet (like <strong>Bitget</strong>, <strong>Trust Wallet</strong>, <strong>Binance</strong>, or <strong>Phantom</strong>).</li>
-                  <li>Navigate to the "Deposit" or "Receive" section and search for the <strong>BONK</strong> token.</li>
-                  <li>Select the <strong>Solana (SOL) Network</strong>. (⚠️ <em>Do not select BSC or ETH, or your funds will be lost!</em>)</li>
-                  <li>Copy the deposit address provided (it will be a long string of letters and numbers).</li>
-                  <li>Paste the wallet address in the field above and enter the amount of BONK you wish to withdraw.</li>
+                  <li>To avoid network fees, we ONLY support withdrawals to <strong>CWallet</strong> or a <strong>Binance Exchange</strong> deposit address.</li>
+                  <li>Open your <strong>CWallet</strong> app or <strong>Binance</strong> account.</li>
+                  <li>Navigate to "Receive" or "Deposit" and select the <strong>BONK</strong> token.</li>
+                  <li>Make sure you select the <strong>Solana (SOL) Network</strong>. (⚠️ <em>Do not select BSC or ETH!</em>)</li>
+                  <li>Copy your receiving address and paste it in the field above.</li>
                   <li>Click Submit. Your withdrawal will be processed automatically!</li>
                 </ol>
                 <div style={{ marginTop: 12, padding: '8px', background: 'rgba(239,68,68,0.1)', color: '#f87171', borderRadius: 6, fontWeight: 600 }}>
