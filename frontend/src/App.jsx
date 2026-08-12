@@ -1783,12 +1783,12 @@ export default function App() {
               </div>
 
               <div style={{ marginBottom: 16 }}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 4 }}>SOLANA WALLET ADDRESS</div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 4 }}>CWALLET ID</div>
                 <input 
                   type="text"
                   value={walletAddress}
                   onChange={(e) => setWalletAddress(e.target.value)}
-                  placeholder="CWallet or Binance Solana Address"
+                  placeholder="CWallet ID (e.g. 12345678)"
                   style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px 14px', borderRadius: 10, color: '#fff', fontSize: 14 }}
                 />
               </div>
@@ -1803,11 +1803,10 @@ export default function App() {
               <div style={{ fontWeight: 800, fontSize: 15, marginBottom: 12, color: '#a855f7' }}>How to Withdraw?</div>
               <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: '1.5' }}>
                 <ol style={{ paddingLeft: 16, margin: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  <li>To avoid network fees, we ONLY support withdrawals to <strong>CWallet</strong> or a <strong>Binance Exchange</strong> deposit address.</li>
-                  <li>Open your <strong>CWallet</strong> app or <strong>Binance</strong> account.</li>
-                  <li>Navigate to "Receive" or "Deposit" and select the <strong>BONK</strong> token.</li>
-                  <li>Make sure you select the <strong>Solana (SOL) Network</strong>. (⚠️ <em>Do not select BSC or ETH!</em>)</li>
-                  <li>Copy your receiving address and paste it in the field above.</li>
+                  <li>To avoid network fees, we ONLY support withdrawals to a <strong>CWallet ID</strong>.</li>
+                  <li>Open your <strong>CWallet</strong> app. If you don't have an account, <a href="https://cwallet.com/referralweb/lAnLI39k?type=signup" target="_blank" rel="noopener noreferrer" style={{color: '#a855f7', textDecoration: 'underline'}}>create one here</a>.</li>
+                  <li>Go to your profile/settings to find your CWallet ID (usually an 8-digit number).</li>
+                  <li>Paste your CWallet ID in the field above.</li>
                   <li>Click Submit. Your withdrawal will be processed automatically!</li>
                 </ol>
                 <div style={{ marginTop: 12, padding: '8px', background: 'rgba(239,68,68,0.1)', color: '#f87171', borderRadius: 6, fontWeight: 600 }}>
