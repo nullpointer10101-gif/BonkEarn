@@ -25,6 +25,16 @@ export async function sendPaymentProof(username, amount, wallet, gateway) {
     return false;
   }
 
+  let chatId = PAYMENT_CHANNEL_ID.trim();
+  if (!chatId.startsWith('@') && !chatId.startsWith('-100') && !chatId.match(/^[0-9]+$/)) {
+    // If they pasted a link like https://t.me/channelname
+    if (chatId.includes('t.me/')) {
+      chatId = '@' + chatId.split('t.me/')[1].split('/')[0];
+    } else {
+      chatId = '@' + chatId;
+    }
+  }
+
   // Format amount cleanly
   const formattedAmount = Number(amount).toLocaleString('en-US', {
     minimumFractionDigits: 0,
@@ -62,7 +72,7 @@ export async function sendPaymentProof(username, amount, wallet, gateway) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        chat_id: PAYMENT_CHANNEL_ID,
+        chat_id: chatId,
         text: messageText,
         parse_mode: 'Markdown',
         reply_markup: inlineKeyboard
