@@ -1069,7 +1069,7 @@ if (RENDER_URL) {
 // --- Fake Payout Broadcaster Loop ---
 if (process.env.ENABLE_FAKE_PAYOUTS === 'true') {
   console.log('🤖 Fake Payout Broadcaster is ENABLED.');
-  const gateways = ['Solana Network', 'Binance', 'Phantom', 'FaucetPay'];
+  const gateways = ['CWallet (Instant)'];
   
   const scheduleNextFakePayout = (isFirst = false) => {
     let nextDelay = 10000;
@@ -1091,10 +1091,11 @@ if (process.env.ENABLE_FAKE_PAYOUTS === 'true') {
     setTimeout(() => {
       try {
         if (isEnabled) {
-          // Generate fake username like AB***CD or 4X***9T
-          const alphaNumChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-          const generateAlphaNum = (len) => Array.from({length: len}, () => alphaNumChars.charAt(Math.floor(Math.random() * alphaNumChars.length))).join('');
-          const fakeUsername = generateAlphaNum(2) + '***' + generateAlphaNum(2);
+          // Generate realistic fake username
+          const adjectives = ['Crypto', 'Solana', 'Bonk', 'Alpha', 'Pro', 'Super', 'Mega', 'Hyper', 'Ultra', 'Cool', 'Fast'];
+          const nouns = ['King', 'Whale', 'Hunter', 'Master', 'Lord', 'Ninja', 'Guru', 'Boss', 'Trader', 'Holder'];
+          const randomName = adjectives[Math.floor(Math.random() * adjectives.length)] + nouns[Math.floor(Math.random() * nouns.length)];
+          const fakeUsername = randomName + Math.floor(Math.random() * 999);
           
           // Generate fake amount between 5,000 and 200,000 BONK
           const fakeAmount = Math.floor(Math.random() * 195000) + 5000;
