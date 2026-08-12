@@ -1808,8 +1808,10 @@ export default function App() {
               <div style={{ fontWeight: 800, fontSize: 15, marginBottom: 12, color: '#a855f7' }}>How to Withdraw?</div>
               <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: '1.5' }}>
                 <ol style={{ paddingLeft: 16, margin: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  <li>Download a Solana-compatible wallet like <strong>Phantom</strong> or <strong>Solflare</strong>.</li>
-                  <li>Copy your Solana wallet address from the app (it should be a long string of numbers and letters, starting with a base58 character).</li>
+                  <li>Open your crypto wallet (like <strong>Bitget</strong>, <strong>Trust Wallet</strong>, <strong>Binance</strong>, or <strong>Phantom</strong>).</li>
+                  <li>Navigate to the "Deposit" or "Receive" section and search for the <strong>BONK</strong> token.</li>
+                  <li>Select the <strong>Solana (SOL) Network</strong>. (⚠️ <em>Do not select BSC or ETH, or your funds will be lost!</em>)</li>
+                  <li>Copy the deposit address provided (it will be a long string of letters and numbers).</li>
                   <li>Paste the wallet address in the field above and enter the amount of BONK you wish to withdraw.</li>
                   <li>Click Submit. Your withdrawal will be processed by our admin team!</li>
                 </ol>
