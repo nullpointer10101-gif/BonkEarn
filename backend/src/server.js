@@ -847,7 +847,7 @@ app.post('/admin/settings', authenticateAdmin, (req, res) => {
 
 app.post('/admin/withdraw/:id/approve', authenticateAdmin, (req, res) => {
   const withdrawId = req.params.id;
-  const { txHash } = req.body;
+  const { txHash } = req.body || {};
   const nowStr = new Date().toISOString();
   const generatedTx = txHash || 'sol_' + Math.random().toString(36).substr(2, 12) + '_sig';
 
@@ -880,7 +880,7 @@ app.post('/admin/withdraw/:id/approve', authenticateAdmin, (req, res) => {
 
 app.post('/admin/withdraw/:id/reject', authenticateAdmin, (req, res) => {
   const withdrawId = req.params.id;
-  const { reason } = req.body;
+  const { reason } = req.body || {};
   const nowStr = new Date().toISOString();
   const adminNote = reason || 'Rejected by Admin';
 
