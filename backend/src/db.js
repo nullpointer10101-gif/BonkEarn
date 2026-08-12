@@ -582,6 +582,37 @@ class DbWrapper {
           return { changes: 1 };
         }
 
+        if (cleanSql.includes('DELETE FROM users WHERE id = ?')) {
+          const userId = Number(params[0]);
+          const userExists = memoryDb.users.some(u => u.id === userId);
+          if (userExists) {
+            // Remove user
+            memoryDb.users = memoryDb.users.filter(u => u.id !== userId);
+            
+            // Unlink referrals
+            memoryDb.users.forEach(u => {
+              if (u.referrer_id === userId) u.referrer_id = null;
+            });
+
+            // Cascade deletes
+            if (memoryDb.ad_sessions) {
+              memoryDb.ad_sessions = memoryDb.ad_sessions.filter(s => s.user_id !== userId);
+            }
+            if (memoryDb.task_completions) {
+              memoryDb.task_completions = memoryDb.task_completions.filter(tc => tc.user_id !== userId);
+            }
+            if (memoryDb.withdrawals) {
+              memoryDb.withdrawals = memoryDb.withdrawals.filter(w => w.user_id !== userId);
+            }
+            if (memoryDb.transactions) {
+              memoryDb.transactions = memoryDb.transactions.filter(t => t.user_id !== userId);
+            }
+
+            saveData(memoryDb);
+          }
+          return { changes: 1 };
+        }
+
         if (cleanSql.includes('INSERT INTO withdrawals')) {
           memoryDb.withdrawals.push({
             id: params[0],

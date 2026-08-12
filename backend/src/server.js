@@ -771,6 +771,21 @@ app.post('/admin/users/:id/block', authenticateAdmin, (req, res) => {
   res.json({ success: true, userId, message: `Account #${userId} blocked successfully.` });
 });
 
+app.delete('/admin/users/:id', authenticateAdmin, (req, res) => {
+  const userId = Number(req.params.id);
+  
+  if (ADMIN_USER_IDS.includes(userId)) {
+    return res.status(400).json({ error: '🛡️ Admin/owner accounts are protected and can never be deleted.' });
+  }
+
+  const user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+
+  db.prepare('DELETE FROM users WHERE id = ?').run(userId);
+
+  res.json({ success: true, userId, message: `Account #${userId} deleted successfully.` });
+});
+
 app.post('/admin/tasks', authenticateAdmin, (req, res) => {
   const { title, type, rewardAmount, verificationData } = req.body;
   const taskId = 't_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);

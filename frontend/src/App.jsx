@@ -511,6 +511,8 @@ export default function App() {
   const [blockReasonModal, setBlockReasonModal] = useState(null);
   const [blockReasonText, setBlockReasonText] = useState('Multi-accounting / Sybil policy violation');
 
+  const [deleteUserModal, setDeleteUserModal] = useState(null);
+
   const [sysConfig, setSysConfig] = useState({
     adRewardAmount: 1200,
     dailyAdCap: 10,
@@ -747,6 +749,34 @@ export default function App() {
         showToast(`🔒 User #${userId} blocked!`);
       });
     setBlockReasonModal(null);
+  };
+
+  const handleConfirmDeleteUser = (e) => {
+    e.preventDefault();
+    if (!deleteUserModal) return;
+    const userId = deleteUserModal.id;
+    if (isProtectedAdmin(userId)) {
+      setDeleteUserModal(null);
+      showToast('🛡️ Admin/owner accounts are protected and can never be deleted');
+      return;
+    }
+    
+    adminFetch(`${API_BASE}/admin/users/${userId}`, { method: 'DELETE' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          showToast(`🗑️ Account #${userId} permanently deleted.`);
+          setAdminUsers(prev => prev.filter(u => u.id !== userId));
+          fetchAdminData();
+        } else {
+          showToast(`Error: ${data.error}`);
+        }
+      })
+      .catch((err) => {
+        if (err && err.message === 'Admin session expired') return;
+        showToast('Error deleting account');
+      });
+    setDeleteUserModal(null);
   };
 
   const handleCreateTask = (e) => {
@@ -2229,6 +2259,17 @@ export default function App() {
                               🔒 Block Account
                             </button>
                           )}
+
+                          {/* DELETE BUTTON */}
+                          {!isProtectedAdmin(usr.id) && (
+                            <button 
+                              onClick={() => setDeleteUserModal(usr)}
+                              title="Permanently Delete Account"
+                              style={{ flex: 0.5, background: 'rgba(220,38,38,0.1)', border: '1px dashed rgba(220,38,38,0.4)', color: '#dc2626', padding: '7px 0', borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            >
+                              🗑️
+                            </button>
+                          )}
                         </div>
                       </div>
                     ))}
@@ -2537,6 +2578,31 @@ export default function App() {
                   🔒 Confirm Block
                 </button>
                 <button type="button" onClick={() => setBlockReasonModal(null)} style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', padding: '0 14px', borderRadius: 10, cursor: 'pointer' }}>Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* DELETE USER MODAL */}
+      {deleteUserModal && (
+        <div className="modal-overlay" onClick={() => setDeleteUserModal(null)}>
+          <div className="glass-card" onClick={e => e.stopPropagation()} style={{ width: '100%', maxWidth: 360, margin: 0 }}>
+            <div style={{ fontWeight: 800, fontSize: 18, color: '#dc2626', marginBottom: 4 }}>Permanently Delete Account?</div>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 12 }}>
+              Target: @{deleteUserModal.username || 'user'} (#{deleteUserModal.id})
+            </div>
+            
+            <div style={{ background: 'rgba(220,38,38,0.15)', border: '1px solid rgba(220,38,38,0.3)', padding: 12, borderRadius: 8, fontSize: 12, color: '#fca5a5', marginBottom: 16 }}>
+              <strong>WARNING:</strong> This action cannot be undone. All of this user's data (balance, referrals, withdrawals, and task history) will be completely erased from the database.
+            </div>
+
+            <form onSubmit={handleConfirmDeleteUser}>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <button type="submit" style={{ flex: 1, background: '#dc2626', color: '#fff', border: 'none', padding: '10px', borderRadius: 10, fontWeight: 700, cursor: 'pointer' }}>
+                  🗑️ Yes, Delete Account
+                </button>
+                <button type="button" onClick={() => setDeleteUserModal(null)} style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', padding: '0 14px', borderRadius: 10, cursor: 'pointer' }}>Cancel</button>
               </div>
             </form>
           </div>
