@@ -2428,7 +2428,7 @@ export default function App() {
                   <input 
                     type="number" 
                     value={sysConfig.adRewardAmount}
-                    onChange={e => setSysConfig({ ...sysConfig, adRewardAmount: Number(e.target.value) })}
+                    onChange={e => setSysConfig({ ...sysConfig, adRewardAmount: e.target.value === '' ? '' : Number(e.target.value) })}
                     style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 8, color: '#fff', fontSize: 13 }}
                   />
                 </div>
@@ -2438,7 +2438,7 @@ export default function App() {
                   <input 
                     type="number" 
                     value={sysConfig.dailyAdCap}
-                    onChange={e => setSysConfig({ ...sysConfig, dailyAdCap: Number(e.target.value) })}
+                    onChange={e => setSysConfig({ ...sysConfig, dailyAdCap: e.target.value === '' ? '' : Number(e.target.value) })}
                     style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 8, color: '#fff', fontSize: 13 }}
                   />
                 </div>
@@ -2448,7 +2448,7 @@ export default function App() {
                   <input 
                     type="number" 
                     value={sysConfig.minWithdrawalAmount}
-                    onChange={e => setSysConfig({ ...sysConfig, minWithdrawalAmount: Number(e.target.value) })}
+                    onChange={e => setSysConfig({ ...sysConfig, minWithdrawalAmount: e.target.value === '' ? '' : Number(e.target.value) })}
                     style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 8, color: '#fff', fontSize: 13 }}
                   />
                 </div>
@@ -2458,7 +2458,7 @@ export default function App() {
                   <input 
                     type="number" 
                     value={sysConfig.minVerifiedRefs}
-                    onChange={e => setSysConfig({ ...sysConfig, minVerifiedRefs: Number(e.target.value) })}
+                    onChange={e => setSysConfig({ ...sysConfig, minVerifiedRefs: e.target.value === '' ? '' : Number(e.target.value) })}
                     style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 8, color: '#fff', fontSize: 13 }}
                   />
                 </div>
@@ -2468,7 +2468,7 @@ export default function App() {
                   <input 
                     type="number" 
                     value={sysConfig.onboardingBonus}
-                    onChange={e => setSysConfig({ ...sysConfig, onboardingBonus: Number(e.target.value) })}
+                    onChange={e => setSysConfig({ ...sysConfig, onboardingBonus: e.target.value === '' ? '' : Number(e.target.value) })}
                     style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 8, color: '#fff', fontSize: 13 }}
                   />
                 </div>
@@ -2478,7 +2478,7 @@ export default function App() {
                   <input 
                     type="number" 
                     value={sysConfig.referralSignupBonus}
-                    onChange={e => setSysConfig({ ...sysConfig, referralSignupBonus: Number(e.target.value) })}
+                    onChange={e => setSysConfig({ ...sysConfig, referralSignupBonus: e.target.value === '' ? '' : Number(e.target.value) })}
                     style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 8, color: '#fff', fontSize: 13 }}
                   />
                 </div>
@@ -2488,7 +2488,7 @@ export default function App() {
                   <input 
                     type="number" 
                     value={sysConfig.verifiedRefBonus}
-                    onChange={e => setSysConfig({ ...sysConfig, verifiedRefBonus: Number(e.target.value) })}
+                    onChange={e => setSysConfig({ ...sysConfig, verifiedRefBonus: e.target.value === '' ? '' : Number(e.target.value) })}
                     style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 8, color: '#fff', fontSize: 13 }}
                   />
                 </div>
@@ -2532,8 +2532,8 @@ export default function App() {
                       <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 4 }}>MIN DELAY (MINUTES)</div>
                       <input 
                         type="number" 
-                        value={sysConfig.fakePayoutMinDelay ?? 1}
-                        onChange={e => setSysConfig({ ...sysConfig, fakePayoutMinDelay: Number(e.target.value) })}
+                        value={sysConfig.fakePayoutMinDelay ?? ''}
+                        onChange={e => setSysConfig({ ...sysConfig, fakePayoutMinDelay: e.target.value === '' ? '' : Number(e.target.value) })}
                         style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 8, color: '#fff', fontSize: 13 }}
                       />
                     </div>
@@ -2541,8 +2541,8 @@ export default function App() {
                       <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 4 }}>MAX DELAY (MINUTES)</div>
                       <input 
                         type="number" 
-                        value={sysConfig.fakePayoutMaxDelay ?? 2}
-                        onChange={e => setSysConfig({ ...sysConfig, fakePayoutMaxDelay: Number(e.target.value) })}
+                        value={sysConfig.fakePayoutMaxDelay ?? ''}
+                        onChange={e => setSysConfig({ ...sysConfig, fakePayoutMaxDelay: e.target.value === '' ? '' : Number(e.target.value) })}
                         style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 8, color: '#fff', fontSize: 13 }}
                       />
                     </div>
