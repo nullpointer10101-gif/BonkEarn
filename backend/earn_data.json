@@ -63,7 +63,7 @@
       "id": 6909180225,
       "username": "Foxypi99",
       "first_name": "Baeyyo",
-      "balance": 13500,
+      "balance": 12500,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-12",
@@ -237,7 +237,15 @@
       "completed_at": "2026-08-11T15:29:10.573Z"
     }
   ],
-  "withdrawals": [],
+  "withdrawals": [
+    {
+      "id": "w_1786517377628_sd1e9",
+      "user_id": 1000,
+      "amount": null,
+      "status": "pending",
+      "requested_at": "2026-08-12T06:49:37.629Z"
+    }
+  ],
   "transactions": [
     {
       "id": "tx_1786132996848_qeoa",
@@ -327,5 +335,20 @@
       "description": "Completed Bonus Task: Visit Sponsor Website",
       "created_at": "2026-08-11T15:29:10.575Z"
     }
-  ]
+  ],
+  "_settings": {
+    "adRewardAmount": 1200,
+    "dailyAdCap": 10,
+    "minWithdrawalAmount": 1000,
+    "minVerifiedRefs": 0,
+    "referralSignupBonus": 100,
+    "verifiedRefBonus": 10000,
+    "onboardingBonus": 1000,
+    "onboardingChannels": [
+      "BonkEarnNews",
+      "BonkEarnPayouts",
+      "BonkEarnChat"
+    ],
+    "maintenanceMode": false
+  }
 }
