@@ -582,6 +582,44 @@ class DbWrapper {
           return { changes: 1 };
         }
 
+        if (cleanSql.includes('INSERT INTO withdrawals')) {
+          memoryDb.withdrawals.push({
+            id: params[0],
+            user_id: Number(params[1]),
+            amount: Number(params[2]),
+            wallet_address: params[3],
+            status: 'pending',
+            requested_at: new Date().toISOString(),
+            processed_at: null,
+            admin_note: null,
+            tx_hash: null
+          });
+          saveData(memoryDb);
+          return { changes: 1 };
+        }
+
+        if (cleanSql.includes('UPDATE withdrawals SET status = ?, tx_hash = ?, processed_at = ? WHERE id = ?')) {
+          const w = memoryDb.withdrawals.find(x => x.id === params[3]);
+          if (w) {
+            w.status = params[0];
+            w.tx_hash = params[1];
+            w.processed_at = params[2];
+            saveData(memoryDb);
+          }
+          return { changes: 1 };
+        }
+
+        if (cleanSql.includes('UPDATE withdrawals SET status = ?, processed_at = ?, admin_note = ? WHERE id = ?')) {
+          const w = memoryDb.withdrawals.find(x => x.id === params[3]);
+          if (w) {
+            w.status = params[0];
+            w.processed_at = params[1];
+            w.admin_note = params[2];
+            saveData(memoryDb);
+          }
+          return { changes: 1 };
+        }
+
         return { changes: 0 };
       }
     };
