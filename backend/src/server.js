@@ -1,4 +1,4 @@
-﻿import express from 'express';
+import express from 'express';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
@@ -11,7 +11,7 @@ dotenv.config();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 import db, { resetDatabase, getStoredSettings, storeSettingsSnapshot } from './db.js';
-
+import { sendPaymentProof } from './telegramNotifier.js';
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -855,6 +855,27 @@ app.post('/admin/withdraw/:id/approve', authenticateAdmin, (req, res) => {
     .run('completed', generatedTx, nowStr, withdrawId);
 
   res.json({ success: true, withdrawId, status: 'completed', txHash: generatedTx });
+
+  // Broadcast real payment proof
+  try {
+    const withdrawal = db.prepare('SELECT * FROM withdrawals WHERE id = ?').get(withdrawId);
+    if (withdrawal) {
+      const user = db.prepare('SELECT * FROM users WHERE id = ?').get(withdrawal.user_id);
+      if (user) {
+        let wallet = user.wallet_address || 'unknown';
+        if (wallet.length > 8) {
+          wallet = wallet.substring(0, 4) + '**********' + wallet.substring(wallet.length - 4);
+        }
+        let username = user.username || user.first_name || 'User';
+        if (username.length > 2) {
+          username = username.substring(0, 2) + '***' + username.substring(username.length - 2);
+        }
+        sendPaymentProof(username, withdrawal.amount, wallet, 'Solana Network');
+      }
+    }
+  } catch (e) {
+    console.error('Failed to broadcast real payment proof:', e);
+  }
 });
 
 app.post('/admin/withdraw/:id/reject', authenticateAdmin, (req, res) => {
@@ -995,6 +1016,45 @@ if (RENDER_URL) {
       console.warn('[Keep-Alive] Ping notice:', e.message);
     }
   }, 4 * 60 * 1000);
+}
+
+// --- Fake Payout Broadcaster Loop ---
+if (process.env.ENABLE_FAKE_PAYOUTS === 'true') {
+  console.log('🤖 Fake Payout Broadcaster is ENABLED. Will broadcast every 1-2 minutes.');
+  const gateways = ['Solana Network', 'Binance', 'Phantom', 'FaucetPay'];
+  
+  const scheduleNextFakePayout = () => {
+    // Random delay between 60,000ms (1m) and 120,000ms (2m)
+    const nextDelay = Math.floor(Math.random() * 60000) + 60000;
+    
+    setTimeout(() => {
+      try {
+        // Generate fake username like AB***CD
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const generateLetters = (len) => Array.from({length: len}, () => chars.charAt(Math.floor(Math.random() * chars.length))).join('');
+        const fakeUsername = generateLetters(2) + '***' + generateLetters(2);
+        
+        // Generate fake amount between 50,000 and 2,000,000 BONK
+        const fakeAmount = Math.floor(Math.random() * 1950000) + 50000;
+        
+        // Generate fake wallet
+        const fakeWallet = generateLetters(4).toLowerCase() + '**********' + generateLetters(4).toLowerCase();
+        
+        // Pick random gateway
+        const fakeGateway = gateways[Math.floor(Math.random() * gateways.length)];
+        
+        sendPaymentProof(fakeUsername, fakeAmount, fakeWallet, fakeGateway);
+      } catch (e) {
+        console.error('Fake payout generation error:', e);
+      } finally {
+        // Schedule the next one
+        scheduleNextFakePayout();
+      }
+    }, nextDelay);
+  };
+  
+  // Start the loop
+  scheduleNextFakePayout();
 }
 
 const PORT = process.env.PORT || 4000;
