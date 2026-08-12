@@ -29,18 +29,19 @@ app.use((req, res, next) => {
     const payload = token ? jwt.verify(token, JWT_SECRET) : null;
     if (payload && ADMIN_USER_IDS.includes(Number(payload.id))) return next();
   } catch (e) {}
-  return res.status(503).json({ error: 'ðŸ”§ System is under maintenance. Please check back soon.', maintenance: true });
+  return res.status(503).json({ error: '🛠️ System is under maintenance. Please check back soon.', maintenance: true });
 });
 
 const JWT_SECRET = process.env.JWT_SECRET || 'earn_app_jwt_secret_key_2026';
 const BOT_TOKEN = process.env.BOT_TOKEN || 'MOCK_BOT_TOKEN';
-
 let botInstance = null;
+let botInitError = null;
 if (BOT_TOKEN && BOT_TOKEN !== 'MOCK_BOT_TOKEN') {
   try {
-    botInstance = new Telegraf(BOT_TOKEN);
+    botInstance = new Telegraf(BOT_TOKEN.trim());
     console.log('✅ Telegram bot instance created for channel verification.');
   } catch (e) {
+    botInitError = e.message;
     console.error('Failed to initialize Telegraf bot:', e.message);
   }
 }
@@ -263,7 +264,9 @@ app.get('/user/referrals', authenticateToken, (req, res) => {
 function verifyChannelMember(channelUsername, userId) {
   return new Promise((resolve) => {
     if (!botInstance) {
-      return resolve({ verified: false, error: 'Bot not configured. No channel verification available.' });
+      let msg = 'Bot not configured (Token missing or MOCK).';
+      if (botInitError) msg = `Bot init failed: ${botInitError}`;
+      return resolve({ verified: false, error: `${msg} No channel verification available.` });
     }
     const username = String(channelUsername || '').replace('@', '').trim();
     if (!username) {
