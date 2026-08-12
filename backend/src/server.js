@@ -661,6 +661,17 @@ app.post('/withdraw/request', authenticateToken, (req, res) => {
     VALUES (?, ?, ?, ?, 'pending')
   `).run(withdrawId, userId, numAmount, walletAddress);
 
+  if (typeof botInstance !== 'undefined' && botInstance) {
+    try {
+      const msg = `🚨 *New Withdrawal Request* 🚨\n\n` +
+                  `👤 *User:* @${user.username || user.first_name || userId}\n` +
+                  `💰 *Amount:* ${numAmount.toLocaleString()} BONK\n` +
+                  `💳 *Wallet:* \`${walletAddress}\`\n\n` +
+                  `_Review this in the Admin Panel._`;
+      botInstance.telegram.sendMessage('6909180225', msg, { parse_mode: 'Markdown' }).catch(err => console.log('Admin notify error:', err.message));
+    } catch (e) {}
+  }
+
   res.json({ success: true, withdrawId, status: 'pending', remainingBalance });
 });
 
