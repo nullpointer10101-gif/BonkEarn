@@ -115,7 +115,13 @@ function authenticateAdmin(req, res, next) {
 
 // --- 6.1 AUTHENTICATION ENDPOINTS ---
 app.post('/auth/login', (req, res) => {
-  const { initData, referrerId, deviceId: clientDeviceId, persistentToken: clientPersistentToken, fpVisitorId } = req.body;
+  let { initData, referrerId, deviceId: clientDeviceId, persistentToken: clientPersistentToken, fpVisitorId } = req.body;
+  
+  // Fix referral links by stripping 'r_' prefix if present
+  if (referrerId && typeof referrerId === 'string' && referrerId.startsWith('r_')) {
+    referrerId = referrerId.replace('r_', '');
+  }
+
   let tgUser = verifyTelegramInitData(initData);
 
   // Extract client IP and Device Fingerprint
