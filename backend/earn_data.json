@@ -63,7 +63,7 @@
       "id": 6909180225,
       "username": "Foxypi99",
       "first_name": "Baeyyo",
-      "balance": 8000,
+      "balance": 7500,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-12",
@@ -259,6 +259,17 @@
       "tx_hash": "sol_ffixwhb60xr_sig",
       "processed_at": "2026-08-12T07:30:21.108Z",
       "admin_note": "w_1786519815383_qv25i"
+    },
+    {
+      "id": "w_1786520049820_zgyh4",
+      "user_id": 6909180225,
+      "amount": 500,
+      "wallet_address": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
+      "status": "completed",
+      "requested_at": "2026-08-12T07:34:09.830Z",
+      "tx_hash": "sol_9jh7xatm45_sig",
+      "processed_at": "2026-08-12T07:34:19.511Z",
+      "admin_note": "w_1786520049820_zgyh4"
     }
   ],
   "transactions": [
