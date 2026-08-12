@@ -137,6 +137,45 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 0,
       "created_at": "2026-08-12T10:13:09.902Z"
+    },
+    {
+      "id": 5977993618,
+      "username": "Kingalien001",
+      "first_name": "WIZZY",
+      "balance": 500,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-12",
+      "referrer_id": null,
+      "ip_address": "102.88.115.100",
+      "device_id": "hw_TW96aWxsYS81LjAgKGlQaG9uZTsgQ1BV",
+      "persistent_token": "dev_uuid_t7xabg2uwh_mspxt9nv",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 1,
+      "created_at": "2026-08-12T10:19:27.858Z",
+      "last_ad_watched_at": "2026-08-12T10:20:22.052Z"
+    },
+    {
+      "id": 8079225018,
+      "username": "",
+      "first_name": "Bhrat Singh",
+      "balance": 500,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-12",
+      "referrer_id": null,
+      "ip_address": "1.187.164.43",
+      "device_id": "c4f4b64a4244f4b11706afe2a01d7e44",
+      "persistent_token": "dev_uuid_e25j3844fp_mspxtnao",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 1,
+      "created_at": "2026-08-12T10:19:45.657Z"
     }
   ],
   "ad_sessions": [
@@ -327,6 +366,15 @@
       "ad_token": "token_7vuv63p6z",
       "reward_amount": 200,
       "created_at": "2026-08-12T09:59:27.635Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786530022052_qyonw",
+      "user_id": 5977993618,
+      "step": 1,
+      "ad_token": "token_wr7wotq99",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T10:20:22.052Z",
       "claimed_at": null
     }
   ],
@@ -530,6 +578,22 @@
       "amount": 500,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-12T09:59:18.792Z"
+    },
+    {
+      "id": "tx_1786529999881_mzex",
+      "user_id": 5977993618,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-12T10:19:59.881Z"
+    },
+    {
+      "id": "tx_1786530024910_t7sf",
+      "user_id": 8079225018,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-12T10:20:24.910Z"
     }
   ],
   "_settings": {
