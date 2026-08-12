@@ -981,7 +981,10 @@ if (botInstance && RUN_TELEGRAM_BOT) {
           ],
           [
             { text: 'ðŸ’¬ Community Chat', url: 'https://t.me/BonkEarnChat' },
-            { text: 'ðŸ‘¥ Invite Friends', url: `https://t.me/share/url?url=https://t.me/BonkEarnSol_bot/app?startapp=r_${startPayload || 'earn'}&text=ðŸŽ Join BONK Earn and get 10,000 free BONK tokens instantly!` }
+            { text: 'ðŸ‘¥ Invite Friends', url: `https://t.me/share/url?url=https://t.me/BonkEarnSol_bot/app?startapp=r_${startPayload || 'earn'}&text=ðŸŽ  Join BONK Earn and get 10,000 free BONK tokens instantly!` }
+          ],
+          [
+            { text: '🎧 24/7 Live Support', url: 'https://t.me/Bonkcs99' }
           ]
         ]
       };

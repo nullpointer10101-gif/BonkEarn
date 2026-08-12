@@ -1554,7 +1554,7 @@ export default function App() {
               <ChevronRight size={18} color="var(--text-muted)" />
             </div>
 
-            <div className="glass-card" onClick={() => showToast('Connecting to 24/7 Live Support...')} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div className="glass-card" onClick={() => window.open('https://t.me/Bonkcs99', '_blank')} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                 <div style={{ background: 'rgba(192, 132, 252, 0.2)', padding: 10, borderRadius: 12 }}>
                   <Headphones size={22} color="#c084fc" />
