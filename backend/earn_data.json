@@ -372,11 +372,11 @@
   "_settings": {
     "adRewardAmount": 200,
     "dailyAdCap": 15,
-    "minWithdrawalAmount": 500,
+    "minWithdrawalAmount": 5000,
     "minVerifiedRefs": 3,
     "referralSignupBonus": 100,
-    "verifiedRefBonus": 998,
-    "onboardingBonus": 1000,
+    "verifiedRefBonus": 1000,
+    "onboardingBonus": 500,
     "onboardingChannels": [
       "BonkEarnNews",
       "BonkEarnPayouts",
