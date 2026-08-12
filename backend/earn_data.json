@@ -328,6 +328,44 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 0,
       "created_at": "2026-08-12T11:10:27.673Z"
+    },
+    {
+      "id": 1965480129,
+      "username": "Maung202622",
+      "first_name": "私は愛を狂おしいほど愛した。",
+      "balance": 0,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-12",
+      "referrer_id": null,
+      "ip_address": "1.46.140.37",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_9t3usihlix_mspzuphl",
+      "flagged": 1,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 0,
+      "created_at": "2026-08-12T11:17:26.196Z"
+    },
+    {
+      "id": 8406100533,
+      "username": "Wai578",
+      "first_name": "Aung",
+      "balance": 0,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-12",
+      "referrer_id": null,
+      "ip_address": "38.51.130.41",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_rfxoib4kh8_mspznhn8",
+      "flagged": 1,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 0,
+      "created_at": "2026-08-12T11:17:41.705Z"
     }
   ],
   "ad_sessions": [
@@ -908,6 +946,30 @@
       "amount": 0,
       "description": "â›” Onboarding bonus DENIED: Account #8533040659 flagged for policy review",
       "created_at": "2026-08-12T11:15:45.024Z"
+    },
+    {
+      "id": "tx_1786533446206_yohs",
+      "user_id": 1965480129,
+      "type": "anti_fraud_alert",
+      "amount": 0,
+      "description": "â›” FORBIDDEN REGISTRATION: Device HWID matches User #6909180225 (@Foxypi99)",
+      "created_at": "2026-08-12T11:17:26.206Z"
+    },
+    {
+      "id": "tx_1786533461705_le3z",
+      "user_id": 8406100533,
+      "type": "anti_fraud_alert",
+      "amount": 0,
+      "description": "â›” FORBIDDEN REGISTRATION: Device HWID matches User #6909180225 (@Foxypi99)",
+      "created_at": "2026-08-12T11:17:41.706Z"
+    },
+    {
+      "id": "tx_1786533513418_het6",
+      "user_id": 8406100533,
+      "type": "onboarding_denied",
+      "amount": 0,
+      "description": "â›” Onboarding bonus DENIED: Account #8406100533 flagged for policy review",
+      "created_at": "2026-08-12T11:18:33.418Z"
     }
   ],
   "_settings": {
