@@ -627,7 +627,7 @@ app.post('/withdraw/request', authenticateToken, (req, res) => {
     return res.status(400).json({ error: 'Invalid withdrawal amount' });
   }
   if (!Number.isFinite(user.balance) || user.balance < numAmount) return res.status(400).json({ error: 'Insufficient balance' });
-  const minWithdrawal = settingNum('minWithdrawalAmount', 50000);
+  const minWithdrawal = settingNum('minWithdrawalAmount', 5000);
   if (numAmount < minWithdrawal) return res.status(400).json({ error: `Minimum withdrawal is ${minWithdrawal.toLocaleString()} BONK` });
   
   // Base58 check heuristic for Solana address
@@ -848,7 +848,7 @@ app.get('/admin/users/:id/details', authenticateAdmin, (req, res) => {
 const DEFAULT_SETTINGS = {
   adRewardAmount: 1200,
   dailyAdCap: 10,
-  minWithdrawalAmount: 50000,
+  minWithdrawalAmount: 5000,
   minVerifiedRefs: 3,
   referralSignupBonus: 100,
   verifiedRefBonus: 1000,

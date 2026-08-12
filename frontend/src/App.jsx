@@ -515,10 +515,10 @@ export default function App() {
   const [sysConfig, setSysConfig] = useState({
     adRewardAmount: 1200,
     dailyAdCap: 10,
-    minWithdrawalAmount: 50000,
+    minWithdrawalAmount: 5000,
     minVerifiedRefs: 3,
     referralSignupBonus: 100,
-    verifiedRefBonus: 10000,
+    verifiedRefBonus: 1000,
     onboardingBonus: 1000,
     onboardingChannels: ['BonkEarnNews', 'BonkEarnPayouts', 'BonkEarnChat'],
     maintenanceMode: false
