@@ -10,7 +10,7 @@ dotenv.config();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-import db, { resetDatabase, getStoredSettings, storeSettingsSnapshot } from './db.js';
+import db, { resetDatabase, getStoredSettings, storeSettingsSnapshot, forceGitPush } from './db.js';
 import { sendPaymentProof } from './telegramNotifier.js';
 import { Telegraf } from 'telegraf';
 
@@ -876,6 +876,15 @@ app.post('/admin/settings', authenticateAdmin, (req, res) => {
   systemSettings = { ...systemSettings, ...req.body };
   persistSettings();
   res.json({ success: true, settings: systemSettings });
+});
+
+app.post('/admin/backup', authenticateAdmin, async (req, res) => {
+  try {
+    await forceGitPush();
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to backup database to GitHub' });
+  }
 });
 
 app.post('/admin/withdraw/:id/approve', authenticateAdmin, (req, res) => {

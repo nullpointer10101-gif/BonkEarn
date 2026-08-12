@@ -678,5 +678,9 @@ export function storeSettingsSnapshot(settings) {
   saveData(memoryDb);
 }
 
+export async function forceGitPush() {
+  await flushGitPush();
+}
+
 const db = new DbWrapper();
 export default db;

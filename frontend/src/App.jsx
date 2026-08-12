@@ -650,9 +650,23 @@ export default function App() {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          showToast('⚙️ System configuration saved!');
+          showToast('⚙️ System configuration saved locally!');
         }
       });
+  };
+
+  const handleForceBackup = () => {
+    showToast('⏳ Pushing database snapshot to GitHub...');
+    adminFetch(`${API_BASE}/admin/backup`, { method: 'POST' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          showToast('✅ Database safely backed up to GitHub!');
+        } else {
+          showToast('❌ Backup failed');
+        }
+      })
+      .catch(() => showToast('❌ Backup request failed'));
   };
 
   const handleAdjustBalance = (userId) => {
@@ -2535,9 +2549,17 @@ export default function App() {
                   </div>
                 </div>
 
-                <button type="submit" className="btn-primary btn-green">
-                  Save System Parameters
-                </button>
+                <div style={{ display: 'flex', gap: 12, marginTop: 16 }}>
+                  <button type="submit" className="btn-primary btn-green" style={{ flex: 1 }}>
+                    Save System Parameters
+                  </button>
+                  <button type="button" onClick={handleForceBackup} className="btn-primary" style={{ flex: 1, background: '#3b82f6' }}>
+                    Force GitHub Backup
+                  </button>
+                </div>
+                <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 8, textAlign: 'center' }}>
+                  If you plan to trigger a manual deploy, click Force GitHub Backup first and wait 5 seconds.
+                </div>
               </form>
             </div>
           )}
