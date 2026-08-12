@@ -565,9 +565,14 @@ app.post('/ads/claim', authenticateToken, (req, res) => {
   const updatedUser = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
 
   // Check if referrer should get verified bonus (+1,000 BONK when user reaches 10 total ads)
-  if (updatedUser.ads_watched_total === 10 && updatedUser.referrer_id) {
+  if (updatedUser.ads_watched_total >= 10 && updatedUser.referrer_id) {
     const referrer = db.prepare('SELECT * FROM users WHERE id = ?').get(updatedUser.referrer_id);
     if (referrer) {
+      // Check if referrer already received the bonus for this specific user
+      const refTxs = db.prepare('SELECT * FROM transactions WHERE user_id = ?').all(referrer.id);
+      const alreadyRewarded = refTxs.some(t => t.type === 'referral_verified' && t.description.includes(`Ref #${userId} `));
+
+      if (!alreadyRewarded) {
       // Anti-Fraud Verification
       if (false /* disabled */ && referrer.device_id && referrer.device_id === updatedUser.device_id) {
         const refTxId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
@@ -1140,6 +1145,39 @@ if (process.env.ENABLE_FAKE_PAYOUTS === 'true') {
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-  console.log(`âš¡ BonkEarn Backend API & Bot running on port ${PORT}`);
+  console.log(`⚡ BonkEarn Backend API & Bot running on port ${PORT}`);
+  
+  // Retroactive fix for missed verified referrals
+  setTimeout(() => {
+    try {
+      console.log('Running retroactive referral check...');
+      const allUsers = db.prepare('SELECT * FROM users').all();
+      const allTxs = db.prepare('SELECT * FROM transactions').all();
+      let fixedCount = 0;
+      
+      for (const user of allUsers) {
+        if ((user.ads_watched_total || 0) >= 10 && user.referrer_id) {
+          const gotIt = allTxs.some(t => t.user_id === user.referrer_id && t.type === 'referral_verified' && t.description.includes(`Ref #${user.id} `));
+          
+          if (!gotIt) {
+            const verifiedBonus = settingNum('verifiedRefBonus', 1000);
+            db.prepare('UPDATE users SET verified_ref_count = verified_ref_count + 1, balance = balance + ? WHERE id = ?').run(verifiedBonus, user.referrer_id);
+            const refTxId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+            db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
+              .run(refTxId, user.referrer_id, 'referral_verified', verifiedBonus, `Verified Referral Bonus (Ref #${user.id} retroactively completed 10+ ads)`);
+            
+            const referrer = db.prepare('SELECT * FROM users WHERE id = ?').get(user.referrer_id);
+            const minVerifiedRefs = settingNum('minVerifiedRefs', 3);
+            if (referrer && referrer.verified_ref_count >= minVerifiedRefs) {
+              db.prepare('UPDATE users SET withdrawal_unlocked = 1 WHERE id = ?').run(user.referrer_id);
+            }
+            fixedCount++;
+          }
+        }
+      }
+      if (fixedCount > 0) console.log(`Retroactively credited ${fixedCount} missed verified referrals.`);
+    } catch(e) {
+      console.error('Retroactive check failed:', e.message);
+    }
+  }, 5000);
 });
-
