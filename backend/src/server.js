@@ -349,7 +349,7 @@ app.post('/onboarding/claim-bonus', authenticateToken, async (req, res) => {
     db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
       .run(txId, req.user.id, 'onboarding_denied', 0, `â›” Onboarding bonus DENIED: Account #${req.user.id} flagged for policy review`);
     return res.status(403).json({
-      error: `â›” ACCESS FORBIDDEN: Account #${req.user.id} is under policy review. Channels joined, but the registration bonus cannot be credited. Contact support.`
+      error: `⛔ ACCESS FORBIDDEN: Account #${req.user.id} is under policy review. Channels joined, but the registration bonus cannot be credited. Contact support at @Bonkcs99.`
     });
   }
 
@@ -612,7 +612,7 @@ app.post('/withdraw/request', authenticateToken, (req, res) => {
   
   if (!user) return res.status(404).json({ error: 'User not found' });
   if (user.flagged) {
-    return res.status(403).json({ error: 'ðŸš¨ Account suspended for Anti-Fraud / Multi-Account policy violation. Withdrawals disabled.' });
+    return res.status(403).json({ error: '🚨 Account suspended for Anti-Fraud / Multi-Account policy violation. Withdrawals disabled. Contact support at @Bonkcs99.' });
   }
 
   // Strict amount validation (blocks NaN / negative / decimals / strings)
