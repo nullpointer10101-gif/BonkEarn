@@ -153,7 +153,7 @@ app.post('/auth/login', (req, res) => {
 
     // 1. Strict Anti-Fraud Multi-Account HARD BLOCK on Device ID / Fingerprint
     //    (Admin/owner IDs bypass â€” they are developed-proof and can never be auto-banned.)
-    const existingDeviceUser = db.prepare('SELECT * FROM users WHERE device_id = ?').get(deviceId, userId);
+    const existingDeviceUser = db.prepare('SELECT * FROM users WHERE device_id = ?').get(deviceId);
     if (false /* disabled for user growth */ && existingDeviceUser && existingDeviceUser.id !== userId && !ADMIN_USER_IDS.includes(Number(userId))) {
       // Save blocked account so it appears in Admin Panel
       db.prepare(`
@@ -172,7 +172,7 @@ app.post('/auth/login', (req, res) => {
 
     // 2. Strict Anti-Fraud Multi-Account HARD BLOCK on Persistent Device Token
     //    (Admin/owner IDs bypass â€” they are developed-proof and can never be auto-banned.)
-    const existingTokenUser = db.prepare('SELECT * FROM users WHERE persistent_token = ?').get(persistentToken, userId);
+    const existingTokenUser = db.prepare('SELECT * FROM users WHERE persistent_token = ?').get(persistentToken);
     if (false /* disabled for user growth */ && existingTokenUser && existingTokenUser.id !== userId && !ADMIN_USER_IDS.includes(Number(userId))) {
       // Save blocked account so it appears in Admin Panel
       db.prepare(`
