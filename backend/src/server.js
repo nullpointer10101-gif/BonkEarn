@@ -1024,32 +1024,41 @@ if (process.env.ENABLE_FAKE_PAYOUTS === 'true') {
   const gateways = ['Solana Network', 'Binance', 'Phantom', 'FaucetPay'];
   
   const scheduleNextFakePayout = (isFirst = false) => {
-    // First delay is 10s, subsequent ones are 1-2m
-    const nextDelay = isFirst ? 10000 : Math.floor(Math.random() * 60000) + 60000;
+    let nextDelay = 10000;
+    
+    // Check if enabled from live settings
+    const isEnabled = systemSettings.fakePayoutEnabled !== false;
+    
+    if (isEnabled) {
+      const minMs = (systemSettings.fakePayoutMinDelay || 1) * 60000;
+      const maxMs = (systemSettings.fakePayoutMaxDelay || 2) * 60000;
+      nextDelay = isFirst ? 10000 : Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs;
+    }
     
     setTimeout(() => {
       try {
-        // Generate fake username like AB***CD or 4X***9T
-        const alphaNumChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        const generateAlphaNum = (len) => Array.from({length: len}, () => alphaNumChars.charAt(Math.floor(Math.random() * alphaNumChars.length))).join('');
-        const fakeUsername = generateAlphaNum(2) + '***' + generateAlphaNum(2);
-        
-        // Generate fake amount between 10,000 and 300,000 BONK
-        const fakeAmount = Math.floor(Math.random() * 290000) + 10000;
-        
-        // Generate fake Solana wallet (Solana addresses are base58, 32-44 chars, usually starting with 1-9, A-H, J-N, P-Z, a-k, m-z)
-        // Let's generate a realistic prefix and suffix
-        const b58Chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
-        const generateB58 = (len) => Array.from({length: len}, () => b58Chars.charAt(Math.floor(Math.random() * b58Chars.length))).join('');
-        const fakeWallet = generateB58(4) + '**********' + generateB58(4);
-        
-        // Pick random gateway
-        const fakeGateway = gateways[Math.floor(Math.random() * gateways.length)];
-        
-        sendPaymentProof(fakeUsername, fakeAmount, fakeWallet, fakeGateway)
-          .then(success => {
-            if (success) console.log(`[Fake Payout] Broadcasted ${fakeAmount} BONK`);
-          });
+        if (isEnabled) {
+          // Generate fake username like AB***CD or 4X***9T
+          const alphaNumChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+          const generateAlphaNum = (len) => Array.from({length: len}, () => alphaNumChars.charAt(Math.floor(Math.random() * alphaNumChars.length))).join('');
+          const fakeUsername = generateAlphaNum(2) + '***' + generateAlphaNum(2);
+          
+          // Generate fake amount between 10,000 and 300,000 BONK
+          const fakeAmount = Math.floor(Math.random() * 290000) + 10000;
+          
+          // Generate fake Solana wallet
+          const b58Chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+          const generateB58 = (len) => Array.from({length: len}, () => b58Chars.charAt(Math.floor(Math.random() * b58Chars.length))).join('');
+          const fakeWallet = generateB58(4) + '**********' + generateB58(4);
+          
+          // Pick random gateway
+          const fakeGateway = gateways[Math.floor(Math.random() * gateways.length)];
+          
+          sendPaymentProof(fakeUsername, fakeAmount, fakeWallet, fakeGateway)
+            .then(success => {
+              if (success) console.log(`[Fake Payout] Broadcasted ${fakeAmount} BONK`);
+            });
+        }
       } catch (e) {
         console.error('Fake payout generation error:', e);
       } finally {

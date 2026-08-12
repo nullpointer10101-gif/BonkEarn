@@ -2450,6 +2450,41 @@ export default function App() {
                   </button>
                 </div>
 
+                <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 16, marginTop: 16, marginBottom: 16 }}>
+                  <div style={{ fontWeight: 700, fontSize: 14, color: '#c084fc', marginBottom: 12 }}>Fake Payout Broadcaster</div>
+                  
+                  <div style={{ marginBottom: 16, display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', padding: '10px 12px', borderRadius: 10 }}>
+                    <div>
+                      <div style={{ fontWeight: 700, fontSize: 13, color: '#fff' }}>Enable Fake Payouts</div>
+                      <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Broadcasts fake proof of payments to Telegram automatically.</div>
+                    </div>
+                    <button type="button" onClick={() => setSysConfig({ ...sysConfig, fakePayoutEnabled: sysConfig.fakePayoutEnabled === false ? true : false })} style={{ minWidth: 52, height: 28, borderRadius: 20, border: 'none', cursor: 'pointer', background: sysConfig.fakePayoutEnabled !== false ? '#34d399' : 'rgba(255,255,255,0.15)', color: sysConfig.fakePayoutEnabled !== false ? '#000' : '#fff', fontWeight: 800, fontSize: 12 }}>
+                      {sysConfig.fakePayoutEnabled !== false ? 'ON' : 'OFF'}
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: 12, marginBottom: 10 }}>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 4 }}>MIN DELAY (MINUTES)</div>
+                      <input 
+                        type="number" 
+                        value={sysConfig.fakePayoutMinDelay ?? 1}
+                        onChange={e => setSysConfig({ ...sysConfig, fakePayoutMinDelay: Number(e.target.value) })}
+                        style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 8, color: '#fff', fontSize: 13 }}
+                      />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 4 }}>MAX DELAY (MINUTES)</div>
+                      <input 
+                        type="number" 
+                        value={sysConfig.fakePayoutMaxDelay ?? 2}
+                        onChange={e => setSysConfig({ ...sysConfig, fakePayoutMaxDelay: Number(e.target.value) })}
+                        style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', borderRadius: 8, color: '#fff', fontSize: 13 }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 <button type="submit" className="btn-primary btn-green">
                   Save System Parameters
                 </button>

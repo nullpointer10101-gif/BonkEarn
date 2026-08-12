@@ -375,6 +375,9 @@
       "BonkEarnPayouts",
       "BonkEarnChat"
     ],
-    "maintenanceMode": false
+    "maintenanceMode": false,
+    "fakePayoutEnabled": true,
+    "fakePayoutMinDelay": 1,
+    "fakePayoutMaxDelay": 2
   }
 }
