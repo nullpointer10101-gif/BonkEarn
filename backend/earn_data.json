@@ -271,6 +271,63 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 0,
       "created_at": "2026-08-12T10:58:23.544Z"
+    },
+    {
+      "id": 5745222835,
+      "username": "Phyo8991",
+      "first_name": "Wai",
+      "balance": 0,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-12",
+      "referrer_id": 5908710070,
+      "ip_address": "38.51.130.41",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_09g62b4ngj_mspzkiru",
+      "flagged": 1,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 0,
+      "created_at": "2026-08-12T11:08:35.719Z"
+    },
+    {
+      "id": 8533040659,
+      "username": "Ebun44",
+      "first_name": "Oluwaranti",
+      "balance": 0,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-12",
+      "referrer_id": 5908710070,
+      "ip_address": "102.88.110.191",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_x690e7r4w6_mspzmj61",
+      "flagged": 1,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 0,
+      "created_at": "2026-08-12T11:10:09.080Z"
+    },
+    {
+      "id": 6991367066,
+      "username": "Pyaephyo2667",
+      "first_name": "Ignorance🎭",
+      "balance": 0,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-12",
+      "referrer_id": null,
+      "ip_address": "38.51.130.41",
+      "device_id": "cc38e6b5e280c18364644c63263d5ed1",
+      "persistent_token": "dev_uuid_09g62b4ngj_mspzkiru",
+      "flagged": 1,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 0,
+      "created_at": "2026-08-12T11:10:27.673Z"
     }
   ],
   "ad_sessions": [
@@ -787,6 +844,62 @@
       "amount": 0,
       "description": "â›” Onboarding bonus DENIED: Account #8280795098 flagged for policy review",
       "created_at": "2026-08-12T10:59:42.250Z"
+    },
+    {
+      "id": "tx_1786532915729_xz4r",
+      "user_id": 5745222835,
+      "type": "anti_fraud_alert",
+      "amount": 0,
+      "description": "â›” FORBIDDEN REGISTRATION: Device HWID matches User #7723814899 (@user)",
+      "created_at": "2026-08-12T11:08:35.729Z"
+    },
+    {
+      "id": "tx_1786532944543_vwyu",
+      "user_id": 5745222835,
+      "type": "onboarding_denied",
+      "amount": 0,
+      "description": "â›” Onboarding bonus DENIED: Account #5745222835 flagged for policy review",
+      "created_at": "2026-08-12T11:09:04.543Z"
+    },
+    {
+      "id": "tx_1786532967089_d9ai",
+      "user_id": 5745222835,
+      "type": "onboarding_denied",
+      "amount": 0,
+      "description": "â›” Onboarding bonus DENIED: Account #5745222835 flagged for policy review",
+      "created_at": "2026-08-12T11:09:27.089Z"
+    },
+    {
+      "id": "tx_1786533009081_61yl",
+      "user_id": 8533040659,
+      "type": "anti_fraud_alert",
+      "amount": 0,
+      "description": "â›” FORBIDDEN REGISTRATION: Device HWID matches User #7723814899 (@user)",
+      "created_at": "2026-08-12T11:10:09.081Z"
+    },
+    {
+      "id": "tx_1786533027674_rb3q",
+      "user_id": 6991367066,
+      "type": "anti_fraud_alert",
+      "amount": 0,
+      "description": "â›” FORBIDDEN REGISTRATION: Persistent device token matches User #5745222835",
+      "created_at": "2026-08-12T11:10:27.674Z"
+    },
+    {
+      "id": "tx_1786533057003_s9p6",
+      "user_id": 8533040659,
+      "type": "onboarding_denied",
+      "amount": 0,
+      "description": "â›” Onboarding bonus DENIED: Account #8533040659 flagged for policy review",
+      "created_at": "2026-08-12T11:10:57.003Z"
+    },
+    {
+      "id": "tx_1786533079993_fpml",
+      "user_id": 8533040659,
+      "type": "onboarding_denied",
+      "amount": 0,
+      "description": "â›” Onboarding bonus DENIED: Account #8533040659 flagged for policy review",
+      "created_at": "2026-08-12T11:11:19.993Z"
     }
   ],
   "_settings": {
