@@ -47,11 +47,11 @@
       "balance": 0,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
-      "ads_date": "2026-08-08",
+      "ads_date": "2026-08-12",
       "referrer_id": null,
-      "ip_address": "13.57.148.235",
-      "device_id": "hw_TW96aWxsYS81LjAgKFgxMTsgTGludXgg",
-      "persistent_token": "dev_uuid_v3aoieqwbn_mskia9pk",
+      "ip_address": "205.169.39.49",
+      "device_id": "a985dd0fd169b592d4eebd0cd6575448",
+      "persistent_token": "dev_uuid_36nzo9jaa6_msq5ylsj",
       "flagged": 0,
       "referral_count": 0,
       "verified_ref_count": 0,
@@ -526,9 +526,9 @@
       "id": 7709587401,
       "username": "",
       "first_name": "Rukayat",
-      "balance": 900,
-      "ads_watched_total": 2,
-      "ads_watched_today": 2,
+      "balance": 1500,
+      "ads_watched_total": 5,
+      "ads_watched_today": 5,
       "ads_date": "2026-08-12",
       "referrer_id": null,
       "ip_address": "62.146.227.110",
@@ -540,7 +540,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-12T14:00:23.456Z",
-      "last_ad_watched_at": "2026-08-12T14:03:35.424Z"
+      "last_ad_watched_at": "2026-08-12T14:08:34.869Z"
     }
   ],
   "ad_sessions": [
@@ -1020,6 +1020,51 @@
       "reward_amount": 200,
       "created_at": "2026-08-12T14:03:11.552Z",
       "claimed_at": "2026-08-12T14:03:35.423Z"
+    },
+    {
+      "id": "ad_1786543519987_otmvs",
+      "user_id": 7709587401,
+      "step": 3,
+      "ad_token": "token_evb6zd9ww",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T14:05:19.987Z",
+      "claimed_at": "2026-08-12T14:05:46.823Z"
+    },
+    {
+      "id": "ad_1786543570524_w7g4g",
+      "user_id": 7709587401,
+      "step": 3,
+      "ad_token": "token_ywqvdha3t",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T14:06:10.524Z",
+      "claimed_at": "2026-08-12T14:06:38.014Z"
+    },
+    {
+      "id": "ad_1786543618336_6u430",
+      "user_id": 7709587401,
+      "step": 3,
+      "ad_token": "token_csqel8b5g",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T14:06:58.336Z",
+      "claimed_at": "2026-08-12T14:07:29.995Z"
+    },
+    {
+      "id": "ad_1786543673194_pxu7n",
+      "user_id": 7709587401,
+      "step": 1,
+      "ad_token": "token_7hytm9k6u",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T14:07:53.194Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786543714868_ntwin",
+      "user_id": 7709587401,
+      "step": 1,
+      "ad_token": "token_s2lbolf23",
+      "reward_amount": 200,
+      "created_at": "2026-08-12T14:08:34.868Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
@@ -1838,6 +1883,30 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786543391551_oz9kl)",
       "created_at": "2026-08-12T14:03:35.425Z"
+    },
+    {
+      "id": "tx_1786543546826_v82x",
+      "user_id": 7709587401,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786543519987_otmvs)",
+      "created_at": "2026-08-12T14:05:46.826Z"
+    },
+    {
+      "id": "tx_1786543598018_yrud",
+      "user_id": 7709587401,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786543570524_w7g4g)",
+      "created_at": "2026-08-12T14:06:38.018Z"
+    },
+    {
+      "id": "tx_1786543649998_m94x",
+      "user_id": 7709587401,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786543618336_6u430)",
+      "created_at": "2026-08-12T14:07:29.998Z"
     }
   ],
   "_settings": {
