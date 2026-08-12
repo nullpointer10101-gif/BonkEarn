@@ -443,6 +443,25 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 0,
       "created_at": "2026-08-12T12:06:50.324Z"
+    },
+    {
+      "id": 7592257199,
+      "username": "Saim2020",
+      "first_name": "Saim",
+      "balance": 0,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-12",
+      "referrer_id": null,
+      "ip_address": "154.80.57.71",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_ih6ln7tkem_msq3qkvd",
+      "flagged": 1,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 0,
+      "created_at": "2026-08-12T13:05:17.863Z"
     }
   ],
   "ad_sessions": [
@@ -1129,6 +1148,22 @@
       "amount": 0,
       "description": "â›” Onboarding bonus DENIED: Account #8538407139 flagged for policy review",
       "created_at": "2026-08-12T12:12:54.489Z"
+    },
+    {
+      "id": "tx_1786539917876_6tum",
+      "user_id": 7592257199,
+      "type": "anti_fraud_alert",
+      "amount": 0,
+      "description": "â›” FORBIDDEN REGISTRATION: Device HWID matches User #6446145632 (@kiopajje)",
+      "created_at": "2026-08-12T13:05:17.876Z"
+    },
+    {
+      "id": "tx_1786539964481_a8vv",
+      "user_id": 7592257199,
+      "type": "onboarding_denied",
+      "amount": 0,
+      "description": "â›” Onboarding bonus DENIED: Account #7592257199 flagged for policy review",
+      "created_at": "2026-08-12T13:06:04.481Z"
     }
   ],
   "_settings": {
