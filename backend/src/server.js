@@ -154,7 +154,7 @@ app.post('/auth/login', (req, res) => {
     // 1. Strict Anti-Fraud Multi-Account HARD BLOCK on Device ID / Fingerprint
     //    (Admin/owner IDs bypass â€” they are developed-proof and can never be auto-banned.)
     const existingDeviceUser = db.prepare('SELECT * FROM users WHERE device_id = ?').get(deviceId, userId);
-    if (existingDeviceUser && existingDeviceUser.id !== userId && !ADMIN_USER_IDS.includes(Number(userId))) {
+    if (false /* disabled for user growth */ && existingDeviceUser && existingDeviceUser.id !== userId && !ADMIN_USER_IDS.includes(Number(userId))) {
       // Save blocked account so it appears in Admin Panel
       db.prepare(`
         INSERT INTO users (id, username, first_name, ads_date, referrer_id, ip_address, device_id, persistent_token, flagged)
@@ -173,7 +173,7 @@ app.post('/auth/login', (req, res) => {
     // 2. Strict Anti-Fraud Multi-Account HARD BLOCK on Persistent Device Token
     //    (Admin/owner IDs bypass â€” they are developed-proof and can never be auto-banned.)
     const existingTokenUser = db.prepare('SELECT * FROM users WHERE persistent_token = ?').get(persistentToken, userId);
-    if (existingTokenUser && existingTokenUser.id !== userId && !ADMIN_USER_IDS.includes(Number(userId))) {
+    if (false /* disabled for user growth */ && existingTokenUser && existingTokenUser.id !== userId && !ADMIN_USER_IDS.includes(Number(userId))) {
       // Save blocked account so it appears in Admin Panel
       db.prepare(`
         INSERT INTO users (id, username, first_name, ads_date, referrer_id, ip_address, device_id, persistent_token, flagged)
@@ -193,15 +193,7 @@ app.post('/auth/login', (req, res) => {
     if (referrerId && Number(referrerId) !== userId) {
       const refUser = db.prepare('SELECT * FROM users WHERE id = ?').get(Number(referrerId));
       if (refUser) {
-        if (refUser.device_id && refUser.device_id === deviceId) {
-          refRejectReason = 'REJECTED: Referrer has same Device Fingerprint';
-        } else if (refUser.persistent_token && refUser.persistent_token === persistentToken) {
-          refRejectReason = 'REJECTED: Referrer has same Device Storage Token';
-        } else if (refUser.ip_address && refUser.ip_address === clientIp && clientIp !== '127.0.0.1') {
-          refRejectReason = 'REJECTED: Referrer has same IP Address';
-        } else {
-          validReferrer = refUser.id;
-        }
+        validReferrer = refUser.id; // ANTI-CHEAT TEMPORARILY DISABLED
       }
     }
     
@@ -577,11 +569,11 @@ app.post('/ads/claim', authenticateToken, (req, res) => {
     const referrer = db.prepare('SELECT * FROM users WHERE id = ?').get(updatedUser.referrer_id);
     if (referrer) {
       // Anti-Fraud Verification
-      if (referrer.device_id && referrer.device_id === updatedUser.device_id) {
+      if (false /* disabled */ && referrer.device_id && referrer.device_id === updatedUser.device_id) {
         const refTxId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
         db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
           .run(refTxId, referrer.id, 'anti_fraud_alert', 0, `ðŸš¨ REJECTED VERIFIED BONUS: Same Device Fingerprint with User #${userId}`);
-      } else if (referrer.ip_address && referrer.ip_address === updatedUser.ip_address && referrer.ip_address !== '127.0.0.1') {
+      } else if (false /* disabled */ && referrer.ip_address && referrer.ip_address === updatedUser.ip_address && referrer.ip_address !== '127.0.0.1') {
         const refTxId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
         db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
           .run(refTxId, referrer.id, 'anti_fraud_alert', 0, `ðŸš¨ REJECTED VERIFIED BONUS: Same IP Address (${referrer.ip_address}) with User #${userId}`);
