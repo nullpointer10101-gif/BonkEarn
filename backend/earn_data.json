@@ -589,7 +589,7 @@
       "id": 7512537103,
       "username": "temuasb12",
       "first_name": "⛏️ Tomsun",
-      "balance": 0,
+      "balance": 500,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-12",
@@ -601,8 +601,27 @@
       "referral_count": 0,
       "verified_ref_count": 0,
       "withdrawal_unlocked": 0,
-      "onboarding_completed": 0,
+      "onboarding_completed": 1,
       "created_at": "2026-08-12T18:17:23.975Z"
+    },
+    {
+      "id": 6060197031,
+      "username": "Web3Tuke",
+      "first_name": "WҽႦ3Tυƙҽ",
+      "balance": 500,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-12",
+      "referrer_id": null,
+      "ip_address": "197.211.63.57",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_uq72l8w8nb_msqex5yl",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 1,
+      "created_at": "2026-08-12T18:18:20.629Z"
     }
   ],
   "ad_sessions": [
@@ -2499,6 +2518,22 @@
       "amount": 500,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-12T17:02:47.809Z"
+    },
+    {
+      "id": "tx_1786558724261_hpwc",
+      "user_id": 6060197031,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-12T18:18:44.261Z"
+    },
+    {
+      "id": "tx_1786558759984_0mcm",
+      "user_id": 7512537103,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-12T18:19:19.984Z"
     }
   ],
   "_settings": {
