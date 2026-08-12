@@ -462,6 +462,25 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 0,
       "created_at": "2026-08-12T13:05:17.863Z"
+    },
+    {
+      "id": 1004195512,
+      "username": "a7medma21",
+      "first_name": "Ahmed",
+      "balance": 0,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-12",
+      "referrer_id": null,
+      "ip_address": "197.38.152.254",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_xdsdgewv4s_msq4h91w",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 0,
+      "created_at": "2026-08-12T13:26:01.211Z"
     }
   ],
   "ad_sessions": [
