@@ -862,7 +862,7 @@ app.post('/admin/withdraw/:id/approve', authenticateAdmin, (req, res) => {
     if (withdrawal) {
       const user = db.prepare('SELECT * FROM users WHERE id = ?').get(withdrawal.user_id);
       if (user) {
-        let wallet = user.wallet_address || 'unknown';
+        let wallet = withdrawal.wallet_address || 'unknown';
         if (wallet.length > 8) {
           wallet = wallet.substring(0, 4) + '**********' + wallet.substring(wallet.length - 4);
         }
