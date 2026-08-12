@@ -1043,8 +1043,8 @@ if (process.env.ENABLE_FAKE_PAYOUTS === 'true') {
           const generateAlphaNum = (len) => Array.from({length: len}, () => alphaNumChars.charAt(Math.floor(Math.random() * alphaNumChars.length))).join('');
           const fakeUsername = generateAlphaNum(2) + '***' + generateAlphaNum(2);
           
-          // Generate fake amount between 10,000 and 300,000 BONK
-          const fakeAmount = Math.floor(Math.random() * 290000) + 10000;
+          // Generate fake amount between 5,000 and 200,000 BONK
+          const fakeAmount = Math.floor(Math.random() * 195000) + 5000;
           
           // Generate fake Solana wallet
           const b58Chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
