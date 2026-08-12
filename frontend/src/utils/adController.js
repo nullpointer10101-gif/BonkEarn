@@ -112,7 +112,10 @@ function tryMonetagBackup(onSuccess, onFailure) {
           .catch((err) => onFailure('Monetag', err));
         return;
       } else {
-        onSuccess('Monetag');
+        // If it's a popunder and returns no promise, enforce the 15s watch time natively
+        setTimeout(() => {
+          onSuccess('Monetag');
+        }, 15500); // 15.5s to safely pass the 12s anti-cheat check
         return;
       }
     } catch (e) {
