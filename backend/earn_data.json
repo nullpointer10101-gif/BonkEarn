@@ -68,9 +68,9 @@
       "ads_watched_today": 0,
       "ads_date": "2026-08-12",
       "referrer_id": null,
-      "ip_address": "157.48.1.124",
-      "device_id": "4ceebeccdb8ec61618cb40e6c7bf9f3a",
-      "persistent_token": "dev_uuid_cqlbcchss7_msjexln0",
+      "ip_address": "157.48.2.105",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_w2czwo9nat_msjbpoep",
       "flagged": 0,
       "referral_count": 0,
       "verified_ref_count": 0,
@@ -608,7 +608,7 @@
       "id": 6060197031,
       "username": "Web3Tuke",
       "first_name": "WҽႦ3Tυƙҽ",
-      "balance": 500,
+      "balance": 3500,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-12",
@@ -2534,6 +2534,14 @@
       "amount": 500,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-12T18:19:19.984Z"
+    },
+    {
+      "id": "tx_1786558914377_3k77",
+      "user_id": 6060197031,
+      "type": "admin_credit",
+      "amount": 3000,
+      "description": "Manual reward adjustment",
+      "created_at": "2026-08-12T18:21:54.377Z"
     }
   ],
   "_settings": {
