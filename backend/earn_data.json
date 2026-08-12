@@ -370,12 +370,12 @@
     }
   ],
   "_settings": {
-    "adRewardAmount": 1200,
-    "dailyAdCap": 10,
+    "adRewardAmount": 200,
+    "dailyAdCap": 15,
     "minWithdrawalAmount": 500,
-    "minVerifiedRefs": 0,
+    "minVerifiedRefs": 3,
     "referralSignupBonus": 100,
-    "verifiedRefBonus": 10000,
+    "verifiedRefBonus": 998,
     "onboardingBonus": 1000,
     "onboardingChannels": [
       "BonkEarnNews",
