@@ -68,6 +68,8 @@ export async function sendPaymentProof(username, amount, wallet, gateway) {
 
   try {
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+    console.log(`[Notifier] Attempting to send message to chatId: ${chatId}`);
+    
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
