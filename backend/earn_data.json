@@ -434,7 +434,7 @@
       "ads_watched_today": 0,
       "ads_date": "2026-08-12",
       "referrer_id": null,
-      "ip_address": "128.14.90.113",
+      "ip_address": "87.213.172.232",
       "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
       "persistent_token": "dev_uuid_lgsi8kp0z5_msq1ne34",
       "flagged": 1,
@@ -1113,6 +1113,22 @@
       "amount": 0,
       "description": "â›” Onboarding bonus DENIED: Account #8538407139 flagged for policy review",
       "created_at": "2026-08-12T12:09:35.924Z"
+    },
+    {
+      "id": "tx_1786536675323_y533",
+      "user_id": 8538407139,
+      "type": "onboarding_denied",
+      "amount": 0,
+      "description": "â›” Onboarding bonus DENIED: Account #8538407139 flagged for policy review",
+      "created_at": "2026-08-12T12:11:15.323Z"
+    },
+    {
+      "id": "tx_1786536774488_c4hf",
+      "user_id": 8538407139,
+      "type": "onboarding_denied",
+      "amount": 0,
+      "description": "â›” Onboarding bonus DENIED: Account #8538407139 flagged for policy review",
+      "created_at": "2026-08-12T12:12:54.489Z"
     }
   ],
   "_settings": {
