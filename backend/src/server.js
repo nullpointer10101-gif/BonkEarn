@@ -925,10 +925,7 @@ app.post('/admin/withdraw/:id/approve', authenticateAdmin, (req, res) => {
           wallet = wallet.substring(0, 4) + '**********' + wallet.substring(wallet.length - 4);
         }
         let username = user.username || user.first_name || 'User';
-        if (username.length > 2) {
-          username = username.substring(0, 2) + '***' + username.substring(username.length - 2);
-        }
-        sendPaymentProof(username, withdrawal.amount, wallet, 'Solana Network');
+        sendPaymentProof(username, withdrawal.amount, wallet, 'CWallet (Instant)');
       }
     }
   } catch (e) {

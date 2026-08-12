@@ -41,19 +41,20 @@ export async function sendPaymentProof(username, amount, wallet, gateway) {
     maximumFractionDigits: 8
   });
 
-  // Current time formatted cleanly
+  // Current time formatted cleanly without +0000
   const now = new Date();
-  const timeString = now.toISOString().replace('T', ' ').substring(0, 19) + ' +0000';
+  const timeString = now.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
 
   const messageText = 
-    `💸 <b>PAYMENT PROOF</b>\n\n` +
-    `✅ <b>Withdrawal Successful!</b>\n\n` +
-    `👤 User: ${username}\n` +
-    `💰 Amount: ${formattedAmount} BONK\n` +
-    `💼 Wallet: ${wallet}\n` +
-    `🏦 Gateway: ${gateway}\n` +
-    `🕒 Time: ${timeString}\n\n` +
-    `🚀 Join BonkEarn and earn BONK today!`;
+    `🟢 <b>VERIFIED PAYOUT</b> 🟢\n\n` +
+    `✅ <b>Withdrawal Successfully Processed!</b>\n\n` +
+    `👤 User: <b>${username}</b>\n` +
+    `💰 Amount: <b>${formattedAmount} BONK</b>\n` +
+    `💼 Wallet: <b>${wallet}</b>\n` +
+    `🏦 Gateway: <b>${gateway}</b>\n` +
+    `🕒 Time: <b>${timeString}</b>\n\n` +
+    `<i>All payouts are processed instantly and securely via CWallet.</i>\n\n` +
+    `🚀 <b>Join BonkEarn and earn free crypto today!</b>`;
 
   const inlineKeyboard = {
     inline_keyboard: [
