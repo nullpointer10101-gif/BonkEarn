@@ -1785,7 +1785,7 @@ export default function App() {
               <div style={{ marginBottom: 16 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 4 }}>
                   <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)' }}>CWALLET ID</div>
-                  <a href="https://cwallet.com/referralweb/lAnLI39k?type=signup" target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: '#a855f7', textDecoration: 'none', fontWeight: 600 }}>Create CWallet Account &rarr;</a>
+                  <a href="https://cwallet.com/referralweb/lAnLI39k?type=signup" target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: '#a855f7', textDecoration: 'none', fontWeight: 600 }}>Create CWallet Account (No KYC) &rarr;</a>
                 </div>
                 <input 
                   type="text"
