@@ -634,6 +634,22 @@ app.post('/withdraw/request', authenticateToken, (req, res) => {
     return res.status(400).json({ error: `Minimum ${minVerifiedRefs} verified referrals required to unlock withdrawals` });
   }
 
+  // Strict Rule 1: 1 withdrawal per day per user
+  const allWithdrawals = db.prepare('SELECT * FROM withdrawals').all();
+  const userWithdrawals = allWithdrawals.filter(w => w.user_id === userId);
+  const todayStr = new Date().toISOString().split('T')[0];
+  const hasWithdrawnToday = userWithdrawals.some(w => w.requested_at && w.requested_at.startsWith(todayStr));
+  
+  if (hasWithdrawnToday) {
+    return res.status(400).json({ error: 'Strict Rule: You have already submitted a withdrawal today. Limit is 1 per day.' });
+  }
+
+  // Strict Rule 2: Wallet address uniqueness
+  const addressUsedByOther = allWithdrawals.some(w => w.wallet_address === walletAddress && w.user_id !== userId);
+  if (addressUsedByOther) {
+    return res.status(400).json({ error: 'Strict Rule: This wallet address is already linked to another account.' });
+  }
+
   const withdrawId = 'w_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
 
   // Capture remaining BEFORE deducting (user is a live db reference, so
