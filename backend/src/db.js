@@ -146,6 +146,12 @@ class DbWrapper {
     const cleanSql = sql.trim().replace(/\s+/g, ' ');
 
     // Fix schema updates if missing
+    if (!memoryDb.tasks) memoryDb.tasks = [];
+    if (!memoryDb.task_completions) memoryDb.task_completions = [];
+    if (!memoryDb.transactions) memoryDb.transactions = [];
+    if (!memoryDb.withdrawals) memoryDb.withdrawals = [];
+    if (!memoryDb.ad_sessions) memoryDb.ad_sessions = [];
+    
     memoryDb.users.forEach(u => {
       if (u.onboarding_completed === undefined) {
         u.onboarding_completed = 0;
