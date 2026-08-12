@@ -63,12 +63,12 @@
       "id": 6909180225,
       "username": "Foxypi99",
       "first_name": "Baeyyo",
-      "balance": 12500,
+      "balance": 10000,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-12",
       "referrer_id": null,
-      "ip_address": "157.48.10.120",
+      "ip_address": "157.48.2.217",
       "device_id": "4ceebeccdb8ec61618cb40e6c7bf9f3a",
       "persistent_token": "dev_uuid_cqlbcchss7_msjexln0",
       "flagged": 0,
@@ -244,6 +244,20 @@
       "amount": null,
       "status": "pending",
       "requested_at": "2026-08-12T06:49:37.629Z"
+    },
+    {
+      "id": "w_1786517711172_s9jc1",
+      "user_id": 1500,
+      "amount": null,
+      "status": "pending",
+      "requested_at": "2026-08-12T06:55:11.172Z"
+    },
+    {
+      "id": "w_1786517751794_h4zy1",
+      "user_id": 1000,
+      "amount": null,
+      "status": "pending",
+      "requested_at": "2026-08-12T06:55:51.794Z"
     }
   ],
   "transactions": [
