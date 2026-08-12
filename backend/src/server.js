@@ -34,12 +34,15 @@ app.use((req, res, next) => {
 
 const JWT_SECRET = process.env.JWT_SECRET || 'earn_app_jwt_secret_key_2026';
 const BOT_TOKEN = process.env.BOT_TOKEN || 'MOCK_BOT_TOKEN';
+const RUN_TELEGRAM_BOT = process.env.RUN_TELEGRAM_BOT === 'true';
+
 let botInstance = null;
 let botInitError = null;
-if (BOT_TOKEN && BOT_TOKEN !== 'MOCK_BOT_TOKEN') {
+
+if (BOT_TOKEN && BOT_TOKEN !== 'MOCK_BOT_TOKEN' && BOT_TOKEN.includes(':')) {
   try {
     botInstance = new Telegraf(BOT_TOKEN.trim());
-    console.log('✅ Telegram bot instance created for channel verification.');
+    console.log('✅ Telegram bot instance created for API interactions.');
   } catch (e) {
     botInitError = e.message;
     console.error('Failed to initialize Telegraf bot:', e.message);
@@ -915,30 +918,23 @@ app.get('/health', (req, res) => {
 });
 
 // --- TELEGRAM BOT INTEGRATION (Instant Response & Webhook Support) ---
-import { Telegraf } from 'telegraf';
-
 const MINI_APP_URL = process.env.MINI_APP_URL || 'https://bonk-earn.vercel.app';
 const BONK_IMAGE_URL = 'https://raw.githubusercontent.com/nullpointer10101-gif/BonkEarn/main/frontend/public/bonk_coin.png';
-
-let botInstance = null;
 
 // The web service runs the API; the dedicated "BonkEarn-Telegram-Bot" service
 // owns the bot. Running Telegraf here too with the same token causes Telegram
 // 409 conflicts / webhook-overwrite between the two instances => only run when
 // explicitly enabled with RUN_TELEGRAM_BOT=true.
-const RUN_TELEGRAM_BOT = process.env.RUN_TELEGRAM_BOT === 'true';
 
-if (BOT_TOKEN && RUN_TELEGRAM_BOT && BOT_TOKEN !== 'MOCK_BOT_TOKEN' && BOT_TOKEN.includes(':')) {
+if (botInstance && RUN_TELEGRAM_BOT) {
   try {
-    botInstance = new Telegraf(BOT_TOKEN);
-
     const getBotWelcomeKeyboard = (startPayload) => {
       const launchUrl = startPayload ? `${MINI_APP_URL}?start=${startPayload}` : MINI_APP_URL;
       return {
         inline_keyboard: [
           [
             {
-              text: 'ðŸš€ Launch BONK Mini App',
+              text: '🚀 Launch BONK Mini App',
               web_app: { url: launchUrl }
             }
           ],
