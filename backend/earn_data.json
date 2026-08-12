@@ -900,6 +900,14 @@
       "amount": 0,
       "description": "â›” Onboarding bonus DENIED: Account #8533040659 flagged for policy review",
       "created_at": "2026-08-12T11:11:19.993Z"
+    },
+    {
+      "id": "tx_1786533345024_r7u5",
+      "user_id": 8533040659,
+      "type": "onboarding_denied",
+      "amount": 0,
+      "description": "â›” Onboarding bonus DENIED: Account #8533040659 flagged for policy review",
+      "created_at": "2026-08-12T11:15:45.024Z"
     }
   ],
   "_settings": {
