@@ -68,9 +68,9 @@
       "ads_watched_today": 0,
       "ads_date": "2026-08-12",
       "referrer_id": null,
-      "ip_address": "157.48.1.124",
-      "device_id": "4ceebeccdb8ec61618cb40e6c7bf9f3a",
-      "persistent_token": "dev_uuid_cqlbcchss7_msjexln0",
+      "ip_address": "157.48.3.119",
+      "device_id": "f18925bf00cf7aac4161130f0816312f",
+      "persistent_token": "dev_uuid_w2czwo9nat_msjbpoep",
       "flagged": 0,
       "referral_count": 0,
       "verified_ref_count": 0,
@@ -826,7 +826,7 @@
       "ads_watched_today": 0,
       "ads_date": "2026-08-12",
       "referrer_id": null,
-      "ip_address": "105.117.8.205",
+      "ip_address": "105.117.10.179",
       "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
       "persistent_token": "dev_uuid_iiau6ckgl_msqflphq",
       "flagged": 0,
@@ -2234,8 +2234,11 @@
       "user_id": 6060197031,
       "amount": 6700,
       "wallet_address": "146746187",
-      "status": "pending",
-      "requested_at": "2026-08-12T19:01:40.380Z"
+      "status": "completed",
+      "requested_at": "2026-08-12T19:01:40.380Z",
+      "tx_hash": "sol_92powvxuyi_sig",
+      "processed_at": "2026-08-12T19:05:35.491Z",
+      "admin_note": "w_1786561300372_6w0rg"
     }
   ],
   "transactions": [
@@ -3422,6 +3425,30 @@
       "amount": 500,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-12T19:02:18.981Z"
+    },
+    {
+      "id": "tx_1786561452264_qnxj",
+      "user_id": 6060197031,
+      "type": "admin_credit",
+      "amount": 6700,
+      "description": "Manual reward adjustment",
+      "created_at": "2026-08-12T19:04:12.264Z"
+    },
+    {
+      "id": "tx_1786561467642_fmti",
+      "user_id": 6060197031,
+      "type": "admin_credit",
+      "amount": 0,
+      "description": "Manual reward adjustment",
+      "created_at": "2026-08-12T19:04:27.642Z"
+    },
+    {
+      "id": "tx_1786561478383_krdk",
+      "user_id": 6060197031,
+      "type": "admin_debit",
+      "amount": -6700,
+      "description": "Manual reward adjustment",
+      "created_at": "2026-08-12T19:04:38.383Z"
     }
   ],
   "_settings": {
