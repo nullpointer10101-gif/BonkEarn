@@ -83,19 +83,19 @@
       "id": 6446145632,
       "username": "kiopajje",
       "first_name": "Kanzx",
-      "balance": 0,
+      "balance": 1000,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-12",
       "referrer_id": null,
       "ip_address": "157.48.10.180",
-      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "device_id": "426fd12c10c83bf1d7228791be9fe83d",
       "persistent_token": "dev_uuid_w2czwo9nat_msjbpoep",
-      "flagged": 1,
+      "flagged": 0,
       "referral_count": 0,
       "verified_ref_count": 0,
       "withdrawal_unlocked": 0,
-      "onboarding_completed": 0,
+      "onboarding_completed": 1,
       "created_at": "2026-08-09T14:38:43.704Z"
     }
   ],
@@ -360,6 +360,30 @@
       "amount": 2500,
       "description": "Completed Bonus Task: Visit Sponsor Website",
       "created_at": "2026-08-11T15:29:10.575Z"
+    },
+    {
+      "id": "tx_1786521247264_daqd",
+      "user_id": 6446145632,
+      "type": "onboarding_denied",
+      "amount": 0,
+      "description": "â›” Onboarding bonus DENIED: Account #6446145632 flagged for policy review",
+      "created_at": "2026-08-12T07:54:07.264Z"
+    },
+    {
+      "id": "tx_1786521288187_ydyn",
+      "user_id": 6446145632,
+      "type": "admin_unblock",
+      "amount": 0,
+      "description": "ðŸ”“ Admin Unlocked Account #6446145632 (@kiopajje)",
+      "created_at": "2026-08-12T07:54:48.187Z"
+    },
+    {
+      "id": "tx_1786521301035_iwxe",
+      "user_id": 6446145632,
+      "type": "onboarding_bonus",
+      "amount": 1000,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-12T07:55:01.035Z"
     }
   ],
   "_settings": {
@@ -377,7 +401,7 @@
     ],
     "maintenanceMode": false,
     "fakePayoutEnabled": true,
-    "fakePayoutMinDelay": 1,
-    "fakePayoutMaxDelay": 2
+    "fakePayoutMinDelay": 3,
+    "fakePayoutMaxDelay": 5
   }
 }
