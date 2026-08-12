@@ -1046,7 +1046,7 @@ if (RENDER_URL) {
 
 // --- Fake Payout Broadcaster Loop ---
 if (process.env.ENABLE_FAKE_PAYOUTS === 'true') {
-  console.log('🤖 Fake Payout Broadcaster is ENABLED. Will broadcast every 1-2 minutes.');
+  console.log('🤖 Fake Payout Broadcaster is ENABLED.');
   const gateways = ['Solana Network', 'Binance', 'Phantom', 'FaucetPay'];
   
   const scheduleNextFakePayout = (isFirst = false) => {
@@ -1056,9 +1056,14 @@ if (process.env.ENABLE_FAKE_PAYOUTS === 'true') {
     const isEnabled = systemSettings.fakePayoutEnabled !== false;
     
     if (isEnabled) {
-      const minMs = (systemSettings.fakePayoutMinDelay || 1) * 60000;
-      const maxMs = (systemSettings.fakePayoutMaxDelay || 2) * 60000;
-      nextDelay = isFirst ? 10000 : Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs;
+      const minVal = Number(systemSettings.fakePayoutMinDelay) || 1;
+      const maxVal = Number(systemSettings.fakePayoutMaxDelay) || 2;
+      const minMs = minVal * 60000;
+      const maxMs = maxVal * 60000;
+      
+      // If it's the first run (server start), wait at least minMs instead of firing instantly, to avoid spam on restarts.
+      nextDelay = isFirst ? minMs : Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs;
+      console.log(`[Fake Payout] Scheduled next broadcast in ${(nextDelay / 60000).toFixed(2)} minutes.`);
     }
     
     setTimeout(() => {
