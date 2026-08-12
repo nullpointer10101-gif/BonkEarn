@@ -2001,8 +2001,17 @@ export default function App() {
                         </span>
                       </div>
 
-                      <div style={{ fontSize: 11, fontFamily: 'monospace', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.04)', padding: '6px 8px', borderRadius: 6, marginBottom: 8, wordBreak: 'break-all' }}>
-                        Solana Wallet: {req.wallet_address}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 11, fontFamily: 'monospace', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.04)', padding: '6px 8px', borderRadius: 6, marginBottom: 8, wordBreak: 'break-all' }}>
+                        <span>Solana Wallet: {req.wallet_address}</span>
+                        <button 
+                          onClick={() => {
+                            navigator.clipboard.writeText(req.wallet_address);
+                          }}
+                          style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', padding: '4px', borderRadius: 4, cursor: 'pointer', display: 'flex', alignItems: 'center', marginLeft: 8 }}
+                          title="Copy Wallet Address"
+                        >
+                          <Copy size={12} />
+                        </button>
                       </div>
 
                       {req.status === 'pending' && (
