@@ -594,6 +594,7 @@ app.post('/ads/claim', authenticateToken, (req, res) => {
           db.prepare('UPDATE users SET withdrawal_unlocked = 1 WHERE id = ?').run(updatedUser.referrer_id);
         }
       }
+      }
     }
   }
 
