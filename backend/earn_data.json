@@ -622,6 +622,44 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-12T18:18:20.629Z"
+    },
+    {
+      "id": 6597203624,
+      "username": "Sumit200099",
+      "first_name": "Sumit",
+      "balance": 500,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-12",
+      "referrer_id": null,
+      "ip_address": "106.219.234.160",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_upangj7ojl_msqfcj1p",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 1,
+      "created_at": "2026-08-12T18:30:17.052Z"
+    },
+    {
+      "id": 7248154810,
+      "username": "Integrity008",
+      "first_name": "Highlevel TAPX ☣️",
+      "balance": 500,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-12",
+      "referrer_id": null,
+      "ip_address": "102.89.84.6",
+      "device_id": "e92a640e6156fd7201a336c2a29375d2",
+      "persistent_token": "dev_uuid_vdita0pf2n_msqfdfyq",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 1,
+      "created_at": "2026-08-12T18:31:01.499Z"
     }
   ],
   "ad_sessions": [
@@ -2542,6 +2580,22 @@
       "amount": 3000,
       "description": "Manual reward adjustment",
       "created_at": "2026-08-12T18:21:54.377Z"
+    },
+    {
+      "id": "tx_1786559437883_pn2g",
+      "user_id": 6597203624,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-12T18:30:37.883Z"
+    },
+    {
+      "id": "tx_1786559491566_otyl",
+      "user_id": 7248154810,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-12T18:31:31.566Z"
     }
   ],
   "_settings": {
