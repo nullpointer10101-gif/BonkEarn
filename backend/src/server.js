@@ -572,7 +572,7 @@ app.post('/ads/claim', authenticateToken, (req, res) => {
 
   const updatedUser = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
 
-  // Check if referrer should get verified bonus (+10,000 BONK when user reaches 10 total ads)
+  // Check if referrer should get verified bonus (+1,000 BONK when user reaches 10 total ads)
   if (updatedUser.ads_watched_total === 10 && updatedUser.referrer_id) {
     const referrer = db.prepare('SELECT * FROM users WHERE id = ?').get(updatedUser.referrer_id);
     if (referrer) {
@@ -586,7 +586,7 @@ app.post('/ads/claim', authenticateToken, (req, res) => {
         db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
           .run(refTxId, referrer.id, 'anti_fraud_alert', 0, `ðŸš¨ REJECTED VERIFIED BONUS: Same IP Address (${referrer.ip_address}) with User #${userId}`);
       } else {
-        const verifiedBonus = settingNum('verifiedRefBonus', 10000);
+        const verifiedBonus = settingNum('verifiedRefBonus', 1000);
         db.prepare('UPDATE users SET verified_ref_count = verified_ref_count + 1, balance = balance + ? WHERE id = ?').run(verifiedBonus, updatedUser.referrer_id);
         const refTxId = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
         db.prepare('INSERT INTO transactions (id, user_id, type, amount, description) VALUES (?, ?, ?, ?, ?)')
