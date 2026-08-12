@@ -472,7 +472,7 @@ class DbWrapper {
             user_id: Number(params[1]),
             step: params[2] === 2 ? 2 : 1,
             ad_token: params[2] === 2 ? params[3] : params[2],
-            reward_amount: 1200,
+            reward_amount: Number(params[3]) || 1200,
             created_at: new Date().toISOString(),
             claimed_at: null
           };

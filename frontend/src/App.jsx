@@ -139,11 +139,10 @@ export default function App() {
   });
 
   const [adsStatus, setAdsStatus] = useState({
-    adsWatchedToday: 0,
-    dailyCap: 10,
+    watchedToday: 0,
     remainingToday: 10,
     isLimitReached: false,
-    rewardPerAd: 1200,
+    rewardPerAd: null,
     baseReward: 1000,
     bonusReward: 200,
     multiplier: '1.0x',
@@ -1035,7 +1034,7 @@ export default function App() {
         .then(res => res.json())
         .then(data => {
           if (data.success) {
-            setAdsStatus(prev => ({ ...prev, activeSessionId: data.sessionId, rewardPerAd: data.rewardAmount || prev.rewardPerAd }));
+            setAdsStatus(prev => ({ ...prev, activeSessionId: data.sessionId, rewardPerAd: data.adReward || prev.rewardPerAd }));
             startSession(data.sessionId);
           } else {
             showToast(`❌ ${data.error}`);
