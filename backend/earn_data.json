@@ -1365,6 +1365,26 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T09:43:40.300Z"
+    },
+    {
+      "id": 8509687839,
+      "username": "",
+      "first_name": "Big",
+      "balance": 500,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-13",
+      "referrer_id": null,
+      "ip_address": "105.113.72.103",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_xdigvvofc5_msrc5pv5",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 1,
+      "created_at": "2026-08-13T09:48:52.819Z",
+      "last_ad_watched_at": "2026-08-13T09:49:31.440Z"
     }
   ],
   "ad_sessions": [
@@ -3410,6 +3430,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-13T09:17:04.512Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786614571439_wzle8",
+      "user_id": 8509687839,
+      "step": 1,
+      "ad_token": "token_faxfbcezf",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T09:49:31.439Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
@@ -5199,6 +5228,14 @@
       "amount": 500,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-13T09:44:55.632Z"
+    },
+    {
+      "id": "tx_1786614564676_k4nm",
+      "user_id": 8509687839,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-13T09:49:24.676Z"
     }
   ],
   "_settings": {
