@@ -1486,7 +1486,7 @@
       "id": 6751227455,
       "username": "SahilRokhri1",
       "first_name": "Sahil Rokhri",
-      "balance": 500,
+      "balance": 3000,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-13",
@@ -5434,6 +5434,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786616633257_v5ww4)",
       "created_at": "2026-08-13T10:24:44.875Z"
+    },
+    {
+      "id": "tx_1786617003031_6i59",
+      "user_id": 6751227455,
+      "type": "admin_credit",
+      "amount": 2500,
+      "description": "Manual reward adjustment",
+      "created_at": "2026-08-13T10:30:03.031Z"
     }
   ],
   "_settings": {
