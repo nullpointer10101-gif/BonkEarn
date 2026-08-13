@@ -326,7 +326,18 @@ export default function App() {
 
     fetch(`${API_BASE}/ads/status`, { headers })
       .then(res => res.json())
-      .then(data => data.dailyCap && setAdsStatus(data))
+      .then(data => {
+        if (data && data.dailyCap) {
+          setAdsStatus(prev => ({
+            ...prev,
+            adsWatchedToday: data.adsWatchedToday,
+            adsWatchedTotal: data.adsWatchedTotal,
+            dailyCap: data.dailyCap,
+            currentStep: (prev.isWatching || prev.currentStep > data.currentStep) ? prev.currentStep : data.currentStep,
+            activeSessionId: (prev.isWatching || prev.currentStep > data.currentStep) ? prev.activeSessionId : data.activeSessionId
+          }));
+        }
+      })
       .catch(() => {});
 
     fetch(`${API_BASE}/tasks`, { headers })
@@ -357,7 +368,18 @@ export default function App() {
     if (activeToken) {
       fetch(`${API_BASE}/ads/status`, { headers: { Authorization: `Bearer ${activeToken}` } })
         .then(res => res.json())
-        .then(data => data && data.dailyCap && setAdsStatus(data))
+        .then(data => {
+          if (data && data.dailyCap) {
+            setAdsStatus(prev => ({
+              ...prev,
+              adsWatchedToday: data.adsWatchedToday,
+              adsWatchedTotal: data.adsWatchedTotal,
+              dailyCap: data.dailyCap,
+              currentStep: (prev.isWatching || prev.currentStep > data.currentStep) ? prev.currentStep : data.currentStep,
+              activeSessionId: (prev.isWatching || prev.currentStep > data.currentStep) ? prev.activeSessionId : data.activeSessionId
+            }));
+          }
+        })
         .catch(() => {});
     }
   };
