@@ -354,9 +354,9 @@
       "id": 8536783284,
       "username": "Endur1995",
       "first_name": "Endurance☣️Max's Farm 🐾",
-      "balance": 4100,
-      "ads_watched_total": 18,
-      "ads_watched_today": 3,
+      "balance": 4300,
+      "ads_watched_total": 19,
+      "ads_watched_today": 4,
       "ads_date": "2026-08-13",
       "referrer_id": 5908710070,
       "ip_address": "45.137.192.137",
@@ -368,7 +368,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-12T13:41:52.744Z",
-      "last_ad_watched_at": "2026-08-13T20:11:40.881Z"
+      "last_ad_watched_at": "2026-08-13T20:13:52.677Z"
     },
     {
       "id": 6627962056,
@@ -1759,7 +1759,7 @@
       "id": 6626250703,
       "username": "Vip_9955",
       "first_name": "Parsa🐾",
-      "balance": 0,
+      "balance": 500,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-13",
@@ -1771,7 +1771,7 @@
       "referral_count": 0,
       "verified_ref_count": 0,
       "withdrawal_unlocked": 0,
-      "onboarding_completed": 0,
+      "onboarding_completed": 1,
       "created_at": "2026-08-13T20:12:34.454Z"
     }
   ],
@@ -4299,11 +4299,11 @@
     {
       "id": "ad_1786651900878_apap5",
       "user_id": 8536783284,
-      "step": 1,
+      "step": 3,
       "ad_token": "token_4zlzigh6x",
       "reward_amount": 200,
       "created_at": "2026-08-13T20:11:40.878Z",
-      "claimed_at": null
+      "claimed_at": "2026-08-13T20:13:52.675Z"
     }
   ],
   "tasks": [],
@@ -6517,6 +6517,22 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786651843268_c761o)",
       "created_at": "2026-08-13T20:11:09.042Z"
+    },
+    {
+      "id": "tx_1786652032678_tj6n",
+      "user_id": 8536783284,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786651900878_apap5)",
+      "created_at": "2026-08-13T20:13:52.678Z"
+    },
+    {
+      "id": "tx_1786652062289_2o2u",
+      "user_id": 6626250703,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-13T20:14:22.289Z"
     }
   ],
   "_settings": {
