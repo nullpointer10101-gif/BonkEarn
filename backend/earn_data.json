@@ -1133,9 +1133,9 @@
       "id": 7918368029,
       "username": "WILBERT_007",
       "first_name": "WILBERT EcoForest🌿 $AXN HeroesLegends ARNI",
-      "balance": 500,
-      "ads_watched_total": 0,
-      "ads_watched_today": 0,
+      "balance": 700,
+      "ads_watched_total": 1,
+      "ads_watched_today": 1,
       "ads_date": "2026-08-13",
       "referrer_id": null,
       "ip_address": "112.211.125.50",
@@ -1147,7 +1147,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T04:24:08.360Z",
-      "last_ad_watched_at": "2026-08-13T04:30:03.049Z"
+      "last_ad_watched_at": "2026-08-13T04:32:19.379Z"
     }
   ],
   "ad_sessions": [
@@ -2437,6 +2437,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-13T04:30:03.047Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786595505694_u3x8h",
+      "user_id": 7918368029,
+      "step": 3,
+      "ad_token": "token_u9ml79jlh",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T04:31:45.694Z",
+      "claimed_at": "2026-08-13T04:32:19.378Z"
     }
   ],
   "tasks": [],
@@ -3834,6 +3843,14 @@
       "amount": 500,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-13T04:29:13.654Z"
+    },
+    {
+      "id": "tx_1786595539381_w2d3",
+      "user_id": 7918368029,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786595505694_u3x8h)",
+      "created_at": "2026-08-13T04:32:19.381Z"
     }
   ],
   "_settings": {
