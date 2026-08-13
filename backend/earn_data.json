@@ -1133,9 +1133,9 @@
       "id": 7918368029,
       "username": "WILBERT_007",
       "first_name": "WILBERT EcoForest🌿 $AXN HeroesLegends ARNI",
-      "balance": 1500,
-      "ads_watched_total": 5,
-      "ads_watched_today": 5,
+      "balance": 1900,
+      "ads_watched_total": 7,
+      "ads_watched_today": 7,
       "ads_date": "2026-08-13",
       "referrer_id": null,
       "ip_address": "122.2.183.58",
@@ -1147,7 +1147,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T04:24:08.360Z",
-      "last_ad_watched_at": "2026-08-13T05:27:39.486Z"
+      "last_ad_watched_at": "2026-08-13T05:32:35.970Z"
     }
   ],
   "ad_sessions": [
@@ -2599,6 +2599,69 @@
       "reward_amount": 200,
       "created_at": "2026-08-13T05:27:09.889Z",
       "claimed_at": "2026-08-13T05:27:39.484Z"
+    },
+    {
+      "id": "ad_1786598917914_u28oz",
+      "user_id": 7918368029,
+      "step": 1,
+      "ad_token": "token_76ladbpd4",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T05:28:37.914Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786598953945_bf0lx",
+      "user_id": 7918368029,
+      "step": 1,
+      "ad_token": "token_3x15ugow7",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T05:29:13.945Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786598996743_t4wzz",
+      "user_id": 7918368029,
+      "step": 1,
+      "ad_token": "token_b7hshjrsn",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T05:29:56.743Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786599024693_5304t",
+      "user_id": 7918368029,
+      "step": 3,
+      "ad_token": "token_np5u8s17q",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T05:30:24.693Z",
+      "claimed_at": "2026-08-13T05:30:48.584Z"
+    },
+    {
+      "id": "ad_1786599076925_zx8ck",
+      "user_id": 7918368029,
+      "step": 1,
+      "ad_token": "token_os6x59fe7",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T05:31:16.925Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786599097117_7ulkk",
+      "user_id": 7918368029,
+      "step": 3,
+      "ad_token": "token_8lvmpcvbg",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T05:31:37.117Z",
+      "claimed_at": "2026-08-13T05:31:55.673Z"
+    },
+    {
+      "id": "ad_1786599155968_e0lvm",
+      "user_id": 7918368029,
+      "step": 1,
+      "ad_token": "token_qiyrr6fx1",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T05:32:35.968Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
@@ -4036,6 +4099,22 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786598829889_l61fm)",
       "created_at": "2026-08-13T05:27:39.488Z"
+    },
+    {
+      "id": "tx_1786599048586_akjr",
+      "user_id": 7918368029,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786599024693_5304t)",
+      "created_at": "2026-08-13T05:30:48.586Z"
+    },
+    {
+      "id": "tx_1786599115676_huer",
+      "user_id": 7918368029,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786599097117_7ulkk)",
+      "created_at": "2026-08-13T05:31:55.676Z"
     }
   ],
   "_settings": {
