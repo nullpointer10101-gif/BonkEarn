@@ -1075,13 +1075,13 @@
       "id": 8352030560,
       "username": "AGUIKE01",
       "first_name": "21",
-      "balance": 700,
-      "ads_watched_total": 1,
+      "balance": 900,
+      "ads_watched_total": 2,
       "ads_watched_today": 1,
-      "ads_date": "2026-08-12",
+      "ads_date": "2026-08-13",
       "referrer_id": null,
-      "ip_address": "105.113.78.46",
-      "device_id": "809a03067f141c3f716d0ca6578a1193",
+      "ip_address": "105.113.81.46",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
       "persistent_token": "dev_uuid_a0w96p89xj_msqla5kc",
       "flagged": 0,
       "referral_count": 0,
@@ -1089,7 +1089,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-12T21:16:24.339Z",
-      "last_ad_watched_at": "2026-08-12T21:17:54.871Z"
+      "last_ad_watched_at": "2026-08-13T06:16:08.718Z"
     },
     {
       "id": 8787213289,
@@ -2851,6 +2851,24 @@
       "reward_amount": 200,
       "created_at": "2026-08-13T06:13:55.411Z",
       "claimed_at": "2026-08-13T06:14:14.303Z"
+    },
+    {
+      "id": "ad_1786601723264_5dvf7",
+      "user_id": 8352030560,
+      "step": 1,
+      "ad_token": "token_drcsbdc5l",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T06:15:23.264Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786601745210_5l5j3",
+      "user_id": 8352030560,
+      "step": 3,
+      "ad_token": "token_vd3jjzdwu",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T06:15:45.210Z",
+      "claimed_at": "2026-08-13T06:16:08.717Z"
     }
   ],
   "tasks": [],
@@ -4368,6 +4386,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786601635411_gu7sp)",
       "created_at": "2026-08-13T06:14:14.306Z"
+    },
+    {
+      "id": "tx_1786601768719_bke3",
+      "user_id": 8352030560,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786601745210_5l5j3)",
+      "created_at": "2026-08-13T06:16:08.719Z"
     }
   ],
   "_settings": {
