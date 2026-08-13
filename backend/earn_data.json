@@ -1622,9 +1622,9 @@
       "id": 7126878751,
       "username": "SHH2048",
       "first_name": "🗝️🥠Solomon",
-      "balance": 500,
-      "ads_watched_total": 0,
-      "ads_watched_today": 0,
+      "balance": 700,
+      "ads_watched_total": 1,
+      "ads_watched_today": 1,
       "ads_date": "2026-08-13",
       "referrer_id": null,
       "ip_address": "196.191.61.82",
@@ -1636,15 +1636,15 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T12:54:40.227Z",
-      "last_ad_watched_at": "2026-08-13T12:58:24.228Z"
+      "last_ad_watched_at": "2026-08-13T13:09:24.730Z"
     },
     {
       "id": 6806084034,
       "username": "Mmaspekere",
       "first_name": "Abistos",
-      "balance": 900,
-      "ads_watched_total": 2,
-      "ads_watched_today": 2,
+      "balance": 1100,
+      "ads_watched_total": 3,
+      "ads_watched_today": 3,
       "ads_date": "2026-08-13",
       "referrer_id": null,
       "ip_address": "129.205.225.30",
@@ -1656,7 +1656,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T13:03:46.354Z",
-      "last_ad_watched_at": "2026-08-13T13:07:24.851Z"
+      "last_ad_watched_at": "2026-08-13T13:09:26.220Z"
     }
   ],
   "ad_sessions": [
@@ -3918,6 +3918,24 @@
       "reward_amount": 200,
       "created_at": "2026-08-13T13:06:54.849Z",
       "claimed_at": "2026-08-13T13:07:24.850Z"
+    },
+    {
+      "id": "ad_1786626529182_0b7uf",
+      "user_id": 7126878751,
+      "step": 3,
+      "ad_token": "token_qtxwodxij",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T13:08:49.182Z",
+      "claimed_at": "2026-08-13T13:09:24.728Z"
+    },
+    {
+      "id": "ad_1786626538186_8rhl9",
+      "user_id": 6806084034,
+      "step": 3,
+      "ad_token": "token_vt2yocmya",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T13:08:58.186Z",
+      "claimed_at": "2026-08-13T13:09:26.219Z"
     }
   ],
   "tasks": [],
@@ -5915,6 +5933,22 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786626414849_brgq0)",
       "created_at": "2026-08-13T13:07:24.854Z"
+    },
+    {
+      "id": "tx_1786626564731_yzie",
+      "user_id": 7126878751,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786626529182_0b7uf)",
+      "created_at": "2026-08-13T13:09:24.731Z"
+    },
+    {
+      "id": "tx_1786626566222_m0qi",
+      "user_id": 6806084034,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786626538186_8rhl9)",
+      "created_at": "2026-08-13T13:09:26.222Z"
     }
   ],
   "_settings": {
