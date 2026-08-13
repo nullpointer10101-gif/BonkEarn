@@ -1286,6 +1286,25 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 0,
       "created_at": "2026-08-13T08:36:58.757Z"
+    },
+    {
+      "id": 7460092773,
+      "username": "",
+      "first_name": "Sani",
+      "balance": 0,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-13",
+      "referrer_id": null,
+      "ip_address": "105.119.7.171",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_9pz90zt84y_msra2i22",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 0,
+      "created_at": "2026-08-13T08:50:17.832Z"
     }
   ],
   "ad_sessions": [
