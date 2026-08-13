@@ -1754,6 +1754,25 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T19:47:13.264Z"
+    },
+    {
+      "id": 6626250703,
+      "username": "Vip_9955",
+      "first_name": "Parsa🐾",
+      "balance": 0,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-13",
+      "referrer_id": null,
+      "ip_address": "185.8.106.122",
+      "device_id": "37615f9f105cf20bb0857ff3f9c990ea",
+      "persistent_token": "dev_uuid_u6759in1gl_msryfxmc",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 0,
+      "created_at": "2026-08-13T20:12:34.454Z"
     }
   ],
   "ad_sessions": [
