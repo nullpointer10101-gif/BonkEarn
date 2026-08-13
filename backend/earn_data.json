@@ -1500,6 +1500,26 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T10:22:59.744Z"
+    },
+    {
+      "id": 6513696097,
+      "username": "Muluselam",
+      "first_name": "Solomon 🐈",
+      "balance": 500,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-13",
+      "referrer_id": null,
+      "ip_address": "196.191.61.82",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_4otpcjsbfs_msreelmk",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 1,
+      "created_at": "2026-08-13T10:51:42.530Z",
+      "last_ad_watched_at": "2026-08-13T10:52:53.492Z"
     }
   ],
   "ad_sessions": [
@@ -3581,6 +3601,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-13T10:25:09.095Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786618373491_1cabm",
+      "user_id": 6513696097,
+      "step": 1,
+      "ad_token": "token_bj1bai3sk",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T10:52:53.491Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
@@ -5442,6 +5471,14 @@
       "amount": 2500,
       "description": "Manual reward adjustment",
       "created_at": "2026-08-13T10:30:03.031Z"
+    },
+    {
+      "id": "tx_1786618342900_9hkd",
+      "user_id": 6513696097,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-13T10:52:22.900Z"
     }
   ],
   "_settings": {
