@@ -1133,9 +1133,9 @@
       "id": 7918368029,
       "username": "WILBERT_007",
       "first_name": "WILBERT EcoForest🌿 $AXN HeroesLegends ARNI",
-      "balance": 900,
-      "ads_watched_total": 2,
-      "ads_watched_today": 2,
+      "balance": 1300,
+      "ads_watched_total": 4,
+      "ads_watched_today": 4,
       "ads_date": "2026-08-13",
       "referrer_id": null,
       "ip_address": "112.211.125.50",
@@ -1147,7 +1147,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T04:24:08.360Z",
-      "last_ad_watched_at": "2026-08-13T04:57:42.451Z"
+      "last_ad_watched_at": "2026-08-13T04:59:56.218Z"
     }
   ],
   "ad_sessions": [
@@ -2545,6 +2545,24 @@
       "reward_amount": 200,
       "created_at": "2026-08-13T04:57:42.450Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786597112265_p7y2g",
+      "user_id": 7918368029,
+      "step": 3,
+      "ad_token": "token_22vaobcbs",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T04:58:32.265Z",
+      "claimed_at": "2026-08-13T04:59:02.625Z"
+    },
+    {
+      "id": "ad_1786597164995_89ybq",
+      "user_id": 7918368029,
+      "step": 3,
+      "ad_token": "token_6i53wcip1",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T04:59:24.995Z",
+      "claimed_at": "2026-08-13T04:59:56.217Z"
     }
   ],
   "tasks": [],
@@ -3958,6 +3976,22 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786596126247_73cg5)",
       "created_at": "2026-08-13T04:42:46.146Z"
+    },
+    {
+      "id": "tx_1786597142628_6npo",
+      "user_id": 7918368029,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786597112265_p7y2g)",
+      "created_at": "2026-08-13T04:59:02.628Z"
+    },
+    {
+      "id": "tx_1786597196219_zmo1",
+      "user_id": 7918368029,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786597164995_89ybq)",
+      "created_at": "2026-08-13T04:59:56.219Z"
     }
   ],
   "_settings": {
