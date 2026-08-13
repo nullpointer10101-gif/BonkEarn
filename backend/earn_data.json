@@ -1147,7 +1147,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T04:24:08.360Z",
-      "last_ad_watched_at": "2026-08-13T04:32:19.379Z"
+      "last_ad_watched_at": "2026-08-13T04:33:54.532Z"
     }
   ],
   "ad_sessions": [
@@ -2446,6 +2446,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-13T04:31:45.694Z",
       "claimed_at": "2026-08-13T04:32:19.378Z"
+    },
+    {
+      "id": "ad_1786595634531_6t2l2",
+      "user_id": 7918368029,
+      "step": 1,
+      "ad_token": "token_e8prmzp67",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T04:33:54.531Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
