@@ -1385,6 +1385,25 @@
       "onboarding_completed": 1,
       "created_at": "2026-08-13T09:48:52.819Z",
       "last_ad_watched_at": "2026-08-13T09:49:31.440Z"
+    },
+    {
+      "id": 5235072549,
+      "username": "Toweremoji",
+      "first_name": "@bounty_play🚀",
+      "balance": 0,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-13",
+      "referrer_id": null,
+      "ip_address": "5.59.54.5",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_wogdgr5947_msrc98zc",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 0,
+      "created_at": "2026-08-13T09:51:31.169Z"
     }
   ],
   "ad_sessions": [
