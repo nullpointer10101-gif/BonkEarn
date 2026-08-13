@@ -1194,9 +1194,9 @@
       "id": 6408889802,
       "username": "PetoTibor",
       "first_name": "Tibor",
-      "balance": 1100,
-      "ads_watched_total": 3,
-      "ads_watched_today": 3,
+      "balance": 2100,
+      "ads_watched_total": 8,
+      "ads_watched_today": 8,
       "ads_date": "2026-08-13",
       "referrer_id": null,
       "ip_address": "151.0.81.119",
@@ -1208,7 +1208,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T07:50:34.760Z",
-      "last_ad_watched_at": "2026-08-13T08:47:48.935Z"
+      "last_ad_watched_at": "2026-08-13T18:30:09.422Z"
     },
     {
       "id": 7006601829,
@@ -4086,6 +4086,51 @@
       "reward_amount": 200,
       "created_at": "2026-08-13T17:30:24.148Z",
       "claimed_at": "2026-08-13T17:30:45.229Z"
+    },
+    {
+      "id": "ad_1786645572534_ae3y0",
+      "user_id": 6408889802,
+      "step": 3,
+      "ad_token": "token_ehrufg81f",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T18:26:12.534Z",
+      "claimed_at": "2026-08-13T18:26:34.820Z"
+    },
+    {
+      "id": "ad_1786645618700_t2jby",
+      "user_id": 6408889802,
+      "step": 3,
+      "ad_token": "token_yqjkxid2e",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T18:26:58.700Z",
+      "claimed_at": "2026-08-13T18:27:20.416Z"
+    },
+    {
+      "id": "ad_1786645672582_7n5k7",
+      "user_id": 6408889802,
+      "step": 3,
+      "ad_token": "token_fkxf8scgo",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T18:27:52.582Z",
+      "claimed_at": "2026-08-13T18:28:16.446Z"
+    },
+    {
+      "id": "ad_1786645720447_joo29",
+      "user_id": 6408889802,
+      "step": 3,
+      "ad_token": "token_1ugsvldvj",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T18:28:40.447Z",
+      "claimed_at": "2026-08-13T18:29:06.631Z"
+    },
+    {
+      "id": "ad_1786645784196_ueg3y",
+      "user_id": 6408889802,
+      "step": 3,
+      "ad_token": "token_psoe7csqp",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T18:29:44.196Z",
+      "claimed_at": "2026-08-13T18:30:09.420Z"
     }
   ],
   "tasks": [],
@@ -6171,6 +6216,46 @@
       "amount": 500,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-13T18:01:14.995Z"
+    },
+    {
+      "id": "tx_1786645594823_un7m",
+      "user_id": 6408889802,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786645572534_ae3y0)",
+      "created_at": "2026-08-13T18:26:34.823Z"
+    },
+    {
+      "id": "tx_1786645640421_r4xs",
+      "user_id": 6408889802,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786645618700_t2jby)",
+      "created_at": "2026-08-13T18:27:20.421Z"
+    },
+    {
+      "id": "tx_1786645696449_45xf",
+      "user_id": 6408889802,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786645672582_7n5k7)",
+      "created_at": "2026-08-13T18:28:16.449Z"
+    },
+    {
+      "id": "tx_1786645746634_ekkb",
+      "user_id": 6408889802,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786645720447_joo29)",
+      "created_at": "2026-08-13T18:29:06.634Z"
+    },
+    {
+      "id": "tx_1786645809425_crnn",
+      "user_id": 6408889802,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786645784196_ueg3y)",
+      "created_at": "2026-08-13T18:30:09.425Z"
     }
   ],
   "_settings": {
