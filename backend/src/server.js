@@ -274,7 +274,7 @@ function verifyChannelMember(channelUsername, userId) {
       return resolve({ verified: false, error: 'Channel not configured by admin.' });
     }
     botInstance.telegram
-      .getChatMember('@' + username, userId)
+      .getChatMember('@' + username, Number(userId))
       .then((member) => {
         const status = member && member.status;
         const ok = status === 'creator' || status === 'administrator' || status === 'member';
