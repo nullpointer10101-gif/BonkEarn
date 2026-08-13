@@ -1133,9 +1133,9 @@
       "id": 7918368029,
       "username": "WILBERT_007",
       "first_name": "WILBERT EcoForest🌿 $AXN HeroesLegends ARNI",
-      "balance": 2700,
-      "ads_watched_total": 11,
-      "ads_watched_today": 11,
+      "balance": 2900,
+      "ads_watched_total": 12,
+      "ads_watched_today": 12,
       "ads_date": "2026-08-13",
       "referrer_id": null,
       "ip_address": "122.2.183.58",
@@ -1147,7 +1147,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T04:24:08.360Z",
-      "last_ad_watched_at": "2026-08-13T05:57:47.795Z"
+      "last_ad_watched_at": "2026-08-13T06:01:00.705Z"
     }
   ],
   "ad_sessions": [
@@ -2752,6 +2752,51 @@
       "reward_amount": 200,
       "created_at": "2026-08-13T05:57:19.626Z",
       "claimed_at": "2026-08-13T05:57:47.794Z"
+    },
+    {
+      "id": "ad_1786600716102_pwrqq",
+      "user_id": 7918368029,
+      "step": 3,
+      "ad_token": "token_n4dre71dh",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T05:58:36.102Z",
+      "claimed_at": "2026-08-13T05:59:08.283Z"
+    },
+    {
+      "id": "ad_1786600772240_bqxxo",
+      "user_id": 7918368029,
+      "step": 1,
+      "ad_token": "token_nyflpu3m8",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T05:59:32.240Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786600810533_77rgz",
+      "user_id": 7918368029,
+      "step": 1,
+      "ad_token": "token_bwrfxnfna",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T06:00:10.533Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786600839172_mvcf6",
+      "user_id": 7918368029,
+      "step": 1,
+      "ad_token": "token_jfucninfa",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T06:00:39.172Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786600860704_8vpmj",
+      "user_id": 7918368029,
+      "step": 1,
+      "ad_token": "token_a2tfbvrv3",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T06:01:00.704Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
@@ -4237,6 +4282,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786600639626_jjjx3)",
       "created_at": "2026-08-13T05:57:47.798Z"
+    },
+    {
+      "id": "tx_1786600748286_ngny",
+      "user_id": 7918368029,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786600716102_pwrqq)",
+      "created_at": "2026-08-13T05:59:08.286Z"
     }
   ],
   "_settings": {
