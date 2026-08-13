@@ -1133,9 +1133,9 @@
       "id": 7918368029,
       "username": "WILBERT_007",
       "first_name": "WILBERT EcoForest🌿 $AXN HeroesLegends ARNI",
-      "balance": 2100,
-      "ads_watched_total": 8,
-      "ads_watched_today": 8,
+      "balance": 2300,
+      "ads_watched_total": 9,
+      "ads_watched_today": 9,
       "ads_date": "2026-08-13",
       "referrer_id": null,
       "ip_address": "122.2.183.58",
@@ -1147,7 +1147,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T04:24:08.360Z",
-      "last_ad_watched_at": "2026-08-13T05:38:07.538Z"
+      "last_ad_watched_at": "2026-08-13T05:39:38.821Z"
     }
   ],
   "ad_sessions": [
@@ -2698,6 +2698,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-13T05:38:07.537Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786599558623_y54y2",
+      "user_id": 7918368029,
+      "step": 3,
+      "ad_token": "token_g66mrq3wh",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T05:39:18.623Z",
+      "claimed_at": "2026-08-13T05:39:38.819Z"
     }
   ],
   "tasks": [],
@@ -4159,6 +4168,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786599281727_a8xbh)",
       "created_at": "2026-08-13T05:35:01.146Z"
+    },
+    {
+      "id": "tx_1786599578823_aw0a",
+      "user_id": 7918368029,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786599558623_y54y2)",
+      "created_at": "2026-08-13T05:39:38.823Z"
     }
   ],
   "_settings": {
