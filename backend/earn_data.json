@@ -1291,9 +1291,9 @@
       "id": 7460092773,
       "username": "",
       "first_name": "Sani",
-      "balance": 500,
-      "ads_watched_total": 0,
-      "ads_watched_today": 0,
+      "balance": 1300,
+      "ads_watched_total": 4,
+      "ads_watched_today": 4,
       "ads_date": "2026-08-13",
       "referrer_id": null,
       "ip_address": "105.119.7.171",
@@ -1305,7 +1305,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T08:50:17.832Z",
-      "last_ad_watched_at": "2026-08-13T08:53:59.176Z"
+      "last_ad_watched_at": "2026-08-13T09:00:42.790Z"
     }
   ],
   "ad_sessions": [
@@ -3135,6 +3135,69 @@
       "reward_amount": 200,
       "created_at": "2026-08-13T08:53:59.175Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786611341023_7xjpf",
+      "user_id": 7460092773,
+      "step": 1,
+      "ad_token": "token_cop32x4rt",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T08:55:41.023Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786611394350_p987e",
+      "user_id": 7460092773,
+      "step": 3,
+      "ad_token": "token_c61kner99",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T08:56:34.350Z",
+      "claimed_at": "2026-08-13T08:57:05.111Z"
+    },
+    {
+      "id": "ad_1786611447592_y0o0a",
+      "user_id": 7460092773,
+      "step": 3,
+      "ad_token": "token_o1w2qizbg",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T08:57:27.592Z",
+      "claimed_at": "2026-08-13T08:57:57.749Z"
+    },
+    {
+      "id": "ad_1786611501610_9bavb",
+      "user_id": 7460092773,
+      "step": 3,
+      "ad_token": "token_gzz1owpnl",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T08:58:21.610Z",
+      "claimed_at": "2026-08-13T08:58:47.751Z"
+    },
+    {
+      "id": "ad_1786611549670_1pbhh",
+      "user_id": 7460092773,
+      "step": 1,
+      "ad_token": "token_kk5an1mxd",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T08:59:09.670Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786611593187_k6own",
+      "user_id": 7460092773,
+      "step": 1,
+      "ad_token": "token_smhfnljqx",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T08:59:53.187Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786611613759_2w629",
+      "user_id": 7460092773,
+      "step": 3,
+      "ad_token": "token_hwokwwjzy",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T09:00:13.759Z",
+      "claimed_at": "2026-08-13T09:00:42.788Z"
     }
   ],
   "tasks": [],
@@ -4780,6 +4843,38 @@
       "amount": 500,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-13T08:51:10.719Z"
+    },
+    {
+      "id": "tx_1786611425113_epec",
+      "user_id": 7460092773,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786611394350_p987e)",
+      "created_at": "2026-08-13T08:57:05.113Z"
+    },
+    {
+      "id": "tx_1786611477753_z1wt",
+      "user_id": 7460092773,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786611447592_y0o0a)",
+      "created_at": "2026-08-13T08:57:57.753Z"
+    },
+    {
+      "id": "tx_1786611527753_583f",
+      "user_id": 7460092773,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786611501610_9bavb)",
+      "created_at": "2026-08-13T08:58:47.753Z"
+    },
+    {
+      "id": "tx_1786611642791_5hlb",
+      "user_id": 7460092773,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786611613759_2w629)",
+      "created_at": "2026-08-13T09:00:42.791Z"
     }
   ],
   "_settings": {
