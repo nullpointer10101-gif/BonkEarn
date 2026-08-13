@@ -1188,6 +1188,25 @@
       "onboarding_completed": 1,
       "created_at": "2026-08-13T07:07:14.986Z",
       "last_ad_watched_at": "2026-08-13T07:07:58.670Z"
+    },
+    {
+      "id": 6408889802,
+      "username": "PetoTibor",
+      "first_name": "Tibor",
+      "balance": 500,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-13",
+      "referrer_id": null,
+      "ip_address": "151.0.81.119",
+      "device_id": "4e42b3084c4468ec77ebeb978c6bf951",
+      "persistent_token": "dev_uuid_fgr3aj89r0_msr7xr2w",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 1,
+      "created_at": "2026-08-13T07:50:34.760Z"
     }
   ],
   "ad_sessions": [
@@ -4476,6 +4495,14 @@
       "amount": 500,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-13T07:07:52.424Z"
+    },
+    {
+      "id": "tx_1786607459012_rwv1",
+      "user_id": 6408889802,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-13T07:50:59.012Z"
     }
   ],
   "_settings": {
