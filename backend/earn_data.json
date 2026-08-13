@@ -1291,9 +1291,9 @@
       "id": 7460092773,
       "username": "",
       "first_name": "Sani",
-      "balance": 1300,
-      "ads_watched_total": 4,
-      "ads_watched_today": 4,
+      "balance": 2100,
+      "ads_watched_total": 8,
+      "ads_watched_today": 8,
       "ads_date": "2026-08-13",
       "referrer_id": null,
       "ip_address": "105.119.7.171",
@@ -1305,7 +1305,27 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T08:50:17.832Z",
-      "last_ad_watched_at": "2026-08-13T09:00:42.790Z"
+      "last_ad_watched_at": "2026-08-13T09:05:16.276Z"
+    },
+    {
+      "id": 5420878998,
+      "username": "SanekQ21st",
+      "first_name": "Александр ARNI EcoForest🌿 🍀 Anthill ⚔️ Gift Kombat Tower🏰 🐈",
+      "balance": 500,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-13",
+      "referrer_id": null,
+      "ip_address": "88.155.73.121",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_8m4uk1htto_msrakds9",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 1,
+      "created_at": "2026-08-13T09:04:11.444Z",
+      "last_ad_watched_at": "2026-08-13T09:04:53.410Z"
     }
   ],
   "ad_sessions": [
@@ -3198,6 +3218,51 @@
       "reward_amount": 200,
       "created_at": "2026-08-13T09:00:13.759Z",
       "claimed_at": "2026-08-13T09:00:42.788Z"
+    },
+    {
+      "id": "ad_1786611704970_4pl3s",
+      "user_id": 7460092773,
+      "step": 3,
+      "ad_token": "token_4xj74uj2m",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T09:01:44.970Z",
+      "claimed_at": "2026-08-13T09:02:15.348Z"
+    },
+    {
+      "id": "ad_1786611760303_88kgl",
+      "user_id": 7460092773,
+      "step": 3,
+      "ad_token": "token_b31yw4byh",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T09:02:40.303Z",
+      "claimed_at": "2026-08-13T09:03:05.327Z"
+    },
+    {
+      "id": "ad_1786611810050_lo61j",
+      "user_id": 7460092773,
+      "step": 3,
+      "ad_token": "token_rcdkx1dmi",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T09:03:30.050Z",
+      "claimed_at": "2026-08-13T09:03:56.049Z"
+    },
+    {
+      "id": "ad_1786611884893_rhhj3",
+      "user_id": 7460092773,
+      "step": 3,
+      "ad_token": "token_q8k2r7h67",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T09:04:44.893Z",
+      "claimed_at": "2026-08-13T09:05:16.275Z"
+    },
+    {
+      "id": "ad_1786611893408_qc0s6",
+      "user_id": 5420878998,
+      "step": 1,
+      "ad_token": "token_xx1ur05gh",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T09:04:53.408Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
@@ -4875,6 +4940,46 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786611613759_2w629)",
       "created_at": "2026-08-13T09:00:42.791Z"
+    },
+    {
+      "id": "tx_1786611735352_m5n8",
+      "user_id": 7460092773,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786611704970_4pl3s)",
+      "created_at": "2026-08-13T09:02:15.352Z"
+    },
+    {
+      "id": "tx_1786611785331_gzwf",
+      "user_id": 7460092773,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786611760303_88kgl)",
+      "created_at": "2026-08-13T09:03:05.331Z"
+    },
+    {
+      "id": "tx_1786611836052_w9v5",
+      "user_id": 7460092773,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786611810050_lo61j)",
+      "created_at": "2026-08-13T09:03:56.052Z"
+    },
+    {
+      "id": "tx_1786611890359_4nmf",
+      "user_id": 5420878998,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-13T09:04:50.359Z"
+    },
+    {
+      "id": "tx_1786611916278_4fkr",
+      "user_id": 7460092773,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786611884893_rhhj3)",
+      "created_at": "2026-08-13T09:05:16.278Z"
     }
   ],
   "_settings": {
