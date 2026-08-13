@@ -1409,7 +1409,7 @@
       "id": 7514886719,
       "username": "Tonysmith2812",
       "first_name": "Tony",
-      "balance": 0,
+      "balance": 500,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-13",
@@ -1421,7 +1421,7 @@
       "referral_count": 0,
       "verified_ref_count": 0,
       "withdrawal_unlocked": 0,
-      "onboarding_completed": 0,
+      "onboarding_completed": 1,
       "created_at": "2026-08-13T10:07:18.952Z"
     }
   ],
@@ -5274,6 +5274,14 @@
       "amount": 500,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-13T09:49:24.676Z"
+    },
+    {
+      "id": "tx_1786615747422_skwg",
+      "user_id": 7514886719,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-13T10:09:07.422Z"
     }
   ],
   "_settings": {
