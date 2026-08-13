@@ -1461,6 +1461,45 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T10:13:10.096Z"
+    },
+    {
+      "id": 8853056474,
+      "username": "Voltage079",
+      "first_name": "VOL⚡ AGE @monsterland_bot",
+      "balance": 500,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-13",
+      "referrer_id": null,
+      "ip_address": "102.90.99.230",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_6z3lpagkxb_msrdbhn6",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 1,
+      "created_at": "2026-08-13T10:21:41.309Z",
+      "last_ad_watched_at": "2026-08-13T10:23:53.259Z"
+    },
+    {
+      "id": 6751227455,
+      "username": "SahilRokhri1",
+      "first_name": "Sahil Rokhri",
+      "balance": 500,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-13",
+      "referrer_id": null,
+      "ip_address": "144.217.243.242",
+      "device_id": "87ffb92e7a320acbb084a2f6b3a3d66f",
+      "persistent_token": "dev_uuid_nz484d3if4_msrdde4d",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 1,
+      "created_at": "2026-08-13T10:22:59.744Z"
     }
   ],
   "ad_sessions": [
@@ -3515,6 +3554,24 @@
       "reward_amount": 200,
       "created_at": "2026-08-13T09:49:31.439Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786616610276_hm0ss",
+      "user_id": 8853056474,
+      "step": 1,
+      "ad_token": "token_z8ejc69bm",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T10:23:30.276Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786616633257_v5ww4",
+      "user_id": 8853056474,
+      "step": 1,
+      "ad_token": "token_xqwn1nev6",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T10:23:53.257Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
@@ -5344,6 +5401,22 @@
       "amount": 2500,
       "description": "Manual reward adjustment",
       "created_at": "2026-08-13T10:15:52.217Z"
+    },
+    {
+      "id": "tx_1786616535714_wcvc",
+      "user_id": 8853056474,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-13T10:22:15.714Z"
+    },
+    {
+      "id": "tx_1786616621384_utk0",
+      "user_id": 6751227455,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-13T10:23:41.384Z"
     }
   ],
   "_settings": {
