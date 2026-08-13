@@ -202,10 +202,10 @@
       "first_name": "Oluwaranti",
       "balance": 900,
       "ads_watched_total": 2,
-      "ads_watched_today": 2,
-      "ads_date": "2026-08-12",
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-13",
       "referrer_id": 5908710070,
-      "ip_address": "197.210.71.21",
+      "ip_address": "102.90.100.54",
       "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
       "persistent_token": "dev_uuid_x690e7r4w6_mspzmj61",
       "flagged": 0,
@@ -214,7 +214,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-12T11:10:09.080Z",
-      "last_ad_watched_at": "2026-08-12T20:09:23.435Z"
+      "last_ad_watched_at": "2026-08-13T03:51:14.271Z"
     },
     {
       "id": 6991367066,
@@ -2398,6 +2398,15 @@
       "ad_token": "token_d4e4uhioq",
       "reward_amount": 200,
       "created_at": "2026-08-13T02:46:59.426Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786593074268_w0g9d",
+      "user_id": 8533040659,
+      "step": 1,
+      "ad_token": "token_824fpw8cc",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T03:51:14.268Z",
       "claimed_at": null
     }
   ],
