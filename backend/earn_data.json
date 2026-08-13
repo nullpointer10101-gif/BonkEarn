@@ -1213,12 +1213,12 @@
       "id": 7006601829,
       "username": "daweesutechofficial",
       "first_name": "Yusuf hussaini",
-      "balance": 900,
-      "ads_watched_total": 2,
-      "ads_watched_today": 2,
+      "balance": 1100,
+      "ads_watched_total": 3,
+      "ads_watched_today": 3,
       "ads_date": "2026-08-13",
       "referrer_id": null,
-      "ip_address": "102.90.101.146",
+      "ip_address": "102.92.24.168",
       "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
       "persistent_token": "dev_uuid_dhg9k4xs19_msr8u3vw",
       "flagged": 0,
@@ -1227,7 +1227,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T08:15:48.790Z",
-      "last_ad_watched_at": "2026-08-13T08:18:48.239Z"
+      "last_ad_watched_at": "2026-08-13T08:39:45.844Z"
     },
     {
       "id": 8060766634,
@@ -3070,6 +3070,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-13T08:34:58.168Z",
       "claimed_at": "2026-08-13T08:35:29.206Z"
+    },
+    {
+      "id": "ad_1786610362586_yuak7",
+      "user_id": 7006601829,
+      "step": 3,
+      "ad_token": "token_ar9q7v2dd",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T08:39:22.586Z",
+      "claimed_at": "2026-08-13T08:39:45.843Z"
     }
   ],
   "tasks": [],
@@ -4683,6 +4692,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786610098168_ba78p)",
       "created_at": "2026-08-13T08:35:29.210Z"
+    },
+    {
+      "id": "tx_1786610385847_ezpl",
+      "user_id": 7006601829,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786610362586_yuak7)",
+      "created_at": "2026-08-13T08:39:45.847Z"
     }
   ],
   "_settings": {
