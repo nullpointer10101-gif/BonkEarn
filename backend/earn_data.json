@@ -69,7 +69,7 @@
       "ads_date": "2026-08-13",
       "referrer_id": null,
       "ip_address": "144.31.44.88",
-      "device_id": "hw_TW96aWxsYS81LjAgKFdpbmRvd3MgTlQg",
+      "device_id": "4ceebeccdb8ec61618cb40e6c7bf9f3a",
       "persistent_token": "dev_uuid_cqlbcchss7_msjexln0",
       "flagged": 0,
       "referral_count": 0,
@@ -1447,7 +1447,7 @@
       "id": 1117992896,
       "username": "ArslanAk",
       "first_name": "Arslan 🆙 UXUY",
-      "balance": 500,
+      "balance": 3000,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-13",
@@ -5336,6 +5336,14 @@
       "amount": 2500,
       "description": "Manual reward adjustment",
       "created_at": "2026-08-13T10:14:11.304Z"
+    },
+    {
+      "id": "tx_1786616152217_x99d",
+      "user_id": 1117992896,
+      "type": "admin_credit",
+      "amount": 2500,
+      "description": "Manual reward adjustment",
+      "created_at": "2026-08-13T10:15:52.217Z"
     }
   ],
   "_settings": {
