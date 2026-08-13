@@ -1291,7 +1291,7 @@
       "id": 7460092773,
       "username": "",
       "first_name": "Sani",
-      "balance": 0,
+      "balance": 500,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-13",
@@ -1303,8 +1303,9 @@
       "referral_count": 0,
       "verified_ref_count": 0,
       "withdrawal_unlocked": 0,
-      "onboarding_completed": 0,
-      "created_at": "2026-08-13T08:50:17.832Z"
+      "onboarding_completed": 1,
+      "created_at": "2026-08-13T08:50:17.832Z",
+      "last_ad_watched_at": "2026-08-13T08:51:20.132Z"
     }
   ],
   "ad_sessions": [
@@ -3116,6 +3117,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-13T08:47:27.478Z",
       "claimed_at": "2026-08-13T08:47:48.933Z"
+    },
+    {
+      "id": "ad_1786611080131_ao78a",
+      "user_id": 7460092773,
+      "step": 1,
+      "ad_token": "token_omcfb1bn1",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T08:51:20.131Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
@@ -4753,6 +4763,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786610847478_irfac)",
       "created_at": "2026-08-13T08:47:48.937Z"
+    },
+    {
+      "id": "tx_1786611070719_esyj",
+      "user_id": 7460092773,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-13T08:51:10.719Z"
     }
   ],
   "_settings": {
