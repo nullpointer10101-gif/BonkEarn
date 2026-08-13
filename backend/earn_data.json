@@ -1351,7 +1351,7 @@
       "id": 7834689386,
       "username": "Alexa53531",
       "first_name": "☣️Candyvi",
-      "balance": 0,
+      "balance": 500,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-13",
@@ -1363,7 +1363,7 @@
       "referral_count": 0,
       "verified_ref_count": 0,
       "withdrawal_unlocked": 0,
-      "onboarding_completed": 0,
+      "onboarding_completed": 1,
       "created_at": "2026-08-13T09:43:40.300Z"
     }
   ],
@@ -5191,6 +5191,14 @@
       "amount": 500,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-13T09:16:35.474Z"
+    },
+    {
+      "id": "tx_1786614295632_879z",
+      "user_id": 7834689386,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-13T09:44:55.632Z"
     }
   ],
   "_settings": {
