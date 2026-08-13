@@ -1506,9 +1506,9 @@
       "id": 6513696097,
       "username": "Muluselam",
       "first_name": "Solomon 🐈",
-      "balance": 1500,
-      "ads_watched_total": 5,
-      "ads_watched_today": 5,
+      "balance": 1700,
+      "ads_watched_total": 6,
+      "ads_watched_today": 6,
       "ads_date": "2026-08-13",
       "referrer_id": null,
       "ip_address": "196.191.61.82",
@@ -1520,7 +1520,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T10:51:42.530Z",
-      "last_ad_watched_at": "2026-08-13T12:47:12.967Z"
+      "last_ad_watched_at": "2026-08-13T13:35:25.546Z"
     },
     {
       "id": 7723814899,
@@ -3974,6 +3974,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-13T13:14:35.792Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786628100681_t882u",
+      "user_id": 6513696097,
+      "step": 3,
+      "ad_token": "token_rsegam52f",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T13:35:00.681Z",
+      "claimed_at": "2026-08-13T13:35:25.544Z"
     }
   ],
   "tasks": [],
@@ -5995,6 +6004,14 @@
       "amount": 500,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-13T13:27:39.695Z"
+    },
+    {
+      "id": "tx_1786628125547_vqeg",
+      "user_id": 6513696097,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786628100681_t882u)",
+      "created_at": "2026-08-13T13:35:25.547Z"
     }
   ],
   "_settings": {
