@@ -1602,9 +1602,9 @@
       "id": 6766623318,
       "username": "SHHS2016",
       "first_name": "🔵 ONUS",
-      "balance": 900,
-      "ads_watched_total": 2,
-      "ads_watched_today": 2,
+      "balance": 1100,
+      "ads_watched_total": 3,
+      "ads_watched_today": 3,
       "ads_date": "2026-08-13",
       "referrer_id": null,
       "ip_address": "196.191.61.82",
@@ -1616,7 +1616,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T12:48:01.676Z",
-      "last_ad_watched_at": "2026-08-13T12:51:59.686Z"
+      "last_ad_watched_at": "2026-08-13T12:53:49.093Z"
     }
   ],
   "ad_sessions": [
@@ -3842,6 +3842,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-13T12:51:59.685Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786625597736_m639i",
+      "user_id": 6766623318,
+      "step": 3,
+      "ad_token": "token_3wo2l3o1g",
+      "reward_amount": 200,
+      "created_at": "2026-08-13T12:53:17.736Z",
+      "claimed_at": "2026-08-13T12:53:49.091Z"
     }
   ],
   "tasks": [],
@@ -5799,6 +5808,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786625469521_s8aza)",
       "created_at": "2026-08-13T12:51:34.209Z"
+    },
+    {
+      "id": "tx_1786625629095_mqu1",
+      "user_id": 6766623318,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786625597736_m639i)",
+      "created_at": "2026-08-13T12:53:49.095Z"
     }
   ],
   "_settings": {
