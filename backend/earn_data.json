@@ -1059,10 +1059,10 @@
       "first_name": "HOOD Raffay",
       "balance": 900,
       "ads_watched_total": 2,
-      "ads_watched_today": 2,
-      "ads_date": "2026-08-12",
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-14",
       "referrer_id": null,
-      "ip_address": "51.159.119.230",
+      "ip_address": "51.158.166.203",
       "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
       "persistent_token": "dev_uuid_ozp53p36dz_msqk3pje",
       "flagged": 0,
@@ -1071,7 +1071,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-12T20:43:24.310Z",
-      "last_ad_watched_at": "2026-08-12T20:46:14.056Z"
+      "last_ad_watched_at": "2026-08-14T11:51:17.643Z"
     },
     {
       "id": 8352030560,
@@ -1860,9 +1860,9 @@
       "id": 6575400513,
       "username": "Nenzum",
       "first_name": "Nenrit",
-      "balance": 1100,
-      "ads_watched_total": 3,
-      "ads_watched_today": 3,
+      "balance": 1300,
+      "ads_watched_total": 4,
+      "ads_watched_today": 4,
       "ads_date": "2026-08-14",
       "referrer_id": null,
       "ip_address": "102.91.92.156",
@@ -1874,7 +1874,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-14T11:09:18.244Z",
-      "last_ad_watched_at": "2026-08-14T11:48:41.108Z"
+      "last_ad_watched_at": "2026-08-14T11:51:00.487Z"
     }
   ],
   "ad_sessions": [
@@ -5099,6 +5099,24 @@
       "reward_amount": 200,
       "created_at": "2026-08-14T11:48:41.106Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786708237864_iw34t",
+      "user_id": 6575400513,
+      "step": 3,
+      "ad_token": "token_4bdqr3ydq",
+      "reward_amount": 200,
+      "created_at": "2026-08-14T11:50:37.864Z",
+      "claimed_at": "2026-08-14T11:51:00.484Z"
+    },
+    {
+      "id": "ad_1786708277641_skhj9",
+      "user_id": 6713846086,
+      "step": 1,
+      "ad_token": "token_09gac2zz0",
+      "reward_amount": 200,
+      "created_at": "2026-08-14T11:51:17.641Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
@@ -7824,6 +7842,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786708023380_dat8h)",
       "created_at": "2026-08-14T11:47:28.374Z"
+    },
+    {
+      "id": "tx_1786708260490_bo4h",
+      "user_id": 6575400513,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786708237864_iw34t)",
+      "created_at": "2026-08-14T11:51:00.490Z"
     }
   ],
   "_settings": {
