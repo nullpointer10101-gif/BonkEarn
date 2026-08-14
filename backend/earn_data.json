@@ -1686,10 +1686,10 @@
       "first_name": "Александp$ PandaFit",
       "balance": 1300,
       "ads_watched_total": 4,
-      "ads_watched_today": 4,
-      "ads_date": "2026-08-13",
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-14",
       "referrer_id": null,
-      "ip_address": "95.133.166.214",
+      "ip_address": "204.27.80.30",
       "device_id": "ffd94471b4837bdded6b632fea042d31",
       "persistent_token": "dev_uuid_0gvcpiip4b_msrsj7q3",
       "flagged": 0,
@@ -1761,13 +1761,13 @@
       "id": 6626250703,
       "username": "Vip_9955",
       "first_name": "Parsa🐾",
-      "balance": 2300,
-      "ads_watched_total": 9,
-      "ads_watched_today": 9,
-      "ads_date": "2026-08-13",
+      "balance": 2500,
+      "ads_watched_total": 10,
+      "ads_watched_today": 1,
+      "ads_date": "2026-08-14",
       "referrer_id": null,
-      "ip_address": "185.8.106.122",
-      "device_id": "37615f9f105cf20bb0857ff3f9c990ea",
+      "ip_address": "84.32.70.50",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
       "persistent_token": "dev_uuid_u6759in1gl_msryfxmc",
       "flagged": 0,
       "referral_count": 0,
@@ -1775,7 +1775,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T20:12:34.454Z",
-      "last_ad_watched_at": "2026-08-13T20:24:38.984Z"
+      "last_ad_watched_at": "2026-08-14T08:54:01.585Z"
     },
     {
       "id": 6742154161,
@@ -4679,6 +4679,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-14T08:15:23.336Z",
       "claimed_at": "2026-08-14T08:15:45.844Z"
+    },
+    {
+      "id": "ad_1786697619603_kk5xk",
+      "user_id": 6626250703,
+      "step": 3,
+      "ad_token": "token_h5el43btd",
+      "reward_amount": 200,
+      "created_at": "2026-08-14T08:53:39.603Z",
+      "claimed_at": "2026-08-14T08:54:01.583Z"
     }
   ],
   "tasks": [],
@@ -7148,6 +7157,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786695323336_vnckh)",
       "created_at": "2026-08-14T08:15:45.848Z"
+    },
+    {
+      "id": "tx_1786697641588_rbtx",
+      "user_id": 6626250703,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786697619603_kk5xk)",
+      "created_at": "2026-08-14T08:54:01.588Z"
     }
   ],
   "_settings": {
