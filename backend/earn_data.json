@@ -1820,9 +1820,9 @@
       "id": 7003411454,
       "username": "Yip_1172",
       "first_name": "Mohamad",
-      "balance": 0,
-      "ads_watched_total": 0,
-      "ads_watched_today": 0,
+      "balance": 1100,
+      "ads_watched_total": 3,
+      "ads_watched_today": 3,
       "ads_date": "2026-08-14",
       "referrer_id": null,
       "ip_address": "138.68.85.237",
@@ -1832,8 +1832,9 @@
       "referral_count": 0,
       "verified_ref_count": 0,
       "withdrawal_unlocked": 0,
-      "onboarding_completed": 0,
-      "created_at": "2026-08-14T09:08:01.080Z"
+      "onboarding_completed": 1,
+      "created_at": "2026-08-14T09:08:01.080Z",
+      "last_ad_watched_at": "2026-08-14T09:12:13.149Z"
     }
   ],
   "ad_sessions": [
@@ -4707,6 +4708,42 @@
       "reward_amount": 200,
       "created_at": "2026-08-14T08:53:39.603Z",
       "claimed_at": "2026-08-14T08:54:01.583Z"
+    },
+    {
+      "id": "ad_1786698537699_wehtr",
+      "user_id": 7003411454,
+      "step": 3,
+      "ad_token": "token_n9tfvku4u",
+      "reward_amount": 200,
+      "created_at": "2026-08-14T09:08:57.699Z",
+      "claimed_at": "2026-08-14T09:09:19.221Z"
+    },
+    {
+      "id": "ad_1786698584362_p578w",
+      "user_id": 7003411454,
+      "step": 3,
+      "ad_token": "token_6q49dcnvl",
+      "reward_amount": 200,
+      "created_at": "2026-08-14T09:09:44.362Z",
+      "claimed_at": "2026-08-14T09:10:10.751Z"
+    },
+    {
+      "id": "ad_1786698644834_6uelu",
+      "user_id": 7003411454,
+      "step": 3,
+      "ad_token": "token_xpvvag01q",
+      "reward_amount": 200,
+      "created_at": "2026-08-14T09:10:44.835Z",
+      "claimed_at": "2026-08-14T09:11:45.826Z"
+    },
+    {
+      "id": "ad_1786698733148_tufnz",
+      "user_id": 7003411454,
+      "step": 2,
+      "ad_token": "token_vy8yu0s81",
+      "reward_amount": 200,
+      "created_at": "2026-08-14T09:12:13.148Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
@@ -7184,6 +7221,38 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786697619603_kk5xk)",
       "created_at": "2026-08-14T08:54:01.588Z"
+    },
+    {
+      "id": "tx_1786698531886_bab9",
+      "user_id": 7003411454,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-14T09:08:51.886Z"
+    },
+    {
+      "id": "tx_1786698559224_tfn4",
+      "user_id": 7003411454,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786698537699_wehtr)",
+      "created_at": "2026-08-14T09:09:19.224Z"
+    },
+    {
+      "id": "tx_1786698610755_9wcr",
+      "user_id": 7003411454,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786698584362_p578w)",
+      "created_at": "2026-08-14T09:10:10.755Z"
+    },
+    {
+      "id": "tx_1786698705829_d8k1",
+      "user_id": 7003411454,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786698644834_6uelu)",
+      "created_at": "2026-08-14T09:11:45.829Z"
     }
   ],
   "_settings": {
