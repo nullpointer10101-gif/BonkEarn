@@ -1313,13 +1313,13 @@
       "id": 5420878998,
       "username": "SanekQ21st",
       "first_name": "Александр ARNI EcoForest🌿 🍀 Anthill ⚔️ Gift Kombat Tower🏰 🐈",
-      "balance": 500,
-      "ads_watched_total": 0,
-      "ads_watched_today": 0,
-      "ads_date": "2026-08-13",
+      "balance": 700,
+      "ads_watched_total": 1,
+      "ads_watched_today": 1,
+      "ads_date": "2026-08-14",
       "referrer_id": null,
       "ip_address": "88.155.73.121",
-      "device_id": "f85ceda56ea758222b57e4c13634fbee",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
       "persistent_token": "dev_uuid_8m4uk1htto_msrakds9",
       "flagged": 0,
       "referral_count": 0,
@@ -1327,7 +1327,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T09:04:11.444Z",
-      "last_ad_watched_at": "2026-08-13T09:04:53.410Z"
+      "last_ad_watched_at": "2026-08-14T07:17:20.910Z"
     },
     {
       "id": 7311702702,
@@ -4642,6 +4642,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-14T05:52:46.578Z",
       "claimed_at": "2026-08-14T05:53:07.787Z"
+    },
+    {
+      "id": "ad_1786691812385_fhm0d",
+      "user_id": 5420878998,
+      "step": 3,
+      "ad_token": "token_4tov1adar",
+      "reward_amount": 200,
+      "created_at": "2026-08-14T07:16:52.385Z",
+      "claimed_at": "2026-08-14T07:17:20.908Z"
     }
   ],
   "tasks": [],
@@ -7079,6 +7088,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786686766578_lwlr5)",
       "created_at": "2026-08-14T05:53:07.791Z"
+    },
+    {
+      "id": "tx_1786691840913_eug5",
+      "user_id": 5420878998,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786691812385_fhm0d)",
+      "created_at": "2026-08-14T07:17:20.913Z"
     }
   ],
   "_settings": {
