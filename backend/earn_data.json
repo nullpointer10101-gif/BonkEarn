@@ -1767,7 +1767,7 @@
       "ads_date": "2026-08-14",
       "referrer_id": null,
       "ip_address": "185.8.106.249",
-      "device_id": "bdbabb582465b0ca61b0cde4ad2bd596",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
       "persistent_token": "dev_uuid_u6759in1gl_msryfxmc",
       "flagged": 0,
       "referral_count": 0,
@@ -1880,9 +1880,9 @@
       "id": 166575848,
       "username": "MRiahi_03714",
       "first_name": "♠m. r➵",
-      "balance": 0,
-      "ads_watched_total": 0,
-      "ads_watched_today": 0,
+      "balance": 700,
+      "ads_watched_total": 1,
+      "ads_watched_today": 1,
       "ads_date": "2026-08-14",
       "referrer_id": null,
       "ip_address": "81.0.220.110",
@@ -1892,8 +1892,9 @@
       "referral_count": 0,
       "verified_ref_count": 0,
       "withdrawal_unlocked": 0,
-      "onboarding_completed": 0,
-      "created_at": "2026-08-14T12:36:24.946Z"
+      "onboarding_completed": 1,
+      "created_at": "2026-08-14T12:36:24.946Z",
+      "last_ad_watched_at": "2026-08-14T12:38:33.849Z"
     }
   ],
   "ad_sessions": [
@@ -5136,6 +5137,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-14T11:51:17.641Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786711089605_7iqul",
+      "user_id": 166575848,
+      "step": 3,
+      "ad_token": "token_73d7rswoe",
+      "reward_amount": 200,
+      "created_at": "2026-08-14T12:38:09.605Z",
+      "claimed_at": "2026-08-14T12:38:33.847Z"
     }
   ],
   "tasks": [],
@@ -7869,6 +7879,22 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786708237864_iw34t)",
       "created_at": "2026-08-14T11:51:00.490Z"
+    },
+    {
+      "id": "tx_1786711083195_hsh8",
+      "user_id": 166575848,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-14T12:38:03.195Z"
+    },
+    {
+      "id": "tx_1786711113851_z0lh",
+      "user_id": 166575848,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786711089605_7iqul)",
+      "created_at": "2026-08-14T12:38:33.851Z"
     }
   ],
   "_settings": {
