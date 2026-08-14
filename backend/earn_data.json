@@ -1860,9 +1860,9 @@
       "id": 6575400513,
       "username": "Nenzum",
       "first_name": "Nenrit",
-      "balance": 500,
-      "ads_watched_total": 0,
-      "ads_watched_today": 0,
+      "balance": 700,
+      "ads_watched_total": 1,
+      "ads_watched_today": 1,
       "ads_date": "2026-08-14",
       "referrer_id": null,
       "ip_address": "102.91.92.156",
@@ -1873,7 +1873,8 @@
       "verified_ref_count": 0,
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
-      "created_at": "2026-08-14T11:09:18.244Z"
+      "created_at": "2026-08-14T11:09:18.244Z",
+      "last_ad_watched_at": "2026-08-14T11:31:47.810Z"
     }
   ],
   "ad_sessions": [
@@ -5053,6 +5054,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-14T10:20:51.429Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786707072484_allf8",
+      "user_id": 6575400513,
+      "step": 3,
+      "ad_token": "token_ns64qjh4m",
+      "reward_amount": 200,
+      "created_at": "2026-08-14T11:31:12.484Z",
+      "claimed_at": "2026-08-14T11:31:47.808Z"
     }
   ],
   "tasks": [],
@@ -7754,6 +7764,14 @@
       "amount": 500,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-14T11:10:50.802Z"
+    },
+    {
+      "id": "tx_1786707107813_xy51",
+      "user_id": 6575400513,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786707072484_allf8)",
+      "created_at": "2026-08-14T11:31:47.813Z"
     }
   ],
   "_settings": {
