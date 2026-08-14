@@ -354,9 +354,9 @@
       "id": 8536783284,
       "username": "Endur1995",
       "first_name": "Endurance☣️Max's Farm 🐾",
-      "balance": 7500,
-      "ads_watched_total": 35,
-      "ads_watched_today": 5,
+      "balance": 7700,
+      "ads_watched_total": 36,
+      "ads_watched_today": 6,
       "ads_date": "2026-08-14",
       "referrer_id": 5908710070,
       "ip_address": "102.89.69.60",
@@ -368,7 +368,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-12T13:41:52.744Z",
-      "last_ad_watched_at": "2026-08-14T23:47:28.394Z"
+      "last_ad_watched_at": "2026-08-14T23:51:11.834Z"
     },
     {
       "id": 6627962056,
@@ -5616,6 +5616,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-14T23:47:28.392Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786751447983_4mlve",
+      "user_id": 8536783284,
+      "step": 3,
+      "ad_token": "token_xqej41l6j",
+      "reward_amount": 200,
+      "created_at": "2026-08-14T23:50:47.983Z",
+      "claimed_at": "2026-08-14T23:51:11.832Z"
     }
   ],
   "tasks": [],
@@ -8621,6 +8630,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786751147209_xhgmx)",
       "created_at": "2026-08-14T23:46:08.674Z"
+    },
+    {
+      "id": "tx_1786751471836_vxnl",
+      "user_id": 8536783284,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786751447983_4mlve)",
+      "created_at": "2026-08-14T23:51:11.836Z"
     }
   ],
   "_settings": {
