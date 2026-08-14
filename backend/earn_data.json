@@ -902,9 +902,9 @@
       "balance": 500,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
-      "ads_date": "2026-08-12",
+      "ads_date": "2026-08-14",
       "referrer_id": null,
-      "ip_address": "197.211.57.27",
+      "ip_address": "197.211.57.23",
       "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
       "persistent_token": "dev_uuid_daf5ei52he_msqfq6i0",
       "flagged": 0,
@@ -913,7 +913,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-12T18:40:56.013Z",
-      "last_ad_watched_at": "2026-08-12T18:43:34.174Z"
+      "last_ad_watched_at": "2026-08-14T17:24:10.251Z"
     },
     {
       "id": 6314093296,
@@ -5344,6 +5344,24 @@
       "reward_amount": 200,
       "created_at": "2026-08-14T14:45:45.135Z",
       "claimed_at": "2026-08-14T14:46:27.169Z"
+    },
+    {
+      "id": "ad_1786728221589_hdh7p",
+      "user_id": 8304264858,
+      "step": 1,
+      "ad_token": "token_7en2eybjw",
+      "reward_amount": 200,
+      "created_at": "2026-08-14T17:23:41.589Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786728250247_fngzv",
+      "user_id": 8304264858,
+      "step": 1,
+      "ad_token": "token_uelewipua",
+      "reward_amount": 200,
+      "created_at": "2026-08-14T17:24:10.247Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
