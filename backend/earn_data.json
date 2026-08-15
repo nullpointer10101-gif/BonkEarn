@@ -1939,9 +1939,9 @@
       "id": 8993337645,
       "username": "Boyboss4",
       "first_name": "@monsterland",
-      "balance": 700,
-      "ads_watched_total": 1,
-      "ads_watched_today": 1,
+      "balance": 900,
+      "ads_watched_total": 2,
+      "ads_watched_today": 2,
       "ads_date": "2026-08-15",
       "referrer_id": null,
       "ip_address": "197.210.54.51",
@@ -1953,7 +1953,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-15T07:23:16.896Z",
-      "last_ad_watched_at": "2026-08-15T07:26:40.873Z"
+      "last_ad_watched_at": "2026-08-15T07:27:49.258Z"
     }
   ],
   "ad_sessions": [
@@ -5862,6 +5862,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-15T07:26:40.853Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786778847524_hf92z",
+      "user_id": 8993337645,
+      "step": 3,
+      "ad_token": "token_do1ap9e3y",
+      "reward_amount": 200,
+      "created_at": "2026-08-15T07:27:27.524Z",
+      "claimed_at": "2026-08-15T07:27:49.256Z"
     }
   ],
   "tasks": [],
@@ -9035,6 +9044,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786778729890_sd58e)",
       "created_at": "2026-08-15T07:25:55.879Z"
+    },
+    {
+      "id": "tx_1786778869261_5v1n",
+      "user_id": 8993337645,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786778847524_hf92z)",
+      "created_at": "2026-08-15T07:27:49.261Z"
     }
   ],
   "_settings": {
