@@ -1294,12 +1294,12 @@
       "id": 7460092773,
       "username": "",
       "first_name": "Sani",
-      "balance": 6700,
-      "ads_watched_total": 31,
-      "ads_watched_today": 1,
+      "balance": 7100,
+      "ads_watched_total": 33,
+      "ads_watched_today": 3,
       "ads_date": "2026-08-15",
       "referrer_id": null,
-      "ip_address": "105.119.11.154",
+      "ip_address": "105.119.7.190",
       "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
       "persistent_token": "dev_uuid_9pz90zt84y_msra2i22",
       "flagged": 0,
@@ -1308,7 +1308,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T08:50:17.832Z",
-      "last_ad_watched_at": "2026-08-15T08:52:04.058Z"
+      "last_ad_watched_at": "2026-08-15T16:03:55.936Z"
     },
     {
       "id": 5420878998,
@@ -5925,6 +5925,24 @@
       "reward_amount": 200,
       "created_at": "2026-08-15T14:13:27.452Z",
       "claimed_at": "2026-08-15T14:13:47.543Z"
+    },
+    {
+      "id": "ad_1786809719520_e70nm",
+      "user_id": 7460092773,
+      "step": 3,
+      "ad_token": "token_q8ddggz1s",
+      "reward_amount": 200,
+      "created_at": "2026-08-15T16:01:59.520Z",
+      "claimed_at": "2026-08-15T16:02:30.621Z"
+    },
+    {
+      "id": "ad_1786809775615_dmt7t",
+      "user_id": 7460092773,
+      "step": 3,
+      "ad_token": "token_m8acz7gyp",
+      "reward_amount": 200,
+      "created_at": "2026-08-15T16:02:55.615Z",
+      "claimed_at": "2026-08-15T16:03:55.933Z"
     }
   ],
   "tasks": [],
@@ -9146,6 +9164,22 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786803207452_9c3cl)",
       "created_at": "2026-08-15T14:13:47.548Z"
+    },
+    {
+      "id": "tx_1786809750626_4q4y",
+      "user_id": 7460092773,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786809719520_e70nm)",
+      "created_at": "2026-08-15T16:02:30.626Z"
+    },
+    {
+      "id": "tx_1786809835940_d5z9",
+      "user_id": 7460092773,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786809775615_dmt7t)",
+      "created_at": "2026-08-15T16:03:55.940Z"
     }
   ],
   "_settings": {
