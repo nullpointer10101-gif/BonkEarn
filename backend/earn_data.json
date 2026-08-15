@@ -1294,9 +1294,9 @@
       "id": 7460092773,
       "username": "",
       "first_name": "Sani",
-      "balance": 8900,
-      "ads_watched_total": 42,
-      "ads_watched_today": 12,
+      "balance": 9300,
+      "ads_watched_total": 44,
+      "ads_watched_today": 14,
       "ads_date": "2026-08-15",
       "referrer_id": null,
       "ip_address": "105.113.17.160",
@@ -1308,7 +1308,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T08:50:17.832Z",
-      "last_ad_watched_at": "2026-08-15T21:09:25.180Z"
+      "last_ad_watched_at": "2026-08-15T21:13:06.370Z"
     },
     {
       "id": 5420878998,
@@ -6117,6 +6117,24 @@
       "reward_amount": 200,
       "created_at": "2026-08-15T21:09:25.177Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786828308643_w869x",
+      "user_id": 7460092773,
+      "step": 3,
+      "ad_token": "token_c6pt6rnaa",
+      "reward_amount": 200,
+      "created_at": "2026-08-15T21:11:48.643Z",
+      "claimed_at": "2026-08-15T21:12:16.409Z"
+    },
+    {
+      "id": "ad_1786828359600_734h6",
+      "user_id": 7460092773,
+      "step": 3,
+      "ad_token": "token_p5hd25jzr",
+      "reward_amount": 200,
+      "created_at": "2026-08-15T21:12:39.600Z",
+      "claimed_at": "2026-08-15T21:13:06.367Z"
     }
   ],
   "tasks": [],
@@ -9466,6 +9484,22 @@
       "amount": 100,
       "description": "Referral Signup Bonus from User #7983938173",
       "created_at": "2026-08-15T21:07:18.845Z"
+    },
+    {
+      "id": "tx_1786828336414_y2vh",
+      "user_id": 7460092773,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786828308643_w869x)",
+      "created_at": "2026-08-15T21:12:16.414Z"
+    },
+    {
+      "id": "tx_1786828386372_a2n9",
+      "user_id": 7460092773,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786828359600_734h6)",
+      "created_at": "2026-08-15T21:13:06.372Z"
     }
   ],
   "_settings": {
