@@ -1294,9 +1294,9 @@
       "id": 7460092773,
       "username": "",
       "first_name": "Sani",
-      "balance": 9300,
-      "ads_watched_total": 44,
-      "ads_watched_today": 14,
+      "balance": 9500,
+      "ads_watched_total": 45,
+      "ads_watched_today": 15,
       "ads_date": "2026-08-15",
       "referrer_id": null,
       "ip_address": "105.113.17.160",
@@ -1308,7 +1308,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T08:50:17.832Z",
-      "last_ad_watched_at": "2026-08-15T21:13:06.370Z"
+      "last_ad_watched_at": "2026-08-15T21:14:42.355Z"
     },
     {
       "id": 5420878998,
@@ -6135,6 +6135,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-15T21:12:39.600Z",
       "claimed_at": "2026-08-15T21:13:06.367Z"
+    },
+    {
+      "id": "ad_1786828449155_ow813",
+      "user_id": 7460092773,
+      "step": 3,
+      "ad_token": "token_nvp247bo5",
+      "reward_amount": 200,
+      "created_at": "2026-08-15T21:14:09.155Z",
+      "claimed_at": "2026-08-15T21:14:42.350Z"
     }
   ],
   "tasks": [],
@@ -9500,6 +9509,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786828359600_734h6)",
       "created_at": "2026-08-15T21:13:06.372Z"
+    },
+    {
+      "id": "tx_1786828482357_lajw",
+      "user_id": 7460092773,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786828449155_ow813)",
+      "created_at": "2026-08-15T21:14:42.357Z"
     }
   ],
   "_settings": {
