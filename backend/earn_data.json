@@ -2075,7 +2075,7 @@
       "id": 8953298557,
       "username": "",
       "first_name": "Nitish Kumar",
-      "balance": 0,
+      "balance": 500,
       "ads_watched_total": 0,
       "ads_watched_today": 0,
       "ads_date": "2026-08-16",
@@ -2087,8 +2087,9 @@
       "referral_count": 0,
       "verified_ref_count": 0,
       "withdrawal_unlocked": 0,
-      "onboarding_completed": 0,
-      "created_at": "2026-08-16T05:01:12.042Z"
+      "onboarding_completed": 1,
+      "created_at": "2026-08-16T05:01:12.042Z",
+      "last_ad_watched_at": "2026-08-16T05:04:36.967Z"
     }
   ],
   "ad_sessions": [
@@ -6438,6 +6439,60 @@
       "reward_amount": 200,
       "created_at": "2026-08-16T02:30:23.182Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786856533791_d9fj6",
+      "user_id": 8953298557,
+      "step": 1,
+      "ad_token": "token_pw7eqsq0j",
+      "reward_amount": 200,
+      "created_at": "2026-08-16T05:02:13.791Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786856560591_p5f0c",
+      "user_id": 8953298557,
+      "step": 1,
+      "ad_token": "token_gt93ev7ox",
+      "reward_amount": 200,
+      "created_at": "2026-08-16T05:02:40.592Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786856594023_iyy0x",
+      "user_id": 8953298557,
+      "step": 1,
+      "ad_token": "token_3g3x72fjt",
+      "reward_amount": 200,
+      "created_at": "2026-08-16T05:03:14.023Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786856615450_rz0d1",
+      "user_id": 8953298557,
+      "step": 1,
+      "ad_token": "token_riusl1u57",
+      "reward_amount": 200,
+      "created_at": "2026-08-16T05:03:35.450Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786856644760_kj9z5",
+      "user_id": 8953298557,
+      "step": 1,
+      "ad_token": "token_uvhr0bl2d",
+      "reward_amount": 200,
+      "created_at": "2026-08-16T05:04:04.760Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786856676963_oxa1k",
+      "user_id": 8953298557,
+      "step": 1,
+      "ad_token": "token_v5gtje8gj",
+      "reward_amount": 200,
+      "created_at": "2026-08-16T05:04:36.963Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
@@ -9955,6 +10010,14 @@
       "amount": 500,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-16T02:28:04.968Z"
+    },
+    {
+      "id": "tx_1786856522702_gn6j",
+      "user_id": 8953298557,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-16T05:02:02.702Z"
     }
   ],
   "_settings": {
