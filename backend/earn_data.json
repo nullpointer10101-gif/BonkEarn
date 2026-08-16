@@ -2116,9 +2116,9 @@
       "id": 7796272733,
       "username": "honghanhi_123",
       "first_name": "Hong",
-      "balance": 700,
-      "ads_watched_total": 1,
-      "ads_watched_today": 1,
+      "balance": 900,
+      "ads_watched_total": 2,
+      "ads_watched_today": 2,
       "ads_date": "2026-08-16",
       "referrer_id": null,
       "ip_address": "171.251.234.105",
@@ -2130,7 +2130,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-16T14:39:01.747Z",
-      "last_ad_watched_at": "2026-08-16T14:42:19.115Z"
+      "last_ad_watched_at": "2026-08-16T14:46:49.775Z"
     }
   ],
   "ad_sessions": [
@@ -6849,6 +6849,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-16T14:41:40.176Z",
       "claimed_at": "2026-08-16T14:42:19.113Z"
+    },
+    {
+      "id": "ad_1786891587117_bcboa",
+      "user_id": 7796272733,
+      "step": 3,
+      "ad_token": "token_niag29qpc",
+      "reward_amount": 200,
+      "created_at": "2026-08-16T14:46:27.117Z",
+      "claimed_at": "2026-08-16T14:46:49.773Z"
     }
   ],
   "tasks": [],
@@ -10646,6 +10655,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786891300176_9c0wf)",
       "created_at": "2026-08-16T14:42:19.118Z"
+    },
+    {
+      "id": "tx_1786891609778_z2lz",
+      "user_id": 7796272733,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786891587117_bcboa)",
+      "created_at": "2026-08-16T14:46:49.778Z"
     }
   ],
   "_settings": {
