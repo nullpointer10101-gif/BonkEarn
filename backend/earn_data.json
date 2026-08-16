@@ -1508,9 +1508,9 @@
       "id": 6513696097,
       "username": "Muluselam",
       "first_name": "Solomon 🐈",
-      "balance": 3500,
-      "ads_watched_total": 15,
-      "ads_watched_today": 6,
+      "balance": 3700,
+      "ads_watched_total": 16,
+      "ads_watched_today": 7,
       "ads_date": "2026-08-16",
       "referrer_id": null,
       "ip_address": "196.188.177.164",
@@ -1522,7 +1522,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T10:51:42.530Z",
-      "last_ad_watched_at": "2026-08-16T06:15:41.480Z"
+      "last_ad_watched_at": "2026-08-16T06:16:59.041Z"
     },
     {
       "id": 7723814899,
@@ -6547,6 +6547,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-16T06:15:13.571Z",
       "claimed_at": "2026-08-16T06:15:41.478Z"
+    },
+    {
+      "id": "ad_1786860996183_pgj8v",
+      "user_id": 6513696097,
+      "step": 3,
+      "ad_token": "token_lgutqpz45",
+      "reward_amount": 200,
+      "created_at": "2026-08-16T06:16:36.183Z",
+      "claimed_at": "2026-08-16T06:16:59.034Z"
     }
   ],
   "tasks": [],
@@ -10120,6 +10129,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786860913571_be81d)",
       "created_at": "2026-08-16T06:15:41.483Z"
+    },
+    {
+      "id": "tx_1786861019048_1tzl",
+      "user_id": 6513696097,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786860996183_pgj8v)",
+      "created_at": "2026-08-16T06:16:59.048Z"
     }
   ],
   "_settings": {
