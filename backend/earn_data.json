@@ -1471,9 +1471,9 @@
       "id": 8853056474,
       "username": "Voltage079",
       "first_name": "VOL⚡ AGE @monsterland_bot",
-      "balance": 3300,
-      "ads_watched_total": 14,
-      "ads_watched_today": 13,
+      "balance": 3700,
+      "ads_watched_total": 16,
+      "ads_watched_today": 15,
       "ads_date": "2026-08-16",
       "referrer_id": null,
       "ip_address": "102.90.80.74",
@@ -1485,7 +1485,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T10:21:41.309Z",
-      "last_ad_watched_at": "2026-08-16T20:21:01.684Z"
+      "last_ad_watched_at": "2026-08-16T20:22:53.385Z"
     },
     {
       "id": 6751227455,
@@ -7134,11 +7134,20 @@
     {
       "id": "ad_1786911661681_43exr",
       "user_id": 8853056474,
-      "step": 1,
+      "step": 3,
       "ad_token": "token_wygra5v9k",
       "reward_amount": 200,
       "created_at": "2026-08-16T20:21:01.681Z",
-      "claimed_at": null
+      "claimed_at": "2026-08-16T20:22:09.877Z"
+    },
+    {
+      "id": "ad_1786911751420_gcktt",
+      "user_id": 8853056474,
+      "step": 3,
+      "ad_token": "token_j3jstcnpc",
+      "reward_amount": 200,
+      "created_at": "2026-08-16T20:22:31.420Z",
+      "claimed_at": "2026-08-16T20:22:53.382Z"
     }
   ],
   "tasks": [],
@@ -11128,6 +11137,22 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786911517509_sp64v)",
       "created_at": "2026-08-16T20:18:59.013Z"
+    },
+    {
+      "id": "tx_1786911729882_ynxd",
+      "user_id": 8853056474,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786911661681_43exr)",
+      "created_at": "2026-08-16T20:22:09.882Z"
+    },
+    {
+      "id": "tx_1786911773387_xa9g",
+      "user_id": 8853056474,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786911751420_gcktt)",
+      "created_at": "2026-08-16T20:22:53.387Z"
     }
   ],
   "_settings": {
