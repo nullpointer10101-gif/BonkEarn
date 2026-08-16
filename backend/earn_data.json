@@ -1900,9 +1900,9 @@
       "id": 7559973817,
       "username": "sonasimri",
       "first_name": "सोनूMoney Mining ⛏️",
-      "balance": 7300,
-      "ads_watched_total": 34,
-      "ads_watched_today": 4,
+      "balance": 7500,
+      "ads_watched_total": 35,
+      "ads_watched_today": 5,
       "ads_date": "2026-08-16",
       "referrer_id": null,
       "ip_address": "152.56.134.50",
@@ -1914,7 +1914,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-14T17:40:15.703Z",
-      "last_ad_watched_at": "2026-08-16T01:47:54.259Z"
+      "last_ad_watched_at": "2026-08-16T01:52:57.272Z"
     },
     {
       "id": 8881212355,
@@ -6218,6 +6218,33 @@
       "reward_amount": 200,
       "created_at": "2026-08-16T01:47:15.502Z",
       "claimed_at": "2026-08-16T01:47:54.257Z"
+    },
+    {
+      "id": "ad_1786845101218_ka8l7",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_outfqjokk",
+      "reward_amount": 200,
+      "created_at": "2026-08-16T01:51:41.218Z",
+      "claimed_at": "2026-08-16T01:52:06.211Z"
+    },
+    {
+      "id": "ad_1786845148248_20myv",
+      "user_id": 7559973817,
+      "step": 1,
+      "ad_token": "token_k4w0g5mav",
+      "reward_amount": 200,
+      "created_at": "2026-08-16T01:52:28.248Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1786845177270_9znvm",
+      "user_id": 7559973817,
+      "step": 1,
+      "ad_token": "token_wf982ajku",
+      "reward_amount": 200,
+      "created_at": "2026-08-16T01:52:57.270Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
@@ -9639,6 +9666,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786844835502_l1t1h)",
       "created_at": "2026-08-16T01:47:54.263Z"
+    },
+    {
+      "id": "tx_1786845126220_s8nu",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786845101218_ka8l7)",
+      "created_at": "2026-08-16T01:52:06.220Z"
     }
   ],
   "_settings": {
