@@ -1471,9 +1471,9 @@
       "id": 8853056474,
       "username": "Voltage079",
       "first_name": "VOL⚡ AGE @monsterland_bot",
-      "balance": 4500,
-      "ads_watched_total": 20,
-      "ads_watched_today": 4,
+      "balance": 5100,
+      "ads_watched_total": 23,
+      "ads_watched_today": 7,
       "ads_date": "2026-08-17",
       "referrer_id": null,
       "ip_address": "102.90.96.14",
@@ -1485,7 +1485,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T10:21:41.309Z",
-      "last_ad_watched_at": "2026-08-17T05:45:58.311Z"
+      "last_ad_watched_at": "2026-08-17T05:48:49.034Z"
     },
     {
       "id": 6751227455,
@@ -7400,6 +7400,33 @@
       "reward_amount": 200,
       "created_at": "2026-08-17T05:45:58.308Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786945615887_ka9qa",
+      "user_id": 8853056474,
+      "step": 3,
+      "ad_token": "token_pzwp7owtt",
+      "reward_amount": 200,
+      "created_at": "2026-08-17T05:46:55.887Z",
+      "claimed_at": "2026-08-17T05:47:19.578Z"
+    },
+    {
+      "id": "ad_1786945661852_ygikx",
+      "user_id": 8853056474,
+      "step": 3,
+      "ad_token": "token_kd4ifyuvp",
+      "reward_amount": 200,
+      "created_at": "2026-08-17T05:47:41.852Z",
+      "claimed_at": "2026-08-17T05:48:05.033Z"
+    },
+    {
+      "id": "ad_1786945706280_64vqu",
+      "user_id": 8853056474,
+      "step": 3,
+      "ad_token": "token_sqy4x6l85",
+      "reward_amount": 200,
+      "created_at": "2026-08-17T05:48:26.280Z",
+      "claimed_at": "2026-08-17T05:48:49.031Z"
     }
   ],
   "tasks": [],
@@ -11589,6 +11616,30 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786945510789_3ivhf)",
       "created_at": "2026-08-17T05:45:33.261Z"
+    },
+    {
+      "id": "tx_1786945639583_gfwj",
+      "user_id": 8853056474,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786945615887_ka9qa)",
+      "created_at": "2026-08-17T05:47:19.583Z"
+    },
+    {
+      "id": "tx_1786945685038_fcmz",
+      "user_id": 8853056474,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786945661852_ygikx)",
+      "created_at": "2026-08-17T05:48:05.038Z"
+    },
+    {
+      "id": "tx_1786945729038_6haa",
+      "user_id": 8853056474,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786945706280_64vqu)",
+      "created_at": "2026-08-17T05:48:49.038Z"
     }
   ],
   "_settings": {
