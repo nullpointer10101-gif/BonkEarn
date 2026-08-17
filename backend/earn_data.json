@@ -1902,9 +1902,9 @@
       "id": 7559973817,
       "username": "sonasimri",
       "first_name": "सोनूMoney Mining ⛏️",
-      "balance": 10700,
-      "ads_watched_total": 51,
-      "ads_watched_today": 6,
+      "balance": 11100,
+      "ads_watched_total": 53,
+      "ads_watched_today": 8,
       "ads_date": "2026-08-17",
       "referrer_id": null,
       "ip_address": "152.58.158.87",
@@ -1916,7 +1916,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-14T17:40:15.703Z",
-      "last_ad_watched_at": "2026-08-17T03:51:38.936Z"
+      "last_ad_watched_at": "2026-08-17T03:54:52.997Z"
     },
     {
       "id": 8881212355,
@@ -7211,6 +7211,33 @@
       "reward_amount": 200,
       "created_at": "2026-08-17T03:51:38.933Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786938747126_iduk4",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_sb2387xbz",
+      "reward_amount": 200,
+      "created_at": "2026-08-17T03:52:27.126Z",
+      "claimed_at": "2026-08-17T03:53:16.855Z"
+    },
+    {
+      "id": "ad_1786938821479_4u09v",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_2nafs5yrk",
+      "reward_amount": 200,
+      "created_at": "2026-08-17T03:53:41.479Z",
+      "claimed_at": "2026-08-17T03:54:25.586Z"
+    },
+    {
+      "id": "ad_1786938892994_wcckc",
+      "user_id": 7559973817,
+      "step": 1,
+      "ad_token": "token_lf3be6p86",
+      "reward_amount": 200,
+      "created_at": "2026-08-17T03:54:52.994Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
@@ -11264,6 +11291,22 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786938608695_cfxal)",
       "created_at": "2026-08-17T03:50:42.795Z"
+    },
+    {
+      "id": "tx_1786938796862_a61o",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786938747126_iduk4)",
+      "created_at": "2026-08-17T03:53:16.862Z"
+    },
+    {
+      "id": "tx_1786938865591_5ndw",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786938821479_4u09v)",
+      "created_at": "2026-08-17T03:54:25.591Z"
     }
   ],
   "_settings": {
