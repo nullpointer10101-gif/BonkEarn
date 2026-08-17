@@ -1902,9 +1902,9 @@
       "id": 7559973817,
       "username": "sonasimri",
       "first_name": "सोनूMoney Mining ⛏️",
-      "balance": 10300,
-      "ads_watched_total": 49,
-      "ads_watched_today": 4,
+      "balance": 10700,
+      "ads_watched_total": 51,
+      "ads_watched_today": 6,
       "ads_date": "2026-08-17",
       "referrer_id": null,
       "ip_address": "152.58.158.87",
@@ -1916,7 +1916,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-14T17:40:15.703Z",
-      "last_ad_watched_at": "2026-08-17T03:48:15.168Z"
+      "last_ad_watched_at": "2026-08-17T03:50:42.793Z"
     },
     {
       "id": 8881212355,
@@ -7184,6 +7184,24 @@
       "reward_amount": 200,
       "created_at": "2026-08-17T03:47:42.802Z",
       "claimed_at": "2026-08-17T03:48:15.165Z"
+    },
+    {
+      "id": "ad_1786938543596_eqcwa",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_tkbknlgna",
+      "reward_amount": 200,
+      "created_at": "2026-08-17T03:49:03.596Z",
+      "claimed_at": "2026-08-17T03:49:42.193Z"
+    },
+    {
+      "id": "ad_1786938608695_cfxal",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_trj3xrfs9",
+      "reward_amount": 200,
+      "created_at": "2026-08-17T03:50:08.695Z",
+      "claimed_at": "2026-08-17T03:50:42.790Z"
     }
   ],
   "tasks": [],
@@ -11221,6 +11239,22 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786938462802_reo2h)",
       "created_at": "2026-08-17T03:48:15.170Z"
+    },
+    {
+      "id": "tx_1786938582199_sj1t",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786938543596_eqcwa)",
+      "created_at": "2026-08-17T03:49:42.199Z"
+    },
+    {
+      "id": "tx_1786938642795_vx43",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786938608695_cfxal)",
+      "created_at": "2026-08-17T03:50:42.795Z"
     }
   ],
   "_settings": {
