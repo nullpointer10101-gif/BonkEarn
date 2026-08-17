@@ -1902,9 +1902,9 @@
       "id": 7559973817,
       "username": "sonasimri",
       "first_name": "सोनूMoney Mining ⛏️",
-      "balance": 11700,
-      "ads_watched_total": 56,
-      "ads_watched_today": 11,
+      "balance": 11900,
+      "ads_watched_total": 57,
+      "ads_watched_today": 12,
       "ads_date": "2026-08-17",
       "referrer_id": null,
       "ip_address": "152.58.158.87",
@@ -1916,7 +1916,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-14T17:40:15.703Z",
-      "last_ad_watched_at": "2026-08-17T03:59:20.464Z"
+      "last_ad_watched_at": "2026-08-17T04:01:12.561Z"
     },
     {
       "id": 8881212355,
@@ -7274,6 +7274,24 @@
       "reward_amount": 200,
       "created_at": "2026-08-17T03:59:20.452Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1786939218221_3qmvk",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_ppbb7jjis",
+      "reward_amount": 200,
+      "created_at": "2026-08-17T04:00:18.221Z",
+      "claimed_at": "2026-08-17T04:00:44.552Z"
+    },
+    {
+      "id": "ad_1786939272558_f6s9f",
+      "user_id": 7559973817,
+      "step": 1,
+      "ad_token": "token_tuok5ljqy",
+      "reward_amount": 200,
+      "created_at": "2026-08-17T04:01:12.558Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
@@ -11367,6 +11385,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1786939074330_oalqp)",
       "created_at": "2026-08-17T03:58:26.048Z"
+    },
+    {
+      "id": "tx_1786939244558_yquz",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1786939218221_3qmvk)",
+      "created_at": "2026-08-17T04:00:44.558Z"
     }
   ],
   "_settings": {
