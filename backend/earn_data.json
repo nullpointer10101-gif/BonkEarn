@@ -1524,7 +1524,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-13T10:51:42.530Z",
-      "last_ad_watched_at": "2026-08-20T06:06:11.494Z"
+      "last_ad_watched_at": "2026-08-20T06:18:17.070Z"
     },
     {
       "id": 7723814899,
@@ -8817,6 +8817,15 @@
       "ad_token": "token_7zdjfjm2t",
       "reward_amount": 200,
       "created_at": "2026-08-20T06:06:11.491Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1787206697065_tu4nk",
+      "user_id": 6513696097,
+      "step": 1,
+      "ad_token": "token_aygdog3i2",
+      "reward_amount": 200,
+      "created_at": "2026-08-20T06:18:17.065Z",
       "claimed_at": null
     }
   ],
