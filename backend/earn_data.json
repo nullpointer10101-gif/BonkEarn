@@ -2228,6 +2228,25 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-18T17:02:33.877Z"
+    },
+    {
+      "id": 1294552829,
+      "username": "pashxo",
+      "first_name": "leo",
+      "balance": 500,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-08-21",
+      "referrer_id": null,
+      "ip_address": "72.57.78.52",
+      "device_id": "714e8e827c68b94fdddb95a56daf3e39",
+      "persistent_token": "dev_uuid_9oll5jgf41_mt34bxlg",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 1,
+      "created_at": "2026-08-21T15:42:52.931Z"
     }
   ],
   "ad_sessions": [
@@ -14339,6 +14358,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1787282219697_w4k9i)",
       "created_at": "2026-08-21T03:17:31.533Z"
+    },
+    {
+      "id": "tx_1787327066569_cvwu",
+      "user_id": 1294552829,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-08-21T15:44:26.569Z"
     }
   ],
   "_settings": {
