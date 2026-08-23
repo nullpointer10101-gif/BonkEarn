@@ -2252,9 +2252,9 @@
       "id": 7767917160,
       "username": "",
       "first_name": "Binit",
-      "balance": 1700,
-      "ads_watched_total": 6,
-      "ads_watched_today": 6,
+      "balance": 2100,
+      "ads_watched_total": 8,
+      "ads_watched_today": 8,
       "ads_date": "2026-08-23",
       "referrer_id": null,
       "ip_address": "106.196.11.57",
@@ -2266,7 +2266,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-23T12:26:36.115Z",
-      "last_ad_watched_at": "2026-08-23T12:41:34.576Z"
+      "last_ad_watched_at": "2026-08-23T12:43:28.658Z"
     }
   ],
   "ad_sessions": [
@@ -9424,6 +9424,24 @@
       "reward_amount": 200,
       "created_at": "2026-08-23T12:41:13.457Z",
       "claimed_at": "2026-08-23T12:41:34.570Z"
+    },
+    {
+      "id": "ad_1787488943870_qkd7x",
+      "user_id": 7767917160,
+      "step": 3,
+      "ad_token": "token_hzo2wme4k",
+      "reward_amount": 200,
+      "created_at": "2026-08-23T12:42:23.870Z",
+      "claimed_at": "2026-08-23T12:42:45.459Z"
+    },
+    {
+      "id": "ad_1787488986662_fd8k0",
+      "user_id": 7767917160,
+      "step": 3,
+      "ad_token": "token_r0sw5ipze",
+      "reward_amount": 200,
+      "created_at": "2026-08-23T12:43:06.662Z",
+      "claimed_at": "2026-08-23T12:43:28.652Z"
     }
   ],
   "tasks": [],
@@ -15069,6 +15087,22 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1787488873457_ymmp1)",
       "created_at": "2026-08-23T12:41:34.585Z"
+    },
+    {
+      "id": "tx_1787488965469_aoq0",
+      "user_id": 7767917160,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1787488943870_qkd7x)",
+      "created_at": "2026-08-23T12:42:45.469Z"
+    },
+    {
+      "id": "tx_1787489008664_te4z",
+      "user_id": 7767917160,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1787488986662_fd8k0)",
+      "created_at": "2026-08-23T12:43:28.664Z"
     }
   ],
   "_settings": {
