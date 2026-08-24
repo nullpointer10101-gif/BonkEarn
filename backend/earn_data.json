@@ -2292,9 +2292,9 @@
       "id": 7129524606,
       "username": "",
       "first_name": ":",
-      "balance": 500,
-      "ads_watched_total": 0,
-      "ads_watched_today": 0,
+      "balance": 700,
+      "ads_watched_total": 1,
+      "ads_watched_today": 1,
       "ads_date": "2026-08-24",
       "referrer_id": null,
       "ip_address": "42.104.250.202",
@@ -2306,7 +2306,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-24T08:28:29.970Z",
-      "last_ad_watched_at": "2026-08-24T08:31:20.299Z"
+      "last_ad_watched_at": "2026-08-24T08:32:11.197Z"
     }
   ],
   "ad_sessions": [
@@ -9702,11 +9702,11 @@
     {
       "id": "ad_1787560280294_s9jpv",
       "user_id": 7129524606,
-      "step": 1,
+      "step": 3,
       "ad_token": "token_1fjxzb41o",
       "reward_amount": 200,
       "created_at": "2026-08-24T08:31:20.294Z",
-      "claimed_at": null
+      "claimed_at": "2026-08-24T08:32:11.193Z"
     }
   ],
   "tasks": [],
@@ -15512,6 +15512,14 @@
       "amount": 500,
       "description": "Onboarding Registration Bonus (joined 3 channels)",
       "created_at": "2026-08-24T08:29:11.700Z"
+    },
+    {
+      "id": "tx_1787560331200_ye91",
+      "user_id": 7129524606,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1787560280294_s9jpv)",
+      "created_at": "2026-08-24T08:32:11.200Z"
     }
   ],
   "_settings": {
