@@ -1903,9 +1903,9 @@
       "id": 7559973817,
       "username": "sonasimri",
       "first_name": "सोनूMoney Mining ⛏️",
-      "balance": 36100,
-      "ads_watched_total": 178,
-      "ads_watched_today": 13,
+      "balance": 36500,
+      "ads_watched_total": 180,
+      "ads_watched_today": 15,
       "ads_date": "2026-08-25",
       "referrer_id": null,
       "ip_address": "152.59.143.16",
@@ -1917,7 +1917,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-14T17:40:15.703Z",
-      "last_ad_watched_at": "2026-08-25T05:42:22.907Z"
+      "last_ad_watched_at": "2026-08-25T05:46:11.959Z"
     },
     {
       "id": 8881212355,
@@ -9833,6 +9833,24 @@
       "reward_amount": 200,
       "created_at": "2026-08-25T05:42:22.901Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1787636691994_3k2ho",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_37hglxu2l",
+      "reward_amount": 200,
+      "created_at": "2026-08-25T05:44:51.994Z",
+      "claimed_at": "2026-08-25T05:45:25.955Z"
+    },
+    {
+      "id": "ad_1787636747538_c74t2",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_6w2ythend",
+      "reward_amount": 200,
+      "created_at": "2026-08-25T05:45:47.538Z",
+      "claimed_at": "2026-08-25T05:46:11.955Z"
     }
   ],
   "tasks": [],
@@ -15750,6 +15768,22 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1787636479799_w8rj9)",
       "created_at": "2026-08-25T05:41:51.910Z"
+    },
+    {
+      "id": "tx_1787636725962_kww5",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1787636691994_3k2ho)",
+      "created_at": "2026-08-25T05:45:25.962Z"
+    },
+    {
+      "id": "tx_1787636771962_qmwy",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1787636747538_c74t2)",
+      "created_at": "2026-08-25T05:46:11.962Z"
     }
   ],
   "_settings": {
