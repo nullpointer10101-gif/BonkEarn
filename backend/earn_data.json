@@ -1903,9 +1903,9 @@
       "id": 7559973817,
       "username": "sonasimri",
       "first_name": "सोनूMoney Mining ⛏️",
-      "balance": 36500,
-      "ads_watched_total": 180,
-      "ads_watched_today": 0,
+      "balance": 36900,
+      "ads_watched_total": 182,
+      "ads_watched_today": 2,
       "ads_date": "2026-08-26",
       "referrer_id": null,
       "ip_address": "152.59.144.19",
@@ -1917,7 +1917,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-14T17:40:15.703Z",
-      "last_ad_watched_at": "2026-08-26T01:29:17.030Z"
+      "last_ad_watched_at": "2026-08-26T01:34:22.357Z"
     },
     {
       "id": 8881212355,
@@ -9869,6 +9869,24 @@
       "reward_amount": 200,
       "created_at": "2026-08-26T01:29:17.026Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1787707984466_c1ij0",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_uz0cfcrc8",
+      "reward_amount": 200,
+      "created_at": "2026-08-26T01:33:04.466Z",
+      "claimed_at": "2026-08-26T01:33:30.780Z"
+    },
+    {
+      "id": "ad_1787708037866_tbbmk",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_58x10vh61",
+      "reward_amount": 200,
+      "created_at": "2026-08-26T01:33:57.866Z",
+      "claimed_at": "2026-08-26T01:34:22.353Z"
     }
   ],
   "tasks": [],
@@ -15802,6 +15820,22 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1787636747538_c74t2)",
       "created_at": "2026-08-25T05:46:11.962Z"
+    },
+    {
+      "id": "tx_1787708010787_keht",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1787707984466_c1ij0)",
+      "created_at": "2026-08-26T01:33:30.787Z"
+    },
+    {
+      "id": "tx_1787708062361_fx97",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1787708037866_tbbmk)",
+      "created_at": "2026-08-26T01:34:22.361Z"
     }
   ],
   "_settings": {
