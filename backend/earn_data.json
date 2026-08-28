@@ -1909,7 +1909,7 @@
       "ads_date": "2026-08-28",
       "referrer_id": null,
       "ip_address": "152.58.159.117",
-      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "device_id": "cf8b235a13f104824492ddd26171fda5",
       "persistent_token": "dev_uuid_rkz501ogel_mst8fvvl",
       "flagged": 0,
       "referral_count": 0,
@@ -1917,7 +1917,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-14T17:40:15.703Z",
-      "last_ad_watched_at": "2026-08-28T03:35:11.760Z"
+      "last_ad_watched_at": "2026-08-28T03:46:30.681Z"
     },
     {
       "id": 8881212355,
@@ -10365,6 +10365,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-28T03:34:35.450Z",
       "claimed_at": "2026-08-28T03:35:11.756Z"
+    },
+    {
+      "id": "ad_1787888790677_05m37",
+      "user_id": 7559973817,
+      "step": 1,
+      "ad_token": "token_npkl7qvxu",
+      "reward_amount": 200,
+      "created_at": "2026-08-28T03:46:30.677Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
