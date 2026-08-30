@@ -1903,9 +1903,9 @@
       "id": 7559973817,
       "username": "sonasimri",
       "first_name": "सोनूMoney Mining ⛏️",
-      "balance": 49700,
-      "ads_watched_total": 246,
-      "ads_watched_today": 6,
+      "balance": 50100,
+      "ads_watched_total": 248,
+      "ads_watched_today": 8,
       "ads_date": "2026-08-30",
       "referrer_id": null,
       "ip_address": "47.31.86.198",
@@ -1917,7 +1917,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-14T17:40:15.703Z",
-      "last_ad_watched_at": "2026-08-30T03:26:17.868Z"
+      "last_ad_watched_at": "2026-08-30T03:28:37.518Z"
     },
     {
       "id": 8881212355,
@@ -10645,6 +10645,24 @@
       "reward_amount": 200,
       "created_at": "2026-08-30T03:25:19.505Z",
       "claimed_at": "2026-08-30T03:26:17.861Z"
+    },
+    {
+      "id": "ad_1788060428739_0yto9",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_fytc6ubhb",
+      "reward_amount": 200,
+      "created_at": "2026-08-30T03:27:08.739Z",
+      "claimed_at": "2026-08-30T03:27:41.244Z"
+    },
+    {
+      "id": "ad_1788060485370_vgm8w",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_yv29l22yy",
+      "reward_amount": 200,
+      "created_at": "2026-08-30T03:28:05.370Z",
+      "claimed_at": "2026-08-30T03:28:37.514Z"
     }
   ],
   "tasks": [],
@@ -17114,6 +17132,22 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1788060319505_xi17e)",
       "created_at": "2026-08-30T03:26:17.899Z"
+    },
+    {
+      "id": "tx_1788060461252_7m1m",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788060428739_0yto9)",
+      "created_at": "2026-08-30T03:27:41.252Z"
+    },
+    {
+      "id": "tx_1788060517521_inbw",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788060485370_vgm8w)",
+      "created_at": "2026-08-30T03:28:37.521Z"
     }
   ],
   "_settings": {
