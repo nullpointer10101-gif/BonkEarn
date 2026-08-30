@@ -1903,9 +1903,9 @@
       "id": 7559973817,
       "username": "sonasimri",
       "first_name": "सोनूMoney Mining ⛏️",
-      "balance": 49100,
-      "ads_watched_total": 243,
-      "ads_watched_today": 3,
+      "balance": 49500,
+      "ads_watched_total": 245,
+      "ads_watched_today": 5,
       "ads_date": "2026-08-30",
       "referrer_id": null,
       "ip_address": "47.31.86.198",
@@ -1917,7 +1917,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-14T17:40:15.703Z",
-      "last_ad_watched_at": "2026-08-30T03:19:30.844Z"
+      "last_ad_watched_at": "2026-08-30T03:23:48.118Z"
     },
     {
       "id": 8881212355,
@@ -10613,11 +10613,29 @@
     {
       "id": "ad_1788059970840_4gxyd",
       "user_id": 7559973817,
-      "step": 2,
+      "step": 3,
       "ad_token": "token_qurj9512v",
       "reward_amount": 200,
       "created_at": "2026-08-30T03:19:30.840Z",
+      "claimed_at": "2026-08-30T03:21:53.493Z"
+    },
+    {
+      "id": "ad_1788060150114_peei1",
+      "user_id": 7559973817,
+      "step": 1,
+      "ad_token": "token_h6cwee4ut",
+      "reward_amount": 200,
+      "created_at": "2026-08-30T03:22:30.114Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1788060194739_zoged",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_znfsxn962",
+      "reward_amount": 200,
+      "created_at": "2026-08-30T03:23:14.739Z",
+      "claimed_at": "2026-08-30T03:23:48.114Z"
     }
   ],
   "tasks": [],
@@ -17063,6 +17081,22 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1788059915340_30j8j)",
       "created_at": "2026-08-30T03:19:00.807Z"
+    },
+    {
+      "id": "tx_1788060113505_fc7b",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788059970840_4gxyd)",
+      "created_at": "2026-08-30T03:21:53.505Z"
+    },
+    {
+      "id": "tx_1788060228121_88x1",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788060194739_zoged)",
+      "created_at": "2026-08-30T03:23:48.121Z"
     }
   ],
   "_settings": {
