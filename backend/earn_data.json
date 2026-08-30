@@ -1917,7 +1917,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-14T17:40:15.703Z",
-      "last_ad_watched_at": "2026-08-30T03:23:48.118Z"
+      "last_ad_watched_at": "2026-08-30T03:25:19.509Z"
     },
     {
       "id": 8881212355,
@@ -10636,6 +10636,15 @@
       "reward_amount": 200,
       "created_at": "2026-08-30T03:23:14.739Z",
       "claimed_at": "2026-08-30T03:23:48.114Z"
+    },
+    {
+      "id": "ad_1788060319505_xi17e",
+      "user_id": 7559973817,
+      "step": 1,
+      "ad_token": "token_huhm02sev",
+      "reward_amount": 200,
+      "created_at": "2026-08-30T03:25:19.505Z",
+      "claimed_at": null
     }
   ],
   "tasks": [],
