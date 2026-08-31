@@ -1903,9 +1903,9 @@
       "id": 7559973817,
       "username": "sonasimri",
       "first_name": "सोनूMoney Mining ⛏️",
-      "balance": 53700,
-      "ads_watched_total": 266,
-      "ads_watched_today": 11,
+      "balance": 54500,
+      "ads_watched_total": 270,
+      "ads_watched_today": 15,
       "ads_date": "2026-08-31",
       "referrer_id": null,
       "ip_address": "152.58.186.58",
@@ -1917,7 +1917,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-14T17:40:15.703Z",
-      "last_ad_watched_at": "2026-08-31T16:47:43.020Z"
+      "last_ad_watched_at": "2026-08-31T16:51:57.530Z"
     },
     {
       "id": 8881212355,
@@ -10871,6 +10871,51 @@
       "reward_amount": 200,
       "created_at": "2026-08-31T16:47:43.016Z",
       "claimed_at": null
+    },
+    {
+      "id": "ad_1788194917423_upfr4",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_5lvppxtpi",
+      "reward_amount": 200,
+      "created_at": "2026-08-31T16:48:37.423Z",
+      "claimed_at": "2026-08-31T16:48:58.985Z"
+    },
+    {
+      "id": "ad_1788194963054_5cjzu",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_tl63loy5s",
+      "reward_amount": 200,
+      "created_at": "2026-08-31T16:49:23.054Z",
+      "claimed_at": "2026-08-31T16:49:46.974Z"
+    },
+    {
+      "id": "ad_1788195009580_fuq80",
+      "user_id": 7559973817,
+      "step": 1,
+      "ad_token": "token_y4csp5o63",
+      "reward_amount": 200,
+      "created_at": "2026-08-31T16:50:09.580Z",
+      "claimed_at": null
+    },
+    {
+      "id": "ad_1788195038704_mbqw2",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_5cxjgzm34",
+      "reward_amount": 200,
+      "created_at": "2026-08-31T16:50:38.704Z",
+      "claimed_at": "2026-08-31T16:51:05.975Z"
+    },
+    {
+      "id": "ad_1788195088338_k3r4r",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_v5xlhrhha",
+      "reward_amount": 200,
+      "created_at": "2026-08-31T16:51:28.338Z",
+      "claimed_at": "2026-08-31T16:51:57.525Z"
     }
   ],
   "tasks": [],
@@ -17500,6 +17545,38 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1788194815011_td7iv)",
       "created_at": "2026-08-31T16:47:20.812Z"
+    },
+    {
+      "id": "tx_1788194938993_wemd",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788194917423_upfr4)",
+      "created_at": "2026-08-31T16:48:58.993Z"
+    },
+    {
+      "id": "tx_1788194986982_diqv",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788194963054_5cjzu)",
+      "created_at": "2026-08-31T16:49:46.982Z"
+    },
+    {
+      "id": "tx_1788195065983_zepf",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788195038704_mbqw2)",
+      "created_at": "2026-08-31T16:51:05.983Z"
+    },
+    {
+      "id": "tx_1788195117537_dfy8",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788195088338_k3r4r)",
+      "created_at": "2026-08-31T16:51:57.537Z"
     }
   ],
   "_settings": {
