@@ -1903,9 +1903,9 @@
       "id": 7559973817,
       "username": "sonasimri",
       "first_name": "सोनूMoney Mining ⛏️",
-      "balance": 58100,
-      "ads_watched_total": 288,
-      "ads_watched_today": 3,
+      "balance": 60500,
+      "ads_watched_total": 300,
+      "ads_watched_today": 15,
       "ads_date": "2026-09-02",
       "referrer_id": null,
       "ip_address": "152.58.186.164",
@@ -1917,7 +1917,7 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 1,
       "created_at": "2026-08-14T17:40:15.703Z",
-      "last_ad_watched_at": "2026-09-02T01:56:11.446Z"
+      "last_ad_watched_at": "2026-09-02T02:09:48.206Z"
     },
     {
       "id": 8881212355,
@@ -11087,6 +11087,114 @@
       "reward_amount": 200,
       "created_at": "2026-09-02T01:55:47.263Z",
       "claimed_at": "2026-09-02T01:56:11.442Z"
+    },
+    {
+      "id": "ad_1788314391875_4w5m3",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_qmjg04wez",
+      "reward_amount": 200,
+      "created_at": "2026-09-02T01:59:51.875Z",
+      "claimed_at": "2026-09-02T02:00:16.273Z"
+    },
+    {
+      "id": "ad_1788314439957_04k1t",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_au1fctni4",
+      "reward_amount": 200,
+      "created_at": "2026-09-02T02:00:39.957Z",
+      "claimed_at": "2026-09-02T02:01:06.317Z"
+    },
+    {
+      "id": "ad_1788314492754_8aof8",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_lqnply1r4",
+      "reward_amount": 200,
+      "created_at": "2026-09-02T02:01:32.754Z",
+      "claimed_at": "2026-09-02T02:01:56.558Z"
+    },
+    {
+      "id": "ad_1788314545720_ur4sy",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_2rklvek2t",
+      "reward_amount": 200,
+      "created_at": "2026-09-02T02:02:25.720Z",
+      "claimed_at": "2026-09-02T02:02:49.356Z"
+    },
+    {
+      "id": "ad_1788314608373_iljjb",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_rqz3elyre",
+      "reward_amount": 200,
+      "created_at": "2026-09-02T02:03:28.373Z",
+      "claimed_at": "2026-09-02T02:03:52.197Z"
+    },
+    {
+      "id": "ad_1788314656804_q4y5m",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_7d3r2dea7",
+      "reward_amount": 200,
+      "created_at": "2026-09-02T02:04:16.804Z",
+      "claimed_at": "2026-09-02T02:04:43.282Z"
+    },
+    {
+      "id": "ad_1788314706052_l8wle",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_hd5xz4yv7",
+      "reward_amount": 200,
+      "created_at": "2026-09-02T02:05:06.052Z",
+      "claimed_at": "2026-09-02T02:05:33.470Z"
+    },
+    {
+      "id": "ad_1788314755667_5jsf1",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_cd3efo4ci",
+      "reward_amount": 200,
+      "created_at": "2026-09-02T02:05:55.667Z",
+      "claimed_at": "2026-09-02T02:06:19.631Z"
+    },
+    {
+      "id": "ad_1788314802368_ay211",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_j1bbxoe1p",
+      "reward_amount": 200,
+      "created_at": "2026-09-02T02:06:42.368Z",
+      "claimed_at": "2026-09-02T02:07:04.811Z"
+    },
+    {
+      "id": "ad_1788314851312_t6k51",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_9khp00h9k",
+      "reward_amount": 200,
+      "created_at": "2026-09-02T02:07:31.312Z",
+      "claimed_at": "2026-09-02T02:07:59.273Z"
+    },
+    {
+      "id": "ad_1788314905792_0d5zi",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_n1y7r9zam",
+      "reward_amount": 200,
+      "created_at": "2026-09-02T02:08:25.792Z",
+      "claimed_at": "2026-09-02T02:08:50.913Z"
+    },
+    {
+      "id": "ad_1788314955671_am7m7",
+      "user_id": 7559973817,
+      "step": 3,
+      "ad_token": "token_lgd6wvext",
+      "reward_amount": 200,
+      "created_at": "2026-09-02T02:09:15.671Z",
+      "claimed_at": "2026-09-02T02:09:48.200Z"
     }
   ],
   "tasks": [],
@@ -17892,6 +18000,102 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1788314147263_ax905)",
       "created_at": "2026-09-02T01:56:11.450Z"
+    },
+    {
+      "id": "tx_1788314416284_rtac",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788314391875_4w5m3)",
+      "created_at": "2026-09-02T02:00:16.284Z"
+    },
+    {
+      "id": "tx_1788314466325_90u6",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788314439957_04k1t)",
+      "created_at": "2026-09-02T02:01:06.325Z"
+    },
+    {
+      "id": "tx_1788314516566_c4pn",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788314492754_8aof8)",
+      "created_at": "2026-09-02T02:01:56.566Z"
+    },
+    {
+      "id": "tx_1788314569364_miq0",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788314545720_ur4sy)",
+      "created_at": "2026-09-02T02:02:49.364Z"
+    },
+    {
+      "id": "tx_1788314632205_gcf9",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788314608373_iljjb)",
+      "created_at": "2026-09-02T02:03:52.205Z"
+    },
+    {
+      "id": "tx_1788314683294_5vq1",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788314656804_q4y5m)",
+      "created_at": "2026-09-02T02:04:43.294Z"
+    },
+    {
+      "id": "tx_1788314733479_bqlm",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788314706052_l8wle)",
+      "created_at": "2026-09-02T02:05:33.479Z"
+    },
+    {
+      "id": "tx_1788314779640_8xho",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788314755667_5jsf1)",
+      "created_at": "2026-09-02T02:06:19.640Z"
+    },
+    {
+      "id": "tx_1788314824819_pqrx",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788314802368_ay211)",
+      "created_at": "2026-09-02T02:07:04.819Z"
+    },
+    {
+      "id": "tx_1788314879283_ctog",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788314851312_t6k51)",
+      "created_at": "2026-09-02T02:07:59.283Z"
+    },
+    {
+      "id": "tx_1788314930921_b0bl",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788314905792_0d5zi)",
+      "created_at": "2026-09-02T02:08:50.921Z"
+    },
+    {
+      "id": "tx_1788314988211_lftp",
+      "user_id": 7559973817,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1788314955671_am7m7)",
+      "created_at": "2026-09-02T02:09:48.211Z"
     }
   ],
   "_settings": {
