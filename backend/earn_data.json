@@ -1764,12 +1764,12 @@
       "id": 6626250703,
       "username": "Vip_9955",
       "first_name": "Parsa🐾",
-      "balance": 2700,
+      "balance": 7700,
       "ads_watched_total": 11,
       "ads_watched_today": 0,
-      "ads_date": "2026-08-16",
+      "ads_date": "2026-09-05",
       "referrer_id": null,
-      "ip_address": "93.115.25.174",
+      "ip_address": "185.8.107.208",
       "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
       "persistent_token": "dev_uuid_u6759in1gl_msryfxmc",
       "flagged": 0,
@@ -11223,6 +11223,11 @@
       "user_id": 6909180225,
       "task_id": "t3",
       "completed_at": "2026-08-11T15:29:10.573Z"
+    },
+    {
+      "user_id": 6626250703,
+      "task_id": "t_1788547055479_6wgf",
+      "completed_at": "2026-09-05T18:25:52.646Z"
     }
   ],
   "withdrawals": [
@@ -18106,6 +18111,14 @@
       "amount": 200,
       "description": "Watched Premium Video Ad (Session: ad_1788314955671_am7m7)",
       "created_at": "2026-09-02T02:09:48.211Z"
+    },
+    {
+      "id": "tx_1788632752654_ia5s",
+      "user_id": 6626250703,
+      "type": "task_reward",
+      "amount": 5000,
+      "description": "Completed Bonus Task: pmt gram",
+      "created_at": "2026-09-05T18:25:52.654Z"
     }
   ],
   "_settings": {
