@@ -2292,12 +2292,12 @@
       "id": 7129524606,
       "username": "",
       "first_name": ":",
-      "balance": 700,
+      "balance": 5700,
       "ads_watched_total": 1,
-      "ads_watched_today": 1,
-      "ads_date": "2026-08-24",
+      "ads_watched_today": 0,
+      "ads_date": "2026-09-07",
       "referrer_id": null,
-      "ip_address": "42.104.250.202",
+      "ip_address": "42.108.185.243",
       "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
       "persistent_token": "dev_uuid_pxxwotuw0r_mt6z4ut2",
       "flagged": 0,
@@ -11228,6 +11228,11 @@
       "user_id": 6626250703,
       "task_id": "t_1788547055479_6wgf",
       "completed_at": "2026-09-05T18:25:52.646Z"
+    },
+    {
+      "user_id": 7129524606,
+      "task_id": "t_1788547055479_6wgf",
+      "completed_at": "2026-09-07T01:46:58.071Z"
     }
   ],
   "withdrawals": [
@@ -18119,6 +18124,14 @@
       "amount": 5000,
       "description": "Completed Bonus Task: pmt gram",
       "created_at": "2026-09-05T18:25:52.654Z"
+    },
+    {
+      "id": "tx_1788745618079_4ltz",
+      "user_id": 7129524606,
+      "type": "task_reward",
+      "amount": 5000,
+      "description": "Completed Bonus Task: pmt gram",
+      "created_at": "2026-09-07T01:46:58.079Z"
     }
   ],
   "_settings": {
