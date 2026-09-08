@@ -2364,6 +2364,25 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 0,
       "created_at": "2026-08-31T14:51:18.938Z"
+    },
+    {
+      "id": 8057813978,
+      "username": "",
+      "first_name": "Boma",
+      "balance": 0,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-09-08",
+      "referrer_id": null,
+      "ip_address": "102.90.101.158",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_1s5m14k42w_mts2k8mo",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 0,
+      "created_at": "2026-09-08T02:47:44.296Z"
     }
   ],
   "ad_sessions": [
