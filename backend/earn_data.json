@@ -2383,6 +2383,25 @@
       "withdrawal_unlocked": 0,
       "onboarding_completed": 0,
       "created_at": "2026-09-08T02:47:44.296Z"
+    },
+    {
+      "id": 8859624584,
+      "username": "",
+      "first_name": "Saim",
+      "balance": 0,
+      "ads_watched_total": 0,
+      "ads_watched_today": 0,
+      "ads_date": "2026-09-11",
+      "referrer_id": null,
+      "ip_address": "163.61.227.184",
+      "device_id": "hw_TW96aWxsYS81LjAgKExpbnV4OyBBbmRy",
+      "persistent_token": "dev_uuid_kofc304d9s_mtx9boaz",
+      "flagged": 0,
+      "referral_count": 0,
+      "verified_ref_count": 0,
+      "withdrawal_unlocked": 0,
+      "onboarding_completed": 0,
+      "created_at": "2026-09-11T17:55:45.923Z"
     }
   ],
   "ad_sessions": [
