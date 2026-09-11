@@ -2388,9 +2388,9 @@
       "id": 8859624584,
       "username": "",
       "first_name": "Saim",
-      "balance": 0,
-      "ads_watched_total": 0,
-      "ads_watched_today": 0,
+      "balance": 5700,
+      "ads_watched_total": 1,
+      "ads_watched_today": 1,
       "ads_date": "2026-09-11",
       "referrer_id": null,
       "ip_address": "163.61.227.184",
@@ -2400,8 +2400,9 @@
       "referral_count": 0,
       "verified_ref_count": 0,
       "withdrawal_unlocked": 0,
-      "onboarding_completed": 0,
-      "created_at": "2026-09-11T17:55:45.923Z"
+      "onboarding_completed": 1,
+      "created_at": "2026-09-11T17:55:45.923Z",
+      "last_ad_watched_at": "2026-09-11T17:57:46.274Z"
     }
   ],
   "ad_sessions": [
@@ -11233,6 +11234,15 @@
       "reward_amount": 200,
       "created_at": "2026-09-02T02:09:15.671Z",
       "claimed_at": "2026-09-02T02:09:48.200Z"
+    },
+    {
+      "id": "ad_1789149440094_vimmi",
+      "user_id": 8859624584,
+      "step": 3,
+      "ad_token": "token_n9i47wfxu",
+      "reward_amount": 200,
+      "created_at": "2026-09-11T17:57:20.094Z",
+      "claimed_at": "2026-09-11T17:57:46.269Z"
     }
   ],
   "tasks": [
@@ -11271,6 +11281,11 @@
       "user_id": 7129524606,
       "task_id": "t_1788547055479_6wgf",
       "completed_at": "2026-09-07T01:46:58.071Z"
+    },
+    {
+      "user_id": 8859624584,
+      "task_id": "t_1788547055479_6wgf",
+      "completed_at": "2026-09-11T17:57:51.338Z"
     }
   ],
   "withdrawals": [
@@ -18170,6 +18185,30 @@
       "amount": 5000,
       "description": "Completed Bonus Task: pmt gram",
       "created_at": "2026-09-07T01:46:58.079Z"
+    },
+    {
+      "id": "tx_1789149395439_bqff",
+      "user_id": 8859624584,
+      "type": "onboarding_bonus",
+      "amount": 500,
+      "description": "Onboarding Registration Bonus (joined 3 channels)",
+      "created_at": "2026-09-11T17:56:35.439Z"
+    },
+    {
+      "id": "tx_1789149466278_bf78",
+      "user_id": 8859624584,
+      "type": "ad_reward",
+      "amount": 200,
+      "description": "Watched Premium Video Ad (Session: ad_1789149440094_vimmi)",
+      "created_at": "2026-09-11T17:57:46.278Z"
+    },
+    {
+      "id": "tx_1789149471347_b4ow",
+      "user_id": 8859624584,
+      "type": "task_reward",
+      "amount": 5000,
+      "description": "Completed Bonus Task: pmt gram",
+      "created_at": "2026-09-11T17:57:51.347Z"
     }
   ],
   "_settings": {
